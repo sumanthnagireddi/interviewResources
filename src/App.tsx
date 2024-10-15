@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Sidebar from "./pages/Sidebar";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Welcome from "./pages/Welcome";
-import { ThemeProvider } from "./lib/themeprovider";
+// import { ThemeProvider } from "./lib";
 const Layout = () => {
   return (
     <>
@@ -42,9 +42,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+     {/* <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme"> */}
       <RouterProvider router={router} />
-      </ThemeProvider>
+      {/* </ThemeProvider> */}
     </>
   );
 }
