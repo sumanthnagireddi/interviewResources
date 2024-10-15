@@ -5,14 +5,15 @@ import Home from "./pages/Home";
 import Sidebar from "./pages/Sidebar";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Welcome from "./pages/Welcome";
+import { ThemeProvider } from "./lib/themeprovider";
 const Layout = () => {
   return (
     <>
       <div className="flex">
-        <div className="w-[18vw]">
+        <div className="w-[20vw]">
           <Sidebar />
         </div>
-        <div className="w-[82vw] px-6">
+        <div className="w-[80vw] px-6">
           <Home />
           <Outlet />
         </div>
@@ -41,7 +42,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
+     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <RouterProvider router={router} />
+      </ThemeProvider>
     </>
   );
 }
