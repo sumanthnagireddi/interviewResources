@@ -7,11 +7,11 @@ interface Resource {
   // Define other fields that your resources might have, for example:
   name?: string;
   url?: string;
-  subCourses?: unknown
+  subCourses?: Resource[]
 }
 
 const useGetResources = () => {
-  const [resources, setResources] = useState<Resource[]>(DATA);
+  const [resources] = useState<Resource[]>(DATA);
   useEffect(() => {
     const fetchData = async () => {
       const querySnapshot = await getDocs(collection(db, "resources"));
