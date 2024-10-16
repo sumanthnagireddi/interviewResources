@@ -29,7 +29,7 @@ function Sidebar() {
             </li>
             {resources.map((res) =>
               res.subCourses ? (
-                <li>
+                <li key={res.id}>
                   <details className="group [&_summary::-webkit-details-marker]:hidden">
                     <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                       <span className="text-sm font-medium"> {res.name} </span>
@@ -52,7 +52,7 @@ function Sidebar() {
 
                     <ul className="mt-2 space-y-1 px-4">
                       {res.subCourses.map((res) => (
-                        <li>
+                        <li key={res.id}>
                           <Link to={`course/${res.id}`}>
                             <a className="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                               {res.name}
@@ -65,11 +65,11 @@ function Sidebar() {
                 </li>
               ) : (
                 <li key={res.id}>
-                  <Link to={`course/${res.id}`}>
-                    <a className="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                      {res.name}
-                    </a>
-                  </Link>
+                   <Link to={`course/${res.id}`}>
+                            <a className="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                              {res.name}
+                            </a>
+                          </Link>
                 </li>
               )
             )}

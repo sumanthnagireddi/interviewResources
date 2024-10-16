@@ -7,7 +7,7 @@ interface Resource {
   // Define other fields that your resources might have, for example:
   name?: string;
   url?: string;
-  subCourses?: Resource[]
+  subCourses?: Resource[];
 }
 
 const useGetResources = () => {
@@ -20,7 +20,6 @@ const useGetResources = () => {
         ...doc.data(),
       })) as Resource[];
       console.log(fetchedData);
-      // setResources(fetchedData);
     };
 
     fetchData();
