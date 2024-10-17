@@ -1,26 +1,22 @@
-import useGetMarkdownData from "@/hooks/useGetMarkdowndata";
+import Editor from "@/components/ui/Editor";
+import { useGetMarkdownData } from "@/hooks/useGetMarkdowndata";
 import { useParams } from "react-router-dom";
-import MDEditor,{ commands } from "@uiw/react-md-editor";
-
 
 function DetailPage() {
   const { id } = useParams();
   const data = useGetMarkdownData(id);
+  if (!data) {
+    return <p>Loading...</p>;
+  }
+
+  if (data && Object.keys(data).length === 0) {
+    return <p>No data found for this ID.</p>;
+  }
+
   return (
-    <>
-      <div>
-      {/* <MDEditor
-      value={data.data}
-    //   onChange={(val) => setValue(val || "")}
-      commands={[
-        commands.bold,
-        commands.italic,
-        commands.link,
-        // Add or remove commands as needed
-      ]}
-    /> */}
-      </div>
-    </>
+    <div>
+      <Editor content={data} readOnlyMode={true} />
+    </div>
   );
 }
 

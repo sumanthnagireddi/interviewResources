@@ -5,15 +5,16 @@ import Home from "./pages/Home";
 import Sidebar from "./pages/Sidebar";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Welcome from "./pages/Welcome";
+import Admin from "./pages/Admin";
 // import { ThemeProvider } from "./lib";
 const Layout = () => {
   return (
     <>
       <div className="flex">
-        <div className="hidden lg:w-[20vw]">
+        <div className="hidden lg:block lg:w-[20vw]">
           <Sidebar />
         </div>
-        <div className="lg:w-[80vw] px-6">
+        <div className="flex-1 px-6">
           <Home />
           <Outlet />
         </div>
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
         path: "course/:id",
         element: <DetailPage />,
       },
+      {
+        path:"admin",
+        element:<Admin/>
+      }
     ],
   },
 ]);

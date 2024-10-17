@@ -64,3 +64,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+.yoopta-editor{
+  width: 80% !important;
+  /* overflow-x: hidden !important ; */
+}

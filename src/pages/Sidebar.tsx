@@ -1,4 +1,4 @@
-import useGetResources from "@/hooks/useGetResources";
+import {useGetResources} from "@/hooks/useGetResources";
 import { Link } from "react-router-dom";
 
 function Sidebar() {
@@ -22,9 +22,9 @@ function Sidebar() {
           <ul className="mt-10 space-y-1">
             <li>
               <Link to={"/"}>
-                <a className="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                <span className="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                   Introduction
-                </a>
+                </span>
               </Link>
             </li>
             {resources.map((res) =>
@@ -54,9 +54,9 @@ function Sidebar() {
                       {res.subCourses.map((res) => (
                         <li key={res.id}>
                           <Link to={`course/${res.id}`}>
-                            <a className="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            <span className="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                               {res.name}
-                            </a>
+                            </span>
                           </Link>
                         </li>
                       ))}
@@ -66,9 +66,9 @@ function Sidebar() {
               ) : (
                 <li key={res.id}>
                    <Link to={`course/${res.id}`}>
-                            <a className="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            <span className="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                               {res.name}
-                            </a>
+                            </span>
                           </Link>
                 </li>
               )
