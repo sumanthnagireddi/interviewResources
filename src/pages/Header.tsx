@@ -28,7 +28,7 @@ function Header() {
           </kbd>
         </button>
       </div>
-      <div className="flex items-center gap-5 lg:hidden">
+      <div className="flex items-center  lg:hidden">
         <button
           type="button"
           className="flex h-6 w-6 items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
@@ -52,13 +52,13 @@ function Header() {
                 d="M16 8a5 5 0 0 0-5-5H5a5 5 0 0 0-5 5v13.927a1 1 0 0 0 1.623.782l3.684-2.93a4 4 0 0 1 2.49-.87H11a5 5 0 0 0 5-5V8Z"
               ></path>
             </svg>
-            <span className="font-semibold text-lg fill-zinc-900">
+            <span className="font-semibold text-base  md:text-lg fill-zinc-900">
               Sumanth Nagireddi
             </span>
           </span>
         </div>
       </div>
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-2">
         <nav className="hidden md:block">
           <ul role="list" className="flex items-center gap-8">
             <li>

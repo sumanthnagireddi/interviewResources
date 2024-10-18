@@ -4,7 +4,7 @@ function Welcome() {
       <div className="lg:pl-2">
       <div className="relative">
         <div aria-label="Home" className="block h-24 mb-6 w-24 origin-left pointer-events-auto">
-          <img alt="" src="../../public/imag3.jpg"   className="rounded-full bg-zinc-100 object-cover dark:bg-zinc-800"/></div>
+          <img alt="" src="/imag3.jpg"   className="rounded-full bg-zinc-100 object-cover dark:bg-zinc-800"/></div>
         </div>
       <div className="max-w-2xl lg:pl-4">
         <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-800 bg-clip-text text-transparent">
@@ -64,7 +64,7 @@ function Welcome() {
 
 <div className="max-w-sm my-4 lg:my-0 bg-white border border-slate-100  rounded-xl shadow-xl  dark:bg-gray-800 dark:border-gray-700">
     <a href="https://sumanthnagireddi1.web.app/" target="_blank">
-        <img className="rounded-t-lg" src="../../public/image.png" alt="" />
+        <img className="rounded-t-lg" src="/image.png" alt="" />
     </a>
     <div className="p-5">
         <a href="https://sumanthnagireddi1.web.app/" target="_blank">
