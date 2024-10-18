@@ -15,25 +15,18 @@ import { useGetResources } from "@/hooks/useGetResources";
 import { useState } from "react";
 
 // Define types for resources and subResources
-interface SubCourse {
-  id: string;
-  name: string;
-}
-
-interface Resource {
-  id: string;
-  name: string;
-  subCourses?: SubCourse[];
-}
 
 function Admin() {
   const resources = useGetResources();
-  const [currentResource, setCurrentResource] = useState<Resource | null>(null);
-  const markdownData = useGetMarkdownData(currentResource?.id)
-  const handleClick = (resource: SubCourse) => {
+  const [currentResource, setCurrentResource] = useState<object>({
+    id: "",
+    name: "",
+  });
+  const markdownData = useGetMarkdownData(currentResource?.id);
+  const handleClick = (resource: object) => {
     setCurrentResource(resource);
   };
-console.log(Object.values(markdownData).length )
+  console.log(Object.values(markdownData).length);
   return (
     <div>
       <DropdownMenu>
@@ -79,9 +72,8 @@ console.log(Object.values(markdownData).length )
         </DropdownMenuContent>
       </DropdownMenu>
       <span className="font-medium text-lg text-gray-800 pl-4">
-        Selected Resource: {currentResource?.name}
+        Selected Resource: {currentResource && currentResource.name}
       </span>
-      
     </div>
   );
 }
