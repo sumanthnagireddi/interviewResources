@@ -15,18 +15,30 @@ import { useGetResources } from "@/hooks/useGetResources";
 import { useState } from "react";
 
 // Define types for resources and subResources
+interface SubResource {
+  id: string;
+  name?: string; // Mark name as optional to allow undefined
+}
+
+interface Resource {
+  id: string;
+  name?: string; // Mark name as optional to allow undefined
+  subCourses?: SubResource[]; // Optional field if the resource has subCourses
+}
 
 function Admin() {
-  const resources = useGetResources();
-  const [currentResource, setCurrentResource] = useState<object>({
+  const resources: Resource[] = useGetResources(); // Correct type for resources
+  const [currentResource, setCurrentResource] = useState<Resource>({
     id: "",
     name: "",
   });
   const markdownData = useGetMarkdownData(currentResource?.id);
-  const handleClick = (resource: object) => {
+  const handleClick = (resource: Resource) => {
     setCurrentResource(resource);
   };
+
   console.log(Object.values(markdownData).length);
+
   return (
     <div>
       <DropdownMenu>
@@ -47,7 +59,8 @@ function Admin() {
               {resource.subCourses ? (
                 <DropdownMenuSub>
                   <DropdownMenuSubTrigger>
-                    {resource.name}
+                    {resource.name || "Unnamed Resource"}{" "}
+                    {/* Handling optional name */}
                   </DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent className="w-60 max-h-[400px] overflow-y-auto">
@@ -56,7 +69,8 @@ function Admin() {
                           onClick={() => handleClick(sub)}
                           key={sub.id}
                         >
-                          {sub.name}
+                          {sub.name || "Unnamed SubResource"}{" "}
+                          {/* Handling optional name */}
                         </DropdownMenuItem>
                       ))}
                     </DropdownMenuSubContent>
@@ -64,7 +78,8 @@ function Admin() {
                 </DropdownMenuSub>
               ) : (
                 <DropdownMenuItem onClick={() => setCurrentResource(resource)}>
-                  {resource.name}
+                  {resource.name || "Unnamed Resource"}{" "}
+                  {/* Handling optional name */}
                 </DropdownMenuItem>
               )}
             </DropdownMenuGroup>
@@ -72,7 +87,8 @@ function Admin() {
         </DropdownMenuContent>
       </DropdownMenu>
       <span className="font-medium text-lg text-gray-800 pl-4">
-        Selected Resource: {currentResource && currentResource.name}
+        Selected Resource: {currentResource.name || "Unnamed Resource"}{" "}
+        {/* Handling optional name */}
       </span>
     </div>
   );
