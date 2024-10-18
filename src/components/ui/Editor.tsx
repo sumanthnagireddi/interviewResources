@@ -47,7 +47,7 @@ function Editor(props: {
         </button>
       )}
 
-      <div className="px-[20px] max-w-none" ref={selectionRef}>
+      <div className="md:px-[20px] max-w-none" ref={selectionRef}>
         <YooptaEditor
           readOnly={props?.readOnly}
           editor={editor}
