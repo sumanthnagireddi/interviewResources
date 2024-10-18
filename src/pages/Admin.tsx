@@ -10,7 +10,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Editor from "@/components/ui/Editor";
 import { useGetMarkdownData } from "@/hooks/useGetMarkdowndata";
 import { useGetResources } from "@/hooks/useGetResources";
 import { useState } from "react";
@@ -82,9 +81,7 @@ console.log(Object.values(markdownData).length )
       <span className="font-medium text-lg text-gray-800 pl-4">
         Selected Resource: {currentResource?.name}
       </span>
-      {Object.keys(markdownData).length > 0 && (
-        <Editor content={markdownData} readOnlyMode={false} />
-      )}
+      
     </div>
   );
 }

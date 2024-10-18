@@ -1,4 +1,3 @@
-import Editor from "@/components/ui/Editor";
 import { useGetMarkdownData } from "@/hooks/useGetMarkdowndata";
 import { useParams } from "react-router-dom";
 
@@ -15,7 +14,6 @@ function DetailPage() {
 
   return (
     <div>
-      <Editor content={data} readOnlyMode={true} />
     </div>
   );
 }
