@@ -1,14 +1,14 @@
-import {useGetResources} from "@/hooks/useGetResources";
+import { useGetResources } from "@/hooks/useGetResources";
 import { Link } from "react-router-dom";
 
 function Sidebar() {
   const resources = useGetResources();
   return (
-    <div className="w-full">
-      <div className="flex h-screen flex-col justify-between border-e bg-white">
-        <div className="px-4 py-4">
-          <span className="flex items-center">
-            <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 pl-2">
+    <div className="w-full ">
+      <div className="flex max-h-[90vh] overflow-y-auto flex-col justify-between border-e bg-white">
+        <div className="md:px-4 md:py-4">
+          <span className=" hidden lg:flex items-center">
+            <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 md:pl-2">
               <path
                 className="fill-emerald-400"
                 d="M16 8a5 5 0 0 0-5-5H5a5 5 0 0 0-5 5v13.927a1 1 0 0 0 1.623.782l3.684-2.93a4 4 0 0 1 2.49-.87H11a5 5 0 0 0 5-5V8Z"
@@ -19,10 +19,10 @@ function Sidebar() {
             </span>
           </span>
 
-          <ul className="mt-10 space-y-1">
+          <ul className="mt-4 md:mt-10 space-y-1">
             <li>
               <Link to={"/"}>
-                <span className="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                <span className="flex items-center cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                   Introduction
                 </span>
               </Link>
@@ -32,7 +32,7 @@ function Sidebar() {
                 <li key={res.id}>
                   <details className="group [&_summary::-webkit-details-marker]:hidden">
                     <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                      <span className="text-sm font-medium"> {res.name} </span>
+                      <span className="text-sm font-medium flex cursor-pointer items-center  w-full text-nowrap overflow-hidden text-ellipsis"> {res.name} </span>
 
                       <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                         <svg
@@ -50,11 +50,11 @@ function Sidebar() {
                       </span>
                     </summary>
 
-                    <ul className="mt-2 space-y-1 px-4">
+                    <ul className="mt-2 space-y-1 md:px-4">
                       {res.subCourses.map((res) => (
                         <li key={res.id}>
                           <Link to={`course/${res.id}`}>
-                            <span className="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            <span className="flex items-center cursor-pointer rounded-lg md:px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                               {res.name}
                             </span>
                           </Link>
@@ -65,11 +65,11 @@ function Sidebar() {
                 </li>
               ) : (
                 <li key={res.id}>
-                   <Link to={`course/${res.id}`}>
-                            <span className="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                              {res.name}
-                            </span>
-                          </Link>
+                  <Link to={`course/${res.id}`}>
+                    <span className="flex items-center cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                      {res.name}
+                    </span>
+                  </Link>
                 </li>
               )
             )}

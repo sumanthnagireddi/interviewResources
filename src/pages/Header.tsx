@@ -1,4 +1,13 @@
 import { Link } from "react-router-dom";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import Sidebar from "./Sidebar";
 
 function Header() {
   return (
@@ -29,22 +38,50 @@ function Header() {
         </button>
       </div>
       <div className="flex items-center  lg:hidden">
-        <button
-          type="button"
-          className="flex h-6 w-6 items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
-          aria-label="Toggle navigation"
-        >
-          <svg
-            viewBox="0 0 10 9"
-            fill="none"
-            strokeLinecap="round"
-            aria-hidden="true"
-            className="w-2.5 stroke-zinc-900 dark:stroke-white"
-          >
-            <path d="M.5 1h9M.5 8h9M.5 4.5h9"></path>
-          </svg>
-        </button>
-        <div aria-label="Home" >
+        <Sheet>
+          <SheetTrigger>
+            <span
+              className="flex h-6 w-6  items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+              aria-label="Toggle navigation"
+            >
+              <svg
+                viewBox="0 0 10 9"
+                fill="none"
+                strokeLinecap="round"
+                aria-hidden="true"
+                className="w-2.5 stroke-zinc-900 dark:stroke-white"
+              >
+                <path d="M.5 1h9M.5 8h9M.5 4.5h9"></path>
+              </svg>
+            </span>
+          </SheetTrigger>
+          <SheetContent side={"left"}>
+            <SheetHeader>
+              <SheetTitle>
+          
+                  <span className=" hidden lg:flex items-center">
+                    <svg
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      className="h-6 md:pl-2"
+                    >
+                      <path
+                        className="fill-emerald-400"
+                        d="M16 8a5 5 0 0 0-5-5H5a5 5 0 0 0-5 5v13.927a1 1 0 0 0 1.623.782l3.684-2.93a4 4 0 0 1 2.49-.87H11a5 5 0 0 0 5-5V8Z"
+                      ></path>
+                    </svg>
+                    <span className="font-semibold text-lg fill-zinc-900">
+                      Sumanth Nagireddi
+                    </span>
+                  </span>
+              </SheetTitle>
+              <Sidebar />
+              <SheetDescription></SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+
+        <div aria-label="Home">
           <span className="flex items-center">
             <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 pl-2">
               <path
@@ -62,26 +99,17 @@ function Header() {
         <nav className="hidden md:block">
           <ul role="list" className="flex items-center gap-8">
             <li>
-              <span
-                className="text-sm leading-5 text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
-                
-              >
+              <span className="text-sm leading-5 text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
                 Resources
               </span>
             </li>
             <li>
-              <span
-                className="text-sm leading-5 text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
-               
-              >
+              <span className="text-sm leading-5 text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
                 About Me
               </span>
             </li>
             <li>
-              <span
-                className="text-sm leading-5 text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
-               
-              >
+              <span className="text-sm leading-5 text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
                 Contact
               </span>
             </li>
