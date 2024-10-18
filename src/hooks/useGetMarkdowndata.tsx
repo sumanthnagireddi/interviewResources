@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import db from "../config";
 import { doc, getDoc } from "firebase/firestore";
 
-export const useGetMarkdownData = (resourceId: string | undefined) => {
-  const [resource, setResource] = useState({});
+export const useGetMarkdownData = (resourceId: string | undefined):string => {
+  const [resource, setResource] = useState('');
   useEffect(() => {
     if (!resourceId) return;
     const fetchData = async () => {
@@ -13,11 +13,8 @@ export const useGetMarkdownData = (resourceId: string | undefined) => {
 
         if (docSnap.exists()) {
           setResource(docSnap.data().content);
-        } else {
-          //   setError('s');
-        }
+        } 
       } catch (err) {
-        // setError("Failed to fetch data.");
         console.error("Error fetching document: ", err);
       }
     };

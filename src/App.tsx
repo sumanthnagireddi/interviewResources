@@ -14,7 +14,7 @@ const Layout = () => {
         <div className="hidden lg:block lg:w-[20vw]">
           <Sidebar />
         </div>
-        <div className="flex-1 px-6">
+        <div className="flex-1 max-h-[97vh] overflow-y-auto px-6">
           <Home />
           <Outlet />
         </div>
@@ -37,9 +37,9 @@ const router = createBrowserRouter([
         element: <DetailPage />,
       },
       {
-        path:"admin",
-        element:<Admin/>
-      }
+        path: "admin",
+        element: <Admin />,
+      },
     ],
   },
 ]);
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-     {/* <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme"> */}
+      {/* <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme"> */}
       <RouterProvider router={router} />
       {/* </ThemeProvider> */}
     </>

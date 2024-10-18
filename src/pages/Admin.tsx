@@ -10,6 +10,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Editor from "@/components/ui/Editor";
 import { useGetMarkdownData } from "@/hooks/useGetMarkdowndata";
 import { useGetResources } from "@/hooks/useGetResources";
 import { useState } from "react";
@@ -21,23 +22,18 @@ interface SubResource {
 }
 
 interface Resource {
-  id: string;
+  id?: string;
   name?: string; // Mark name as optional to allow undefined
   subCourses?: SubResource[]; // Optional field if the resource has subCourses
 }
 
 function Admin() {
   const resources: Resource[] = useGetResources(); // Correct type for resources
-  const [currentResource, setCurrentResource] = useState<Resource>({
-    id: "",
-    name: "",
-  });
+  const [currentResource, setCurrentResource] = useState<Resource>({});
   const markdownData = useGetMarkdownData(currentResource?.id);
   const handleClick = (resource: Resource) => {
     setCurrentResource(resource);
   };
-
-  console.log(Object.values(markdownData).length);
 
   return (
     <div>
@@ -86,10 +82,16 @@ function Admin() {
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
-      <span className="font-medium text-lg text-gray-800 pl-4">
-        Selected Resource: {currentResource.name || "Unnamed Resource"}{" "}
-        {/* Handling optional name */}
-      </span>
+      {currentResource?.id && (
+        <span className="font-medium text-lg text-gray-800 pl-4">
+          Selected Resource: {currentResource?.name}
+        </span>
+      )}
+      <Editor
+        resourceId={currentResource?.id}
+        readOnly={false}
+        htmlData={markdownData}
+      />
     </div>
   );
 }

@@ -5,7 +5,7 @@ function Sidebar() {
   const resources = useGetResources();
   return (
     <div className="w-full ">
-      <div className="flex max-h-[90vh] overflow-y-auto flex-col justify-between border-e bg-white">
+      <div className="flex max-h-[97vh] overflow-y-auto flex-col justify-between border-e bg-white">
         <div className="md:px-4 md:py-4">
           <span className=" hidden lg:flex items-center">
             <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 md:pl-2">

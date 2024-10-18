@@ -59,7 +59,7 @@ function Header() {
             <SheetHeader>
               <SheetTitle>
           
-                  <span className=" hidden lg:flex items-center">
+                  <span className="items-center">
                     <svg
                       viewBox="0 0 24 24"
                       aria-hidden="true"
