@@ -4,7 +4,7 @@ function Home() {
   return (
     <div>
      <Header/>
-      <article className="flex w-full  h-full flex-col pb-12 pt-16">
+      <article className="flex w-full  h-full flex-col pb-6 pt-16">
         <div className="flex-auto  [html_:where(&amp;>*)]:mx-auto [html_:where(&amp;>*)]:max-w-2xl [html_:where(&amp;>*)]:lg:mx-[calc(50%-min(50%,theme(maxWidth.lg)))] [html_:where(&amp;>*)]:lg:max-w-3xl">
           <div className="absolute inset-0 -z-10 mx-0 max-w-none overflow-hidden">
             <div className="absolute left-1/2 top-0 ml-[-38rem] h-[25rem] w-[81.25rem] dark:[mask-image:linear-gradient(white,transparent)]">

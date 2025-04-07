@@ -5,13 +5,16 @@ import Home from "./pages/Home";
 import Sidebar from "./pages/Sidebar";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Welcome from "./pages/Welcome";
-import Admin from "./pages/Admin";
+import Login from "./pages/Login";
+import { getResourceByName, pushJsonIntoResourcesCollection } from "./services/resourceService";
+import { DATA } from "./lib/resources";
+import { useEffect } from "react";
 // import { ThemeProvider } from "./lib";
 const Layout = () => {
   return (
     <>
       <div className="flex">
-        <div className="hidden lg:block lg:w-[20vw]">
+        <div className="hidden lg:overflow-x-auto lg:block overflow-auto w-full lg:max-w-[20vw]">
           <Sidebar />
         </div>
         <div className="flex-1 max-h-[97vh] overflow-y-auto px-6">
@@ -33,18 +36,33 @@ const router = createBrowserRouter([
         element: <Welcome />,
       },
       {
-        path: "course/:id",
+        path: "course/:id/*",
         element: <DetailPage />,
       },
       {
-        path: "admin",
-        element: <Admin />,
+        path: "login",
+        element: <Login />,
       },
     ],
   },
 ]);
 
 function App() {
+  useEffect(() => {
+    const addJsonData = async () => {
+      try {
+        DATA.forEach(async (data) => {
+          // await pushJsonIntoResourcesCollection(data);
+        });
+
+        console.log("JSON data pushed to Firestore successfully!");
+      } catch (err) {
+        console.error("Error pushing JSON data: ", err);
+      }
+    };
+
+    addJsonData();
+  }, []);
   return (
     <>
       {/* <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme"> */}

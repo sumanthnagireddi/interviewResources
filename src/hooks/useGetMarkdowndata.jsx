@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import db from "../config";
 import { doc, getDoc } from "firebase/firestore";
 
-export const useGetMarkdownData = (resourceId: string | undefined):string => {
+export const useGetMarkdownData = (resourceId) => {
   const [resource, setResource] = useState('');
   useEffect(() => {
     if (!resourceId) return;
