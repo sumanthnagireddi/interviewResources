@@ -8,7 +8,7 @@ function Welcome() {
         </div>
       <div className="max-w-2xl lg:pl-4">
         <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-800 bg-clip-text text-transparent">
-        Fullstack Developer, Web Development Enthusiast, and Tech Innovator.
+        Fullstack Developer(MEAN & MERN), Web Development Enthusiast, and Tech Innovator.
         </h1>
         <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
         I’m Sumanth Nagireddi, a Fullstack developer with over 3+ years of experience in MEAN & MERN technologies. I specialize in designing and developing dynamic, user-focused web applications. This project offers a comprehensive collection of interview resources for web development, utilizing cutting-edge frameworks like Angular, React, Node.js, and TypeScript to create a seamless and effective preparation experience.
