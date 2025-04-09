@@ -74,10 +74,8 @@ import { useCreateMarkdown } from "../../hooks/useCreateMarkdown";
 import { updateTopicByName } from "../../services/resourceService";
 
 const Editor = (props) => {
-  console.log(props);
   const editor = useMemo(() => createYooptaEditor(), []);
   const selectionRef = useRef(null);
-  const updateMarkdownDoc = useCreateMarkdown("oZaYil2DwBeI3BKm8903");
   useEffect(() => {
     if (props?.htmlData) {
       deserializeHTML(props?.htmlData);
