@@ -1893,3 +1893,42 @@ export const WITH_BASIC_INIT_VALUE = {
   export const HTML_OP=`<body id="yoopta-clipboard" data-editor-id="cd9f5e43-771b-431c-9895-a5d9dc377fa6"><p data-meta-align="left" data-meta-depth="0" style="margin-left: 0px; text-align: left">Interview Resources</p>
 <p data-meta-align="left" data-meta-depth="0" style="margin-left: 0px; text-align: left">Prepare for your next interview with all the resources you need in one place. From common interview questions to helpful tips and practice materials, we've got everything to help you feel confident and ready. Whether you're getting ready for a technical interview or just need to brush up on your skills, explore our collection of resources designed to support your success.</p>
 </body>`
+
+export const customStyles = {
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    zIndex: 1000,
+  },
+  content: {
+    top: "50%",
+    width: "50%",
+    height: "60%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "8px",
+    padding: "20px",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+  },
+};
+export const contentModalStyles = {
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    zIndex: 1000,
+  },
+  content: {
+    top: "50%",
+    width: "90%",
+    height: "90%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "8px",
+    padding: "20px",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+  },
+};

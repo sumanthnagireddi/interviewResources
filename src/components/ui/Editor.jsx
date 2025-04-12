@@ -99,7 +99,7 @@ const Editor = (props) => {
 
   const handleSave = async () => {
     try {
-      await updateTopicByName("QFPHgSmKdgfbcg1HS1G9","Arrow Functions",serializeHTML());
+      await updateTopicByName(props?.resourceId,props?.topic,serializeHTML());
     } catch (error) {
       console.error("Error updating document:", error);
     }

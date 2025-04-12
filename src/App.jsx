@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         element: <Welcome />,
       },
       {
-        path: "course/:id/*",
+        path: "course/:id/:category/:subCategory/:topic",
         element: <DetailPage />,
       },
       {

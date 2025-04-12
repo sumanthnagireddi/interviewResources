@@ -23,3 +23,4 @@ export const useGetResources = () => {
 
   return { resources, loading };
 };
+
