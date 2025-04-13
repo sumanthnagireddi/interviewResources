@@ -44,7 +44,7 @@ function DetailPage() {
         <div className="flex items-start gap-2">
           <div className="w-full">
             <h3 className="text-xl font-bold text-gray-800">{data?.name}</h3>
-            <Editor readOnly={readOnly} resourceId={id} category={category} subCategory={subCategory} topic={topic} htmlData={data?.content} />
+            <Editor readOnly={true} htmlData={data?.content} />
           </div>
           <div className="mt-4">
             <Features onItemClick={handleItemClick} />

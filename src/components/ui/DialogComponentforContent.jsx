@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { getResources, pushJsonIntoResourcesCollection, updateResourceById } from "../../services/resourceService";
 import { contentModalStyles } from "./consts";
+import Editor from "../ui/Editor";
 
 Modal.setAppElement("#root");
 
@@ -9,6 +10,8 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
   const [resources, setResources] = useState([]);
   const [technologyTopics, setTechnologyTopics] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
+  const [content, setContent] = useState("");
+  const [contentChanged, setContentChanged] = useState(false);
   useEffect(() => {
     const fetchResources = async () => {
       const data = await getResources();
@@ -17,7 +20,7 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
     fetchResources();
   }, [isOpen]);
 
-  const handleSubmit =  async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const technology = technologyID === "add_new" ? newTechnology : technologyID;
     const topic = newTechnologyTopic === "add_new_tech_topic" ? newTechnology : newTechnologyTopic;
@@ -28,7 +31,7 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
       subcategory: subcategory,
     }
     try {
-    // await updateResourceById(dataToSave);  
+      // await updateResourceById(dataToSave);  
     } catch (error) {
       console.error("❌ Error adding data:", error);
     }
@@ -41,6 +44,7 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
       const selectedResource = resources.find((item) => item.id === value);
       const categories = selectedResource?.categories || [];
       setTechnologyTopics(categories);
+      setContent("");
     } else {
 
     }
@@ -54,12 +58,21 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
       console.log(topics)
 
       setSubCategories(topics);
+      setContent("");
     } else {
       // Handle the case when "Add New" is selected
     }
   }
   const onChangeTopic = (e) => {
     const value = e.target.value;
+    const parsedValue = JSON.parse(value)
+    if (parsedValue?.content) {
+      setContentChanged(true);
+      setContent(parsedValue?.content || "");
+    } else {
+      setContentChanged(false);
+      setContent("");
+    }
   }
 
   return (
@@ -90,13 +103,18 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
               <select onChange={onChangeTopic} className="mt-1 block w-full border px-3 py-2 rounded border-gray-300 shadow-sm sm:text-sm">
                 <option value="">Please select</option>
                 {subCategories?.map((item, idx) => (
-                  <option key={idx} value={item.id}>{item.name || item}</option>
+                  <option key={idx} value={JSON.stringify(item)}>{item.name || item}</option>
                 ))}
               </select>
             </div>
             <button type="submit" className="bg-blue-500 mt-7 text-white p-2 rounded">Submit</button>
           </form>
         </div>
+        {contentChanged && (
+          <div className="p-4">
+            <Editor readOnly={false} htmlData={content} />
+          </div>
+        )}
       </Modal>
     </div>
   )
