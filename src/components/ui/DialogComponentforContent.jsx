@@ -4,6 +4,7 @@ import { getResources, pushJsonIntoResourcesCollection, updateResourceById } fro
 import { contentModalStyles } from "./consts";
 import Editor from "../ui/Editor";
 import { useModalContext } from "../../context/ModalContext";
+import Emptystate from "./Emptystate";
 
 Modal.setAppElement("#root");
 
@@ -81,7 +82,6 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
       setContent("");
     }
   }
-
   return (
     <div>
       <Modal isOpen={isOpen} onRequestClose={onClose} style={contentModalStyles} contentLabel="Add Resource Modal">
@@ -117,11 +117,15 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
             <button type="submit" className="bg-blue-500 mt-7 text-white p-2 rounded">Submit</button>
           </form>
         </div>
-        {contentChanged && (
-          <div className="p-4">
-            <Editor ref={editorRef} readOnly={false} htmlData={content} />
-          </div>
-        )}
+        {contentChanged ? (
+  <div className="p-4">
+    <Editor ref={editorRef} readOnly={false} htmlData={content} />
+  </div>
+) : (
+  <div className="p-4 mt-[10%] text-gray-500 italic">
+  <Emptystate/>
+  </div>
+)}
       </Modal>
     </div>
   )
