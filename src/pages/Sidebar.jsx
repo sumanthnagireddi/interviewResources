@@ -1,7 +1,9 @@
-import DialogComponent1 from "../components/ui/DialogComponent"; 
+import DialogComponent1 from "../components/ui/DialogComponent";
 import { useGetResources } from "../hooks/useGetResources";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useModalContext } from "../context/ModalContext";
+import { getResources } from "../services/resourceService";
 
 const slugify = (str) =>
   str
@@ -81,7 +83,7 @@ const SidebarItem = ({ item, path = [], parentId, onAddClick }) => {
                     onAddClick={onAddClick}
                   />
                 </div>
-               
+
               </div>
             );
           })}
@@ -103,7 +105,7 @@ const SidebarList = ({ resources, onAddClick }) => {
               onAddClick={onAddClick}
             />
           </div>
-        
+
         </div>
       ))}
     </ul>
@@ -111,8 +113,26 @@ const SidebarList = ({ resources, onAddClick }) => {
 };
 
 function Sidebar() {
-  const resources = useGetResources(); // Fetching data
- 
+  // const [resources, setResources] = useState(useGetResources());
+  const { refreshTrigger } = useModalContext();
+  const [resources, setResources] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchResources = async () => {
+      try {
+        const data = await getResources();
+        setResources(data);
+      } catch (error) {
+        console.error("Failed to fetch resources:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchResources();
+    console.log("📦 Fetched resources:", resources);
+  }, [refreshTrigger]);
 
   return (
     <div className="w-full">
@@ -137,18 +157,18 @@ function Sidebar() {
                   Introduction
                 </span>
               </Link>
-            
+
             </li>
 
-            {resources?.loading === false && (
+            {loading === false && (
               <SidebarList
-                resources={resources.resources}
+                resources={resources}
               />
             )}
           </ul>
         </div>
       </div>
-      
+
     </div>
   );
 }

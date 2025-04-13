@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { getResources, pushJsonIntoResourcesCollection, updateResourceById } from "../../services/resourceService";
 import { customStyles } from "./consts";
+import { useModalContext } from "../../context/ModalContext";
 
 Modal.setAppElement("#root");
 
@@ -12,6 +13,7 @@ const DialogComponent1 = ({ isOpen, onClose }) => {
   const [newTechnology, setNewTechnology] = useState("");
   const [newTechnologyTopic, setNewTechnologyTopic] = useState("");
   const [subCategory, setSubCategory] = useState("");
+  const { notifyModalClose } = useModalContext();
   useEffect(() => {
     const fetchResources = async () => {
       const data = await getResources();
@@ -22,6 +24,7 @@ const DialogComponent1 = ({ isOpen, onClose }) => {
 
   const handleSubmit =  async (e) => {
     e.preventDefault();
+    
     const technology = technologyID === "add_new" ? newTechnology : technologyID;
     const topic = newTechnologyTopic === "add_new_tech_topic" ? newTechnology : newTechnologyTopic;
     const subcategory = subCategory;
@@ -35,7 +38,8 @@ const DialogComponent1 = ({ isOpen, onClose }) => {
     } catch (error) {
       console.error("❌ Error adding data:", error);
     }
-    // onClose();
+    notifyModalClose();
+    onClose();
   }
 
   const onChangeTechnology = async (e) => {

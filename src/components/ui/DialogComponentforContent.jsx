@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import Modal from "react-modal";
 import { getResources, pushJsonIntoResourcesCollection, updateResourceById } from "../../services/resourceService";
 import { contentModalStyles } from "./consts";
 import Editor from "../ui/Editor";
+import { useModalContext } from "../../context/ModalContext";
 
 Modal.setAppElement("#root");
 
@@ -12,6 +13,9 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
   const [subCategories, setSubCategories] = useState([]);
   const [content, setContent] = useState("");
   const [contentChanged, setContentChanged] = useState(false);
+  const editorRef = useRef();
+  const { notifyModalClose } = useModalContext();
+
   useEffect(() => {
     const fetchResources = async () => {
       const data = await getResources();
@@ -22,20 +26,25 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const technology = technologyID === "add_new" ? newTechnology : technologyID;
-    const topic = newTechnologyTopic === "add_new_tech_topic" ? newTechnology : newTechnologyTopic;
-    const subcategory = subCategory;
-    const dataToSave = {
-      technology: technology,
-      category: topic,
-      subcategory: subcategory,
-    }
+    const htmlOutput = editorRef.current.getHTML();
+    console.log("HTML to save:", htmlOutput);
+
+    // const technology = technologyID === "add_new" ? newTechnology : technologyID;
+    // const topic = newTechnologyTopic === "add_new_tech_topic" ? newTechnology : newTechnologyTopic;
+    // const subcategory = subCategory;
+    // const dataToSave = {
+    //   technology: technology,
+    //   category: topic,
+    //   subcategory: subcategory,
+    // }
     try {
       // await updateResourceById(dataToSave);  
     } catch (error) {
       console.error("❌ Error adding data:", error);
     }
-    // onClose();
+    
+    notifyModalClose();
+    onClose();
   }
 
   const onChangeTechnology = async (e) => {
@@ -55,8 +64,6 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
     if (value != "") {
       const selectedResource = technologyTopics.find((item) => item.name === value);
       const topics = selectedResource?.Topics || [];
-      console.log(topics)
-
       setSubCategories(topics);
       setContent("");
     } else {
@@ -112,7 +119,7 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
         </div>
         {contentChanged && (
           <div className="p-4">
-            <Editor readOnly={false} htmlData={content} />
+            <Editor ref={editorRef} readOnly={false} htmlData={content} />
           </div>
         )}
       </Modal>

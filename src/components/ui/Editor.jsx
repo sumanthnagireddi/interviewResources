@@ -1,19 +1,19 @@
 
 import YooptaEditor, { createYooptaEditor } from "@yoopta/editor";
 import { html } from "@yoopta/exports";
-import { useEffect, useMemo, useRef } from "react";
 import {  MARKS, plugins, TOOLS } from "./consts";
+import React, { useEffect, useMemo, useRef, forwardRef, useImperativeHandle } from "react";
 
-const Editor = (props) => {
-  console.log(props)
+const Editor =forwardRef(({ readOnly, htmlData }, ref) => {
   const editor = useMemo(() => createYooptaEditor(), []);
   const selectionRef = useRef(null);
 
   useEffect(() => {
-    if (props?.htmlData) {
-      deserializeHTML(props?.htmlData);
+    if (htmlData) {
+      deserializeHTML(htmlData);
     }
-  }, [props?.htmlData]);
+  }, [htmlData]);
+
 
   // from html to @yoopta content
   const deserializeHTML = (data) => {
@@ -30,10 +30,14 @@ const Editor = (props) => {
     return htmlString;
   };
 
+  useImperativeHandle(ref, () => ({
+    getHTML: () => serializeHTML(),
+  }));
+
   return (
       <div className="md:px-[20px] max-w-none" ref={selectionRef}>
         <YooptaEditor
-          readOnly={props?.readOnly}
+          readOnly={readOnly}
           editor={editor}
           plugins={plugins}
           tools={TOOLS}
@@ -43,6 +47,6 @@ const Editor = (props) => {
       </div>
       
   );
-};
+})
 
 export default Editor;

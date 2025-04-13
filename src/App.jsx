@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import { getResourceByName, pushJsonIntoResourcesCollection } from "./services/resourceService";
 import { DATA } from "./lib/resources";
 import { useEffect } from "react";
+import { ModalProvider } from "./context/ModalContext";
 // import { ThemeProvider } from "./lib";
 const Layout = () => {
   return (
@@ -66,7 +67,9 @@ function App() {
   return (
     <>
       {/* <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme"> */}
-      <RouterProvider router={router} />
+      <ModalProvider>
+        <RouterProvider router={router} />
+      </ModalProvider>
       {/* </ThemeProvider> */}
     </>
   );
