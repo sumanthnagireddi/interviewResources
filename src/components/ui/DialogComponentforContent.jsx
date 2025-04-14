@@ -1,6 +1,6 @@
-import { useEffect, useState,useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import Modal from "react-modal";
-import { getResources, pushJsonIntoResourcesCollection, updateResourceById } from "../../services/resourceService";
+import { getResources, pushJsonIntoResourcesCollection, updateResourceById, updateTopicContent } from "../../services/resourceService";
 import { contentModalStyles } from "./consts";
 import Editor from "../ui/Editor";
 import { useModalContext } from "../../context/ModalContext";
@@ -16,7 +16,10 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
   const [contentChanged, setContentChanged] = useState(false);
   const editorRef = useRef();
   const { notifyModalClose } = useModalContext();
-
+  const [technologyID, setTechnologyID] = useState("");
+  const [categoryID, setCategoryID] = useState("");
+  const [topic, setTopic] = useState("");
+  const [contentToSend, setContentToSend] = useState("");
   useEffect(() => {
     const fetchResources = async () => {
       const data = await getResources();
@@ -25,35 +28,13 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
     fetchResources();
   }, [isOpen]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const htmlOutput = editorRef.current.getHTML();
-    console.log("HTML to save:", htmlOutput);
-
-    // const technology = technologyID === "add_new" ? newTechnology : technologyID;
-    // const topic = newTechnologyTopic === "add_new_tech_topic" ? newTechnology : newTechnologyTopic;
-    // const subcategory = subCategory;
-    // const dataToSave = {
-    //   technology: technology,
-    //   category: topic,
-    //   subcategory: subcategory,
-    // }
-    try {
-      // await updateResourceById(dataToSave);  
-    } catch (error) {
-      console.error("❌ Error adding data:", error);
-    }
-    
-    notifyModalClose();
-    onClose();
-  }
-
   const onChangeTechnology = async (e) => {
     const value = e.target.value;
     if (value != "") {
       const selectedResource = resources.find((item) => item.id === value);
       const categories = selectedResource?.categories || [];
       setTechnologyTopics(categories);
+      setTechnologyID(value);
       setContent("");
     } else {
 
@@ -62,9 +43,10 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
 
   const onChangeTechnologyTopic = (e) => {
     const value = e.target.value;
+    setCategoryID(value);
     if (value != "") {
       const selectedResource = technologyTopics.find((item) => item.name === value);
-      const topics = selectedResource?.Topics || [];
+      const topics = selectedResource?.Topics;
       setSubCategories(topics);
       setContent("");
     } else {
@@ -74,13 +56,27 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
   const onChangeTopic = (e) => {
     const value = e.target.value;
     const parsedValue = JSON.parse(value)
+    setTopic(parsedValue?.name);
     if (parsedValue?.content) {
       setContentChanged(true);
       setContent(parsedValue?.content || "");
+      
     } else {
       setContentChanged(false);
       setContent("");
     }
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const htmlOutput = editorRef.current.getHTML();
+    try {
+      await updateTopicContent(technologyID, categoryID, topic, htmlOutput);
+    } catch (error) {
+      console.error("❌ Error adding data:", error);
+    }
+
+    // notifyModalClose();
+    // onClose();
   }
   return (
     <div>
@@ -110,7 +106,7 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
               <select onChange={onChangeTopic} className="mt-1 block w-full border px-3 py-2 rounded border-gray-300 shadow-sm sm:text-sm">
                 <option value="">Please select</option>
                 {subCategories?.map((item, idx) => (
-                  <option key={idx} value={JSON.stringify(item)}>{item.name || item}</option>
+                  <option key={idx} value={JSON.stringify(item)}>{item.name}</option>
                 ))}
               </select>
             </div>
@@ -118,14 +114,14 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
           </form>
         </div>
         {contentChanged ? (
-  <div className="p-4">
-    <Editor ref={editorRef} readOnly={false} htmlData={content} />
-  </div>
-) : (
-  <div className="p-4 mt-[10%] text-gray-500 italic">
-  <Emptystate/>
-  </div>
-)}
+          <div className="p-4">
+            <Editor ref={editorRef} readOnly={false} htmlData={content} />
+          </div>
+        ) : (
+          <div className="p-4  text-gray-500 italic">
+           <Editor ref={editorRef} readOnly={false}  />
+          </div>
+        )}
       </Modal>
     </div>
   )

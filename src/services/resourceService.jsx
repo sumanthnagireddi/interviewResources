@@ -1,4 +1,4 @@
-import {collection,addDoc,getDocs,doc,getDoc,setDoc,arrayUnion,updateDoc} from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, getDoc, setDoc, arrayUnion, updateDoc } from "firebase/firestore";
 import db from "../config";
 import { v4 as uuidv4 } from "uuid";
 export const getResources = async () => {
@@ -49,11 +49,8 @@ export const getResourceByName = async (id, category, subCategory, topicName) =>
 };
 
 
-export const updateTopicByName = async (
-  id = "QFPHgSmKdgfbcg1HS1G9",
-  topicName = "Arrow Functions",
-  updatedContent
-) => {
+export const updateTopicByName = async (id = "QFPHgSmKdgfbcg1HS1G9", topicName = "Arrow Functions", updatedContent) => {
+
   const resource = await getResourceById("QFPHgSmKdgfbcg1HS1G9");
   console.log("🔍 Loaded resource:", resource);
 
@@ -96,9 +93,55 @@ export const updateTopicByName = async (
 
   return null;
 };
+export const updateTopicContent = async (docId, categoryName, topic, content) => {
+  const docRef = doc(db, "resources", docId);
+  const docSnap = await getDoc(docRef);
+
+  if (!docSnap.exists()) {
+    console.log("No such document!");
+    return;
+  }
+
+  const data = docSnap.data();
+  const updatedCategories = data.categories.map((category) => {
+    if (category.name === categoryName) {
+      const existingTopics = category.Topics || [];
+
+      const topicIndex = existingTopics.findIndex(t =>
+        typeof t === "object" && t.name === topic
+      );
+
+      if (topicIndex !== -1) {
+        // Update existing topic
+        existingTopics[topicIndex] = {
+          ...existingTopics[topicIndex],
+          content,
+        };
+      } else {
+        // Push new topic
+        existingTopics.push({ name: topic, content });
+      }
+
+      return {
+        ...category,
+        Topics: existingTopics,
+      };
+    }
+    return category;
+  });
+
+  await updateDoc(docRef, {
+    categories: updatedCategories,
+  });
+
+  console.log("Topic updated or added successfully!");
+
+};
+
+
 export const updateResourceById = async (updatedResource) => {
   try {
-    const docRef = doc(db, "resources", updatedResource.technology );
+    const docRef = doc(db, "resources", updatedResource.technology);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -120,12 +163,12 @@ export const updateResourceById = async (updatedResource) => {
 
         console.log("Subcategory added successfully!");
       } else {
-        await updateDoc(docRef, {categories: arrayUnion({ name: updatedResource.category, Topics: [] })});
+        await updateDoc(docRef, { categories: arrayUnion({ name: updatedResource.category, Topics: [] }) });
         console.log("Category not found.");
       }
     } else {
-      const docRef = doc(db, "resources",uuidv4() );
-      setDoc(docRef, {name: updatedResource.technology, categories: [] })
+      const docRef = doc(db, "resources", uuidv4());
+      setDoc(docRef, { name: updatedResource.technology, categories: [] })
     }
   } catch (error) {
     console.error("Error updating document: ", error);
@@ -145,3 +188,4 @@ export const pushJsonIntoResourcesCollection = async (data) => {
     throw error;
   }
 };
+
