@@ -3,7 +3,7 @@ import { useGetResources } from "../hooks/useGetResources";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useModalContext } from "../context/ModalContext";
-import { getResources } from "../services/resourceService";
+import { getCategoriesByTechnologyId , getResources, getTechnologies, getTopicsByCategoryId } from "../services/resourceService";
 
 const slugify = (str) =>
   str
@@ -122,6 +122,11 @@ function Sidebar() {
     const fetchResources = async () => {
       try {
         const data = await getResources();
+        const technolgoies = await getTechnologies();
+        const categories= await getCategoriesByTechnologyId('926d3dbc-db95-43ea-bcab-a2e15448d1c7');
+        console.log(categories)
+        const topics=await getTopicsByCategoryId(categories[0].parent);
+        console.log(topics)
         setResources(data);
       } catch (error) {
         console.error("Failed to fetch resources:", error);

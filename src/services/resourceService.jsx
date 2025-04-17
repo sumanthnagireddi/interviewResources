@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, doc, getDoc, setDoc, arrayUnion, updateDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, getDoc, setDoc, arrayUnion, updateDoc, getFirestore, query, where } from "firebase/firestore";
 import db from "../config";
 import { v4 as uuidv4 } from "uuid";
 export const getResources = async () => {
@@ -30,22 +30,48 @@ export const getResourceById = async (id) => {
 };
 
 export const getResourceByName = async (id, category, subCategory, topicName) => {
+  //
+  const db = getFirestore();
+  const categoriesCollection = collection(db, "resources");
+  const q = query(categoriesCollection, where("name", "==", category)); // Query to find the category by name
+  try {
+    const querySnapshot = await getDocs(q); // Execute the query
+
+    if (querySnapshot.empty) {
+      console.log("No matching categories found!");
+      return null; // Or handle the case where no category is found
+    }
+
+    // If you expect only one matching category, you can return the first one:
+    const categoryDoc = querySnapshot.docs[0];
+    const categoryData = categoryDoc.data(); // Get the data from the document
+
+    console.log("Category found:", categoryData);
+    return categoryData; // Return the category data
+
+    // If multiple categories may have the same name, process all results:
+    // querySnapshot.forEach((doc) => {
+    //   console.log(doc.id, " => ", doc.data());
+    // });
+
+  } catch (error) {
+    console.error("Error getting category:", error);
+    throw error; // Or handle the error as needed
+  }
+
+  //
   const resource = await getResourceById(id);
   if (!resource) return null;
-
   const matchedCategory = resource.categories?.find(
     (cat) => cat.name === subCategory
   );
-
   if (!matchedCategory || !Array.isArray(matchedCategory.Topics)) return null;
 
   const matchedTopic = matchedCategory.Topics.find(
     (topic) =>
-      (typeof topic === "string" && topic === topicName) ||
-      (typeof topic === "object" && topic.name === topicName)
-  );
+      topic?.name?.trim().toLowerCase() === topicName?.trim().toLowerCase());
 
-  return matchedTopic || null;
+  return matchedTopic;
 };
 
 
@@ -189,3 +215,62 @@ export const pushJsonIntoResourcesCollection = async (data) => {
   }
 };
 
+
+//
+export const getTechnologies = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "technologies"));
+    const data = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return data;
+  } catch (error) {
+    console.error("Error fetching technologies:", error);
+    throw error;
+  }
+}
+
+export const getTechnologyById = async (id) => {
+  try {
+    const docRef = doc(db, "technologies", id);
+    const docSnap = await getDoc(docRef);
+    return {
+      id: docSnap.id,
+      ...docSnap.data(),
+    };
+  } catch (error) {
+    console.error("Error fetching document by ID:", error);
+    throw error;
+  }
+};
+
+export const getCategoriesByTechnologyId = async (technologyId) => {
+  try {
+    const categoriesRef = collection(db, "categories");
+    const q = query(categoriesRef, where("parent", "==", technologyId));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => ({
+      docId: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw error;
+  }
+};
+
+export const getTopicsByCategoryId = async (categoryId) => {
+  try {
+    const topicsRef = collection(db, "topics");
+    const q = query(topicsRef, where("parent", "==", 'a22907c8-5f21-4cfe-89b6-a754859ac88e'));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => ({
+      docId: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.error("Error fetching topics:", error);
+    throw error;
+  }
+};

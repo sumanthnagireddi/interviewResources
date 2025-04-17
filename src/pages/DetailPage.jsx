@@ -44,7 +44,7 @@ function DetailPage() {
   };
 
   if (loading) return <div><Loader/></div>;
-  if (!isDataAvailable) return <div><Emptystate/></div>;
+  // if (!isDataAvailable) return <div><Emptystate/></div>;
 
   return (
     <div>
