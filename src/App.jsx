@@ -2,7 +2,7 @@ import "./App.css";
 import DetailPage from "./pages/DetailPage";
 import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
-import Sidebar from "./pages/Sidebar";
+import Sidebar from "./pages/SidebarNew";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         element: <Welcome />,
       },
       {
-        path: "course/:id/:category/:subCategory/:topic",
+        path: "course/:category/:subCategory/:topic",
         element: <DetailPage />,
       },
       {

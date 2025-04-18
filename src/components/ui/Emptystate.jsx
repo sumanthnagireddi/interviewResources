@@ -3,9 +3,9 @@ import React from 'react'
 function Emptystate() {
     return (
         <div>
-            <div class="w-full flex items-center flex-wrap justify-center gap-10">
-                <div class="grid gap-4 w-60">
-                    <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" width="116" height="121" viewBox="0 0 116 121" fill="none">
+            <div className="w-full flex items-center flex-wrap justify-center gap-10">
+                <div className="grid gap-4 w-60">
+                    <svg className="mx-auto" xmlns="http://www.w3.org/2000/svg" width="116" height="121" viewBox="0 0 116 121" fill="none">
                         <path d="M0.206909 63.57C0.206909 31.7659 25.987 6.12817 57.6487 6.12817C89.2631 6.12817 115.079 31.7541 115.079 63.57C115.079 77.0648 110.43 89.4805 102.627 99.2755C91.8719 112.853 75.4363 121 57.6487 121C39.7426 121 23.4018 112.794 12.6582 99.2755C4.85538 89.4805 0.206909 77.0648 0.206909 63.57Z" fill="#ECFDF5" />
                         <path d="M72.7942 0.600875L72.7942 0.600762L72.7836 0.599331C72.3256 0.537722 71.8622 0.5 71.3948 0.5H22.1643C17.1256 0.5 13.0403 4.56385 13.0403 9.58544V107.286C13.0403 112.308 17.1256 116.372 22.1643 116.372H93.1214C98.1725 116.372 102.245 112.308 102.245 107.286V29.4482C102.245 28.7591 102.17 28.0815 102.019 27.4162L102.019 27.416C101.615 25.6459 100.67 24.0014 99.2941 22.7574C99.2939 22.7572 99.2937 22.757 99.2934 22.7568L77.5462 2.89705C77.5461 2.89692 77.5459 2.89679 77.5458 2.89665C76.2103 1.66765 74.5591 0.876968 72.7942 0.600875Z" fill="white" stroke="#E5E7EB" />
                         <circle cx="60.2069" cy="61" r="21.0256" fill="#ECFDF5" />
@@ -23,7 +23,7 @@ function Emptystate() {
                         <circle cx="50.4633" cy="23.5641" r="1.02564" fill="#059669" />
                     </svg>
                     <div>
-                        <h2 class="text-center text-emerald-800 text-base font-semibold leading-relaxed pb-1">There’s no data here</h2>
+                        <h2 className="text-center text-emerald-800 text-base font-semibold leading-relaxed pb-1">There’s no data here</h2>
                         {/* <p class="text-center text-black text-sm font-normal leading-snug pb-4">Try changing your filters to <br />see appointments </p> */}
                         {/* <div class="flex gap-3">
                             <button class="w-full px-3 py-2 rounded-full border border-gray-300 text-gray-900 text-xs font-semibold leading-4"> Clear Filter </button>

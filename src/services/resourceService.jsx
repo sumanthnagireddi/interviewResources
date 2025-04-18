@@ -274,3 +274,17 @@ export const getTopicsByCategoryId = async (categoryId) => {
     throw error;
   }
 };
+
+export const getTopicById = async (id) => {
+  try {
+    const docRef = doc(db, "topics", id);
+    const docSnap = await getDoc(docRef);
+    return {
+      id: docSnap.id,
+      ...docSnap.data(),
+    };
+  } catch (error) {
+    console.error("Error fetching document by ID:", error);
+    throw error;
+  }
+}

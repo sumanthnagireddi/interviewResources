@@ -3,7 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import Breadcrumb from "../components/ui/Breadcrumb";
 import Features from "../components/ui/Features";
 import Editor from "../components/ui/Editor";
-import { getResourceByName } from "../services/resourceService";
+import { getResourceByName, getTopicById, getTopicsByCategoryId } from "../services/resourceService";
 import DialogComponent from "../components/ui/Dialog";
 import Loader from "../components/ui/Loader";
 import Emptystate from "../components/ui/Emptystate";
@@ -20,11 +20,12 @@ function DetailPage() {
   const [isDataAvailable, setIsDataAvailable] = useState(false);
   const [loading, setLoading] = useState(true);
   const [readOnly, setReadOnly] = useState(true);
-  const { id, category, subCategory, topic } = useParams();
+  const {  category, subCategory, topic } = useParams();
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const response = await getResourceByName(id, deslugify(category), deslugify(subCategory), deslugify(topic));
+      const response=await getTopicById(topic)
+      // const response = await getResourceByName(category, subCategory, topic);
       if (response?.content) {
         setIsDataAvailable(true);
         setData(response);
@@ -37,7 +38,7 @@ function DetailPage() {
 
     };
     fetchData();
-  }, [id, category, subCategory, topic]);
+  }, [ category, subCategory, topic]);
 
   const handleItemClick = () => {
     setReadOnly(!readOnly);
