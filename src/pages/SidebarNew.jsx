@@ -58,7 +58,6 @@ function Sidebar() {
 
   const handleSidebarTechnologyClick = async (e) => {
     const categories = await getCategoriesByTechnologyId(e);
-    console.log(categories)
     setCategories(categories);
   }
 
@@ -74,7 +73,6 @@ function Sidebar() {
   }
 
   const handleCategoryClickToggle = async (id) => {
-    console.log(id)
     setOpenCategoryId(id);
     setTopics([]);
     const topics = await getTopicsByCategoryId(id);

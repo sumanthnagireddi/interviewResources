@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { getResources, pushJsonIntoResourcesCollection, updateResourceById } from "../../services/resourceService";
+import { getCategoriesByTechnologyId, getResources, getTechnologies, pushJsonIntoResourcesCollection, updateResourceById } from "../../services/resourceService";
 import { customStyles } from "./consts";
 import { useModalContext } from "../../context/ModalContext";
 
@@ -8,6 +8,7 @@ Modal.setAppElement("#root");
 
 const DialogComponent1 = ({ isOpen, onClose }) => {
   const [resources, setResources] = useState([]);
+  const [technologies, setTechnologies] = useState([]);
   const [technologyID, setTechnologyID] = useState("");
   const [technologyTopics, setTechnologyTopics] = useState([]);
   const [newTechnology, setNewTechnology] = useState("");
@@ -16,8 +17,8 @@ const DialogComponent1 = ({ isOpen, onClose }) => {
   const { notifyModalClose } = useModalContext();
   useEffect(() => {
     const fetchResources = async () => {
-      const data = await getResources();
-      setResources(data);
+      const data = await getTechnologies();
+      setTechnologies(data);
     };
     fetchResources();
   }, [isOpen]);
@@ -46,9 +47,8 @@ const DialogComponent1 = ({ isOpen, onClose }) => {
     const value = e.target.value;
     setTechnologyID(value);
     if (value != "add_new") {
-      const selectedResource = resources.find((item) => item.id === value);
-      const categories = selectedResource?.categories || [];
-      setTechnologyTopics(categories);
+      const selectedResource = await getCategoriesByTechnologyId(value);
+      setTechnologyTopics(selectedResource);
     } else {
 
     }
@@ -77,7 +77,7 @@ const DialogComponent1 = ({ isOpen, onClose }) => {
               <label htmlFor="technology" className="font-semibold">Technology</label>
               <select onChange={onChangeTechnology} className="mt-1 block w-full border px-3 py-2 rounded border-gray-300 shadow-sm sm:text-sm">
                 <option value="">Please select</option>
-                {resources?.map((item, idx) => (
+                {technologies?.map((item, idx) => (
                   <option key={idx} value={item.id}>{item.name || item}</option>
                 ))}
                 <option value="add_new">Add New</option>
@@ -100,7 +100,7 @@ const DialogComponent1 = ({ isOpen, onClose }) => {
                 <select onChange={onChangeTechnologyTopic} className="mt-1 block w-full border px-3 py-2 rounded border-gray-300 shadow-sm sm:text-sm">
                   <option value="">Please select</option>
                   {technologyTopics?.map((item, idx) => (
-                    <option key={idx} value={item.name}>{item.name || item}</option>
+                    <option key={idx} value={item.docId}>{item.name || item}</option>
                   ))}
                   <option value="add_new_tech_topic">Add New</option>
                 </select>

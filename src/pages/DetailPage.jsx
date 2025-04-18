@@ -4,7 +4,6 @@ import Breadcrumb from "../components/ui/Breadcrumb";
 import Features from "../components/ui/Features";
 import Editor from "../components/ui/Editor";
 import { getResourceByName, getTopicById, getTopicsByCategoryId } from "../services/resourceService";
-import DialogComponent from "../components/ui/Dialog";
 import Loader from "../components/ui/Loader";
 import Emptystate from "../components/ui/Emptystate";
 
@@ -25,10 +24,10 @@ function DetailPage() {
     const fetchData = async () => {
       setLoading(true);
       const response=await getTopicById(topic)
-      // const response = await getResourceByName(category, subCategory, topic);
-      if (response?.content) {
-        setIsDataAvailable(true);
-        setData(response);
+      console.log(response)
+      if (response[0]?.content) {
+        setIsDataAvailable(true); 
+        setData(response[0]);
         setLoading(false);
       } else {
         setIsDataAvailable(false);
@@ -49,7 +48,6 @@ function DetailPage() {
 
   return (
     <div>
-      <DialogComponent />
       <Breadcrumb pathArray={[category, subCategory, topic]} />
       <div className="py-10">
         <div className="flex items-start gap-2">

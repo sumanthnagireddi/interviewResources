@@ -17,7 +17,6 @@ const Editor =forwardRef(({ readOnly, htmlData }, ref) => {
 
   // from html to @yoopta content
   const deserializeHTML = (data) => {
-    console.log(data);
     const content = html.deserialize(editor, data);
     editor.setEditorValue(content);
   };
@@ -26,7 +25,6 @@ const Editor =forwardRef(({ readOnly, htmlData }, ref) => {
   const serializeHTML = () => {
     const data = editor.getEditorValue();
     const htmlString = html.serialize(editor, data);
-    console.log("html string", htmlString);
     return htmlString;
   };
 

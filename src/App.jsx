@@ -49,21 +49,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  useEffect(() => {
-    const addJsonData = async () => {
-      try {
-        DATA.forEach(async (data) => {
-          // await pushJsonIntoResourcesCollection(data);
-        });
-
-        console.log("JSON data pushed to Firestore successfully!");
-      } catch (err) {
-        console.error("Error pushing JSON data: ", err);
-      }
-    };
-
-    addJsonData();
-  }, []);
   return (
     <>
       {/* <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme"> */}

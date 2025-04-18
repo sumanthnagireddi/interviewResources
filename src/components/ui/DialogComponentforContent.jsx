@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Modal from "react-modal";
-import { getResources, pushJsonIntoResourcesCollection, updateResourceById, updateTopicContent } from "../../services/resourceService";
+import { getCategoriesByTechnologyId, getResources, getTechnologies, getTopicById, getTopicsByCategoryId, pushJsonIntoResourcesCollection, updateResourceById, updateTopicContent, updateTopicContentById } from "../../services/resourceService";
 import { contentModalStyles } from "./consts";
 import Editor from "../ui/Editor";
 import { useModalContext } from "../../context/ModalContext";
@@ -19,10 +19,11 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
   const [technologyID, setTechnologyID] = useState("");
   const [categoryID, setCategoryID] = useState("");
   const [topic, setTopic] = useState("");
+  const [contentID, setContentID] = useState("");
   const [contentToSend, setContentToSend] = useState("");
   useEffect(() => {
     const fetchResources = async () => {
-      const data = await getResources();
+      const data = await getTechnologies();
       setResources(data);
     };
     fetchResources();
@@ -31,8 +32,7 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
   const onChangeTechnology = async (e) => {
     const value = e.target.value;
     if (value != "") {
-      const selectedResource = resources.find((item) => item.id === value);
-      const categories = selectedResource?.categories || [];
+      const categories = await getCategoriesByTechnologyId(value);
       setTechnologyTopics(categories);
       setTechnologyID(value);
       setContent("");
@@ -41,26 +41,25 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
     }
   }
 
-  const onChangeTechnologyTopic = (e) => {
+  const onChangeTechnologyTopic = async (e) => {
     const value = e.target.value;
     setCategoryID(value);
     if (value != "") {
-      const selectedResource = technologyTopics.find((item) => item.name === value);
-      const topics = selectedResource?.Topics;
+      const topics = await getTopicsByCategoryId(value);
       setSubCategories(topics);
       setContent("");
     } else {
       // Handle the case when "Add New" is selected
     }
   }
-  const onChangeTopic = (e) => {
+  const onChangeTopic = async (e) => {
     const value = e.target.value;
-    const parsedValue = JSON.parse(value)
-    setTopic(parsedValue?.name);
-    if (parsedValue?.content) {
+    const content = await getTopicById(value);
+    console.log(content)
+    if (content.length > 0) {
+      setContentID(content[0]?.docId)
       setContentChanged(true);
-      setContent(parsedValue?.content || "");
-      
+      setContent(content[0]?.content);
     } else {
       setContentChanged(false);
       setContent("");
@@ -70,7 +69,7 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
     e.preventDefault();
     const htmlOutput = editorRef.current.getHTML();
     try {
-      await updateTopicContent(technologyID, categoryID, topic, htmlOutput);
+      await updateTopicContentById(contentID, htmlOutput);
     } catch (error) {
       console.error("❌ Error adding data:", error);
     }
@@ -106,7 +105,7 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
               <select onChange={onChangeTopic} className="mt-1 block w-full border px-3 py-2 rounded border-gray-300 shadow-sm sm:text-sm">
                 <option value="">Please select</option>
                 {subCategories?.map((item, idx) => (
-                  <option key={idx} value={JSON.stringify(item)}>{item.name}</option>
+                  <option key={idx} value={item.docId}>{item.name}</option>
                 ))}
               </select>
             </div>
@@ -119,7 +118,8 @@ const DialogComponentForContent = ({ isOpen, onClose }) => {
           </div>
         ) : (
           <div className="p-4  text-gray-500 italic">
-           <Editor ref={editorRef} readOnly={false}  />
+            <h3 className="text-xl font-bold text-gray-800">Contentdaefs</h3>
+            <Editor ref={editorRef} readOnly={false} />
           </div>
         )}
       </Modal>

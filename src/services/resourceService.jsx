@@ -38,7 +38,6 @@ export const getResourceByName = async (id, category, subCategory, topicName) =>
     const querySnapshot = await getDocs(q); // Execute the query
 
     if (querySnapshot.empty) {
-      console.log("No matching categories found!");
       return null; // Or handle the case where no category is found
     }
 
@@ -46,12 +45,11 @@ export const getResourceByName = async (id, category, subCategory, topicName) =>
     const categoryDoc = querySnapshot.docs[0];
     const categoryData = categoryDoc.data(); // Get the data from the document
 
-    console.log("Category found:", categoryData);
     return categoryData; // Return the category data
 
     // If multiple categories may have the same name, process all results:
     // querySnapshot.forEach((doc) => {
-    //   console.log(doc.id, " => ", doc.data());
+    //   // console.log(doc.id, " => ", doc.data());
     // });
 
   } catch (error) {
@@ -78,7 +76,7 @@ export const getResourceByName = async (id, category, subCategory, topicName) =>
 export const updateTopicByName = async (id = "QFPHgSmKdgfbcg1HS1G9", topicName = "Arrow Functions", updatedContent) => {
 
   const resource = await getResourceById("QFPHgSmKdgfbcg1HS1G9");
-  console.log("🔍 Loaded resource:", resource);
+  // console.log("🔍 Loaded resource:", resource);
 
   if (!resource) {
     console.warn("❌ Resource not found!");
@@ -86,17 +84,17 @@ export const updateTopicByName = async (id = "QFPHgSmKdgfbcg1HS1G9", topicName =
   }
 
   for (const category of resource.categories || []) {
-    console.log("📂 Checking category:", category);
+    // console.log("📂 Checking category:", category);
 
     const topicIndex = category.Topics?.findIndex((t) =>
       typeof t === "string" ? t === topicName : t.name === topicName
     );
 
-    console.log("🔎 Found topicIndex:", topicIndex);
+    // console.log("🔎 Found topicIndex:", topicIndex);
 
     if (topicIndex !== -1 && category.Topics) {
       const topic = category.Topics[topicIndex];
-      console.log("🎯 Found topic:", topic);
+      // console.log("🎯 Found topic:", topic);
 
       if (typeof topic === "object") {
         category.Topics[topicIndex] = {
@@ -104,7 +102,7 @@ export const updateTopicByName = async (id = "QFPHgSmKdgfbcg1HS1G9", topicName =
           content: updatedContent,
         };
 
-        console.log("✅ Updated topic:", category.Topics[topicIndex]);
+        // console.log("✅ Updated topic:", category.Topics[topicIndex]);
 
         // Now we know it's ready to save
         await saveResource(id, resource);
@@ -124,7 +122,7 @@ export const updateTopicContent = async (docId, categoryName, topic, content) =>
   const docSnap = await getDoc(docRef);
 
   if (!docSnap.exists()) {
-    console.log("No such document!");
+    // console.log("No such document!");
     return;
   }
 
@@ -160,7 +158,7 @@ export const updateTopicContent = async (docId, categoryName, topic, content) =>
     categories: updatedCategories,
   });
 
-  console.log("Topic updated or added successfully!");
+  // console.log("Topic updated or added successfully!");
 
 };
 
@@ -187,10 +185,10 @@ export const updateResourceById = async (updatedResource) => {
           categories: categories
         });
 
-        console.log("Subcategory added successfully!");
+        // console.log("Subcategory added successfully!");
       } else {
         await updateDoc(docRef, { categories: arrayUnion({ name: updatedResource.category, Topics: [] }) });
-        console.log("Category not found.");
+        // console.log("Category not found.");
       }
     } else {
       const docRef = doc(db, "resources", uuidv4());
@@ -201,7 +199,7 @@ export const updateResourceById = async (updatedResource) => {
   }
 };
 const saveResource = async (id, updatedResource) => {
-  console.log(updatedResource);
+  // console.log(updatedResource);
   const ref = doc(db, "resources", id);
   await setDoc(ref, updatedResource);
 };
@@ -216,7 +214,8 @@ export const pushJsonIntoResourcesCollection = async (data) => {
 };
 
 
-//
+// technologies collection
+// getAll
 export const getTechnologies = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "technologies"));
@@ -230,7 +229,7 @@ export const getTechnologies = async () => {
     throw error;
   }
 }
-
+//getbyId
 export const getTechnologyById = async (id) => {
   try {
     const docRef = doc(db, "technologies", id);
@@ -244,7 +243,29 @@ export const getTechnologyById = async (id) => {
     throw error;
   }
 };
-
+// update
+export const updateTechnologyById = async (id, updatedData) => {
+  try {
+    const docRef = doc(db, "technologies", id);
+    await setDoc(docRef, updatedData, { merge: true });
+    // console.log("Document successfully updated!");
+  } catch (error) {
+    console.error("Error updating document:", error);
+  }
+};
+// delete
+// todo- when deleteing a technology, delete all categories and topics related to it
+export const deleteTechnologyById = async (id) => {
+  try {
+    const docRef = doc(db, "technologies", id);
+    await deleteDoc(docRef);
+    // console.log("Document successfully deleted!");
+  } catch (error) {
+    console.error("Error deleting document:", error);
+  }
+};
+// categories collection
+// getAllCategoriesByTechnologyId
 export const getCategoriesByTechnologyId = async (technologyId) => {
   try {
     const categoriesRef = collection(db, "categories");
@@ -259,7 +280,30 @@ export const getCategoriesByTechnologyId = async (technologyId) => {
     throw error;
   }
 };
+// updateCategory
+export const updateCategoryById = async (id, updatedData) => {
+  try {
+    const docRef = doc(db, "categories", id);
+    await setDoc(docRef, updatedData, { merge: true });
+    // console.log("Document successfully updated!");
+  } catch (error) {
+    console.error("Error updating document:", error);
+  }
+};
+// delete category
+// todo- when deleteing a category, delete all topics related to it
+export const deleteCategoryById = async (id) => {
+  try {
+    const docRef = doc(db, "categories", id);
+    await deleteDoc(docRef);
+    // console.log("Document successfully deleted!");
+  } catch (error) {
+    console.error("Error deleting document:", error);
+  }
+}
 
+// topics collection && topicContents collection
+// getAllTopicsByCategoryId
 export const getTopicsByCategoryId = async (categoryId) => {
   try {
     const topicsRef = collection(db, "topics");
@@ -274,17 +318,48 @@ export const getTopicsByCategoryId = async (categoryId) => {
     throw error;
   }
 };
-
+// getTopicById
 export const getTopicById = async (id) => {
+  // console.log(id)
   try {
-    const docRef = doc(db, "topics", id);
-    const docSnap = await getDoc(docRef);
-    return {
-      id: docSnap.id,
-      ...docSnap.data(),
-    };
+    const docRef = collection(db, "topicContents");
+    const q= query(docRef,where("parent","==",id));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => ({ 
+      docId: doc.id,
+      ...doc.data(),
+    }));
   } catch (error) {
     console.error("Error fetching document by ID:", error);
     throw error;
   }
 }
+// updateTopicById
+export const updateTopicById = async (id, updatedData) => {
+  try {
+    const docRef = doc(db, "topics", id);
+    await setDoc(docRef, updatedData, { merge: true });
+    // console.log("Document successfully updated!");
+  } catch (error) {
+    console.error("Error updating document:", error);
+  }
+};
+// updateTopicContent
+export const updateTopicContentById = async (id, updatedData) => {
+  try {
+    const docRef = doc(db, "topicContents", id);
+    await setDoc(docRef, { content: updatedData }, { merge: true });
+  } catch (error) {
+    console.error("Error updating document:", error);
+  }
+};
+// deleteTopicById
+export const deleteTopicById = async (id) => {
+  try {
+    const docRef = doc(db, "topics", id);
+    await deleteDoc(docRef);
+    // console.log("Document successfully deleted!");
+  } catch (error) {
+    console.error("Error deleting document:", error);
+  }
+};
