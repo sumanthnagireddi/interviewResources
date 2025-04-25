@@ -11,7 +11,7 @@ function Welcome() {
         Fullstack Developer(MEAN & MERN), Web Development Enthusiast, and Tech Innovator.
         </h1>
         <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-        I’m Sumanth Nagireddi, a Fullstack developer with over 3+ years of experience in MEAN & MERN technologies. I specialize in designing and developing dynamic, user-focused web applications. This project offers a comprehensive collection of interview resources for web development, utilizing cutting-edge frameworks like Angular, React, Node.js, and TypeScript to create a seamless and effective preparation experience.
+        I’m Sumanth Nagireddi, a Fullstack developer with over 3.5+ years of experience in MEAN & MERN technologies. I specialize in designing and developing dynamic, user-focused web applications. This project offers a comprehensive collection of interview resources for web development, utilizing cutting-edge frameworks like Angular, React, Node.js, and TypeScript to create a seamless and effective preparation experience.
         </p>
         <div className="mt-6 flex gap-6">
           <a className="group -m-1 p-1" aria-label="Follow on X" href="#">
