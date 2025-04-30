@@ -1902,7 +1902,7 @@ export const customStyles = {
   content: {
     top: "50%",
     width: "50%",
-    height: "60%",
+    height: "70%",
     left: "50%",
     right: "auto",
     bottom: "auto",

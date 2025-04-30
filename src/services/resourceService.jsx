@@ -264,6 +264,17 @@ export const deleteTechnologyById = async (id) => {
     console.error("Error deleting document:", error);
   }
 };
+// add new technology
+export const addNewTechnology = async (technology) => {
+  try {
+    const docRef = doc(db, 'technologies', uuidv4())
+    await setDoc(docRef, technology,);
+    return docRef;
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    throw error;
+  }
+}
 // categories collection
 // getAllCategoriesByTechnologyId
 export const getCategoriesByTechnologyId = async (technologyId) => {
@@ -301,7 +312,17 @@ export const deleteCategoryById = async (id) => {
     console.error("Error deleting document:", error);
   }
 }
-
+// add new category
+export const addNewCategory = async (category) => {
+  try {
+    const docRef = doc(db, 'categories', uuidv4())
+    await setDoc(docRef, category,);
+    return docRef;
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    throw error;
+  }
+}
 // topics collection && topicContents collection
 // getAllTopicsByCategoryId
 export const getTopicsByCategoryId = async (categoryId) => {
@@ -323,9 +344,9 @@ export const getTopicById = async (id) => {
   // console.log(id)
   try {
     const docRef = collection(db, "topicContents");
-    const q= query(docRef,where("parent","==",id));
+    const q = query(docRef, where("parent", "==", id));
     const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map((doc) => ({ 
+    return querySnapshot.docs.map((doc) => ({
       docId: doc.id,
       ...doc.data(),
     }));
@@ -363,3 +384,25 @@ export const deleteTopicById = async (id) => {
     console.error("Error deleting document:", error);
   }
 };
+// addNewTopic
+export const addNewTopic = async (topic) => {
+  try {
+    const docRef = doc(db, 'topics', uuidv4())
+    await setDoc(docRef, topic,);
+    return docRef;
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    throw error;
+  }
+}
+// addNewTopicContent
+export const addNewTopicContent = async (topic) => {
+  try {
+    const docRef = doc(db, 'topicContents', uuidv4())
+    await setDoc(docRef, topic,);
+    return docRef;
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    throw error;
+  }
+}
