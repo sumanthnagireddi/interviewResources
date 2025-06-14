@@ -1,0 +1,16 @@
+<div class="flex">
+  <div class=" hidden lg:overflow-x-auto lg:block overflow-auto w-full lg:max-w-[20vw]">
+    <app-sidebar />
+  </div>
+  <div class="py-2 space-y-6 flex-1 max-h-[97vh] overflow-y-auto sm:px-6  ">
+    <div className="sticky top-0 z-50 bg-white shadow-none">
+      <app-header/>
+      <div class="px-4">
+        <app-home/>
+      </div>
+    </div>
+    <div className="lg:px-6 lg:py-4 px-2 space-y-6">
+      <router-outlet/>
+    </div>
+  </div>
+</div>

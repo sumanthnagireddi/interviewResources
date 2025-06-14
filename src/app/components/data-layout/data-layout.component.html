@@ -1,0 +1,8 @@
+<ng-container *ngIf="!this.currentContent$.loading ; else elseTemplate">
+  <app-editor (content)="saveContent($event)" [mode]="mode()" [data]="currentContent$?.data[0]?.content"></app-editor>
+</ng-container>
+<ng-template #elseTemplate>
+  <div class="flex items-center justify-center h-10">
+    <app-loader></app-loader>
+  </div>
+</ng-template>
