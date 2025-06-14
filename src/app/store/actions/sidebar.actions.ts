@@ -39,5 +39,5 @@ export const addCategorySuccess = createAction(SidebarActionTypes.addCategorySuc
 export const addCategoryFailure = createAction(SidebarActionTypes.addCategoryFailure, props<{ error: any }>());
 export const loadCurrentContent = createAction(SidebarActionTypes.loadCurrentContent, props<{ contentID: any }>());
 export const setCurrentContent = createAction(SidebarActionTypes.setCurrentContent, props<{ content: any }>());
-export const updateCurrentContent = createAction(SidebarActionTypes.updateCurrentContent, props<{ contentPayload: { id: string, data: string } }>());
-export const setNewCurrentContent = createAction(SidebarActionTypes.setCurrentContent, props<{ contentPayload: { parent: string, content: string } }>());
+export const updateCurrentContent = createAction(SidebarActionTypes.updateCurrentContent, props<{ contentPayload: { id: string, data: string ,updatedOn : string} }>());
+export const setNewCurrentContent = createAction(SidebarActionTypes.setCurrentContent, props<{ contentPayload: { parent: string, content: string,updatedOn : string } }>());

@@ -68,7 +68,7 @@ export class ResourcesService {
   // updateTopicContent
   updateTopicContentById(payload: any) {
     const docRef = doc(this.firestore, "topicContents", payload.id);
-    return from(setDoc(docRef, { content: payload.data }, { merge: true }))
+    return from(setDoc(docRef, { content: payload.data ,updatedOn:payload.updatedOn}, { merge: true }))
   };
   addNewTopicContent(topic: any) {
     const docRef = doc(this.firestore, 'topicContents', uuidv4())

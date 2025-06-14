@@ -114,7 +114,7 @@ export class SidebarComponent {
   editPage(technology: any, event: Event) {
     event.preventDefault();
     event.stopPropagation();
-    this.router.navigate([`course/${technology.id}/edit`])
+    this.router.navigate([`course/${technology.name}/${technology.id}/edit`])
   }
 }
 

@@ -1,4 +1,13 @@
 <ng-container *ngIf="!this.currentContent$.loading ; else elseTemplate">
+  <address class="flex items-center mb-6 not-italic">
+    <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+        <div>
+            <a  rel="author" class="text-2xl font-bold text-gray-900 dark:text-white">{{topic()}}</a>
+            <!-- <p class="text-sm text-gray-500 dark:text-gray-400">Updated by Sumanth - Fullstack web developer</p> -->
+            <p class="text-sm text-gray-500 dark:text-gray-400"><time>Updated On {{currentContent$?.data[0]?.updatedOn | date:'medium'}}</time></p>
+        </div>
+    </div>
+</address>
   <app-editor (content)="saveContent($event)" [mode]="mode()" [data]="currentContent$?.data[0]?.content"></app-editor>
 </ng-container>
 <ng-template #elseTemplate>
