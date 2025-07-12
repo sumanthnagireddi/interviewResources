@@ -1,4 +1,29 @@
-<div class="bg-white min-h-screen">
+<!-- Loading State -->
+<div
+  *ngIf="loading"
+  class="flex items-center justify-center min-h-screen bg-white"
+>
+  <app-loader />
+</div>
+
+<!-- Error State -->
+<div
+  *ngIf="error && !loading"
+  class="flex items-center justify-center min-h-screen bg-white"
+>
+  <div class="text-center">
+    <div class="text-red-500 text-lg mb-4">{{ error }}</div>
+    <button
+      (click)="loadServerlessContent()"
+      class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+    >
+      Retry
+    </button>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div *ngIf="!loading && !error && contentData" class="bg-white min-h-screen">
   <!-- Header Section -->
   <div class="bg-white border-b border-gray-200 sticky top-0 z-50">
     <div class="max-w-4xl mx-auto px-6 py-3">
