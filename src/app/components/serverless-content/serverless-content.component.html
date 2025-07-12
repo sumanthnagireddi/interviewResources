@@ -370,21 +370,39 @@
           <div class="flex items-center gap-2 mb-2">
             <button
               (click)="addReaction('👍')"
-              class="flex items-center gap-2 px-3 py-2 border rounded hover:bg-gray-50"
+              [class]="
+                'flex items-center gap-2 px-3 py-2 border rounded hover:bg-gray-50 ' +
+                (hasUserReacted('👍') ? 'bg-blue-50 border-blue-300' : '')
+              "
             >
               <span class="text-sm">👍</span>
+              <span *ngIf="reactionCounts['👍'] > 0" class="text-xs">{{
+                reactionCounts["👍"]
+              }}</span>
             </button>
             <button
               (click)="addReaction('👏')"
-              class="flex items-center gap-2 px-3 py-2 border rounded hover:bg-gray-50"
+              [class]="
+                'flex items-center gap-2 px-3 py-2 border rounded hover:bg-gray-50 ' +
+                (hasUserReacted('👏') ? 'bg-blue-50 border-blue-300' : '')
+              "
             >
               <span class="text-sm">👏</span>
+              <span *ngIf="reactionCounts['👏'] > 0" class="text-xs">{{
+                reactionCounts["👏"]
+              }}</span>
             </button>
             <button
               (click)="addReaction('🎉')"
-              class="flex items-center gap-2 px-3 py-2 border rounded hover:bg-gray-50"
+              [class]="
+                'flex items-center gap-2 px-3 py-2 border rounded hover:bg-gray-50 ' +
+                (hasUserReacted('🎉') ? 'bg-blue-50 border-blue-300' : '')
+              "
             >
               <span class="text-sm">🎉</span>
+              <span *ngIf="reactionCounts['🎉'] > 0" class="text-xs">{{
+                reactionCounts["🎉"]
+              }}</span>
             </button>
             <button
               (click)="toggleReactions()"
