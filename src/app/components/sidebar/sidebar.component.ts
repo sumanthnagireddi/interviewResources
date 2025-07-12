@@ -2,7 +2,7 @@ import { Component, ElementRef, inject, QueryList, ViewChildren } from '@angular
 import { Store } from '@ngrx/store';
 import { addCategory, loadSubTechnologies, loadTechnologies } from '../../store/actions/sidebar.actions';
 import { selectSubTechnologies, selectTechnologies } from '../../store/selectors/sidebar.selectors';
-import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { of } from 'rxjs';
 import { LoaderComponent } from "../loader/loader.component";
 import { Technologies } from '../../store/reducers/sidebar.reducer';
@@ -116,5 +116,11 @@ export class SidebarComponent {
     event.stopPropagation();
     this.router.navigate([`course/${technology.name}/${technology.id}/edit`])
   }
+  get sortedTechnologies() {
+  return this.technologies$?.data?.slice()?.sort((a: { name: string; }, b: { name: any; }) => a.name.localeCompare(b.name)) || [];
+}
+get sortedSubTechnologies() {
+  return this.subTechnologies$?.data?.slice()?.sort((a: { name: string; }, b: { name: any; }) => a.name.localeCompare(b.name)) || [];
+}
 }
 
