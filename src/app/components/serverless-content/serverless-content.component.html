@@ -289,7 +289,10 @@
       </ul>
 
       <h3 class="text-xl font-semibold mt-8 mb-4 flex items-center group">
-        Popular Serverless Platforms:
+        {{
+          contentData?.content?.platforms?.title ||
+            "Popular Serverless Platforms:"
+        }}
         <button
           (click)="copyLink()"
           class="ml-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-gray-100 rounded"
