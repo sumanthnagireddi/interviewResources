@@ -143,7 +143,7 @@
                     >
                       <a
                         [routerLink]="
-                          'course/' + subItem.name + '/' + subItem.id + '/view'
+                          'course/' + currenttechName+ '/'+ getSubItem(subItem.name) + '/' + subItem.id + '/view'
                         "
                         [ngClass]="{
                           'border-l-3 border-blue-600 bg-blue-50 text-blue-700 font-semibold':
@@ -188,7 +188,7 @@
                       >
                         <ul role="menu" class="space-y-1">
                           <li
-                            (click)="editPage(subItem, $event)"
+                            (click)="editPage(item,subItem, $event)"
                             role="menuitem"
                             class="cursor-pointer font-medium text-gray-800 flex w-full text-sm items-center rounded-lg p-3 transition-all hover:bg-gray-100 group"
                           >

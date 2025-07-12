@@ -49,6 +49,7 @@ export class SidebarComponent implements OnInit {
   subTechnologies$: any;
   currentTechnology: any;
   currentSubTechnology: any;
+  currenttechName:any
   loading$ = of(false);
   store = inject(Store);
   showAddDialog = false;
@@ -92,8 +93,15 @@ export class SidebarComponent implements OnInit {
     } else {
       // Set new current technology and load its sub-technologies
       this.currentTechnology = tech.id;
+
+      const formattedName = tech.name?.replace(/\s+/g, '-').toLowerCase();
+      console.log('Formatted Technology Name:', formattedName);
+      this.currenttechName = formattedName
       this.store.dispatch(loadSubTechnologies({ technology: tech.id }));
     }
+  }
+  getSubItem(name: string): string {
+    return name.replace(/\s+/g, "-").toLowerCase()
   }
   setCurrentSubTechnology(subTech: any) {
     this.currentSubTechnology = subTech;
@@ -164,10 +172,12 @@ export class SidebarComponent implements OnInit {
     event.stopPropagation();
     this.showDeleteDialog = true;
   }
-  editPage(technology: any, event: Event) {
+  editPage(item: any, technology: any, event: Event) {
     event.preventDefault();
     event.stopPropagation();
-    this.router.navigate([`course/${technology.name}/${technology.id}/edit`]);
+    this.router.navigate([`course/${item.name}/${technology.name}/${technology.id}/edit`]);
+    // this.router.navigate(["/course/Angular/Components/51baafe2-aa57-4a80-b2b9-f1c8f19b04f6/view"]);
+
   }
   get sortedTechnologies() {
     return (
@@ -218,4 +228,5 @@ export class SidebarComponent implements OnInit {
       this.closeMobileMenu();
     }
   }
+  
 }

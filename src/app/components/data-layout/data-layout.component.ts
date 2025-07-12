@@ -1,4 +1,4 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, effect, EventEmitter, inject, input, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { loadCurrentContent, setNewCurrentContent, updateCurrentContent } from '../../store/actions/sidebar.actions';
 import { selectCurentContent, selectTechnologies } from '../../store/selectors/sidebar.selectors';
@@ -15,21 +15,24 @@ import { DatePipe, NgIf } from '@angular/common';
 export class DataLayoutComponent {
   category = input<string>('category');
   mode = input<string>('view');
+  technology = input<any>('technology');
   topic = input<string>('topic');
   store = inject(Store);
   currentContent$: any;
+  @Output() technologyName = new EventEmitter<any>();
   constructor() {
+
+
     effect(() => {
+  sessionStorage.setItem('currentTechnology', this.technology());
       this.store.dispatch(loadCurrentContent({ contentID: this.category() }));
       this.store.select(selectCurentContent).subscribe((content: any) => {
         console.log('Current content:', content?.loading);
         this.currentContent$ = content;
       })
-
     })
   }
   ngOnInit(): void {
-
   }
   saveContent(data: any) {
     if (!this.currentContent$?.data || this.currentContent$?.data.length === 0) {

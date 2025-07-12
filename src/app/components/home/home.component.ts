@@ -7,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  tech:any
+  constructor() {
+   
+  }
 
+  ngOnInit(): void {
+     this.tech = sessionStorage.getItem('currentTechnology');
+    // Initialization logic can go here
+  }
 }
