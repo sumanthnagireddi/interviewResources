@@ -329,30 +329,12 @@
             </tr>
           </thead>
           <tbody class="bg-white">
-            <tr>
-              <td class="border border-gray-300 px-4 py-3">AWS</td>
-              <td class="border border-gray-300 px-4 py-3">AWS Lambda</td>
-            </tr>
-            <tr>
-              <td class="border border-gray-300 px-4 py-3">Microsoft Azure</td>
-              <td class="border border-gray-300 px-4 py-3">Azure Functions</td>
-            </tr>
-            <tr>
-              <td class="border border-gray-300 px-4 py-3">Google Cloud</td>
+            <tr *ngFor="let platform of contentData?.content?.platforms?.data">
               <td class="border border-gray-300 px-4 py-3">
-                Google Cloud Functions
+                {{ platform.provider }}
               </td>
-            </tr>
-            <tr>
-              <td class="border border-gray-300 px-4 py-3">Cloudflare</td>
               <td class="border border-gray-300 px-4 py-3">
-                Cloudflare Workers
-              </td>
-            </tr>
-            <tr>
-              <td class="border border-gray-300 px-4 py-3">Vercel/Netlify</td>
-              <td class="border border-gray-300 px-4 py-3">
-                Serverless Functions for frontend apps
+                {{ platform.service }}
               </td>
             </tr>
           </tbody>
