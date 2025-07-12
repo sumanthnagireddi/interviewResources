@@ -1,0 +1,62 @@
+/* Custom font for sidebar */
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+.font-mono {
+  font-family: "JetBrains Mono", "Monaco", "Menlo", "Ubuntu Mono", monospace;
+  font-feature-settings:
+    "liga" 0,
+    "calt" 0;
+}
+
+/* Ensure details/summary work properly */
+details[open] summary {
+  margin-bottom: 0.5rem;
+}
+
+/* Custom scrollbar for better appearance */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth transitions */
+nav ul li a {
+  transition: all 0.15s ease-in-out;
+}
+
+/* Active state styling */
+.active-tech {
+  border-left-color: #2563eb !important;
+  background-color: rgba(59, 130, 246, 0.05) !important;
+  color: #2563eb !important;
+  font-weight: 600 !important;
+}
+
+/* Hover effects */
+nav ul li:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Icon transitions */
+svg {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Popover positioning */
+.popover-menu {
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
