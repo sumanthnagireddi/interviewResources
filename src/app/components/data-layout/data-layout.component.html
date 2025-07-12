@@ -1,571 +1,456 @@
-<ng-container *ngIf="!this.currentContent$.loading; else elseTemplate">
-  <!-- Confluence-style Layout -->
-  <div class="flex flex-col min-h-screen bg-white">
-    <!-- Header Bar -->
-    <div
-      class="flex items-center justify-between h-14 px-6 border-b border-gray-200 bg-white sticky top-0 z-10"
-    >
-      <!-- Left side - Breadcrumbs -->
-      <div class="flex items-center gap-2">
-        <div class="flex items-center gap-2 min-w-24 overflow-hidden">
-          <div class="flex items-center gap-2 min-w-8">
+
+
+<!-- Main Content Layout -->
+<div class="flex flex-col min-h-screen bg-white">
+  <!-- Header Bar -->
+  <div class="flex items-center justify-between h-14 px-6 border-b border-gray-200 bg-white sticky top-0 z-10">
+    <!-- Left side - Breadcrumbs -->
+    <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 min-w-24 overflow-hidden">
+        <div class="flex items-center gap-2 min-w-8">
+          <button
+            aria-label="Breadcrumbs"
+            class="flex items-center justify-center w-8 h-8 rounded bg-transparent hover:bg-gray-100 transition-colors"
+          >
+            <svg fill="none" viewBox="0 0 16 16" class="w-3 h-3 text-gray-500">
+              <path
+                fill="currentColor"
+                d="m14.53 6.03-6 6a.75.75 0 0 1-1.004.052l-.056-.052-6-6 1.06-1.06L8 10.44l5.47-5.47z"
+              ></path>
+            </svg>
+          </button>
+          <div class="text-gray-600 text-sm overflow-hidden whitespace-nowrap text-ellipsis max-w-48">
+            Sumanth
+          </div>
+        </div>
+        <div class="text-gray-400 text-sm">/</div>
+        <span class="flex items-center gap-2 max-w-96 overflow-hidden">
+          <div
+            class="font-semibold text-sm overflow-hidden text-ellipsis whitespace-nowrap min-w-6"
+          >
+            Welcome to Resources
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <!-- Right side - Actions -->
+    <div class="flex items-center gap-2">
+      <!-- Active users -->
+      <div class="flex items-center -space-x-2">
+        <div class="w-6 h-6 rounded-full bg-blue-500 border-2 border-white flex items-center justify-center">
+          <img
+            alt="Sumanth"
+            src="https://secure.gravatar.com/avatar/627e7713e2d624e97d77193a8079e0e1?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FS-5.png"
+            class="w-full h-full rounded-full object-cover"
+          />
+        </div>
+      </div>
+
+      <div class="w-px h-4 bg-gray-300 mx-2"></div>
+
+      <!-- Action buttons -->
+      <button
+        class="flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100 transition-colors"
+      >
+        <svg fill="none" viewBox="-4 -4 24 24" class="w-6 h-6 text-gray-600">
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M11.586.854a2 2 0 0 1 2.828 0l.732.732a2 2 0 0 1 0 2.828L10.01 9.551a2 2 0 0 1-.864.51l-3.189.91a.75.75 0 0 1-.927-.927l.91-3.189a2 2 0 0 1 .51-.864zm1.768 1.06a.5.5 0 0 0-.708 0l-.585.586L13.5 3.94l.586-.586a.5.5 0 0 0 0-.707zM12.439 5 11 3.56 7.51 7.052a.5.5 0 0 0-.128.217l-.54 1.89 1.89-.54a.5.5 0 0 0 .217-.127zM3 2.501a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-3H15v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2h3v1.5z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </button>
+
+      <button
+        class="flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100 transition-colors"
+      >
+        <svg fill="none" viewBox="-4 -4 24 24" class="w-6 h-6 text-gray-600">
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M0 3.125A2.625 2.625 0 0 1 2.625.5h10.75A2.625 2.625 0 0 1 16 3.125v8.25A2.625 2.625 0 0 1 13.375 14H4.449l-3.327 1.901A.75.75 0 0 1 0 15.25zM2.625 2C2.004 2 1.5 2.504 1.5 3.125v10.833L4.05 12.5h9.325c.621 0 1.125-.504 1.125-1.125v-8.25C14.5 2.504 13.996 2 13.375 2zM12 6.5H4V5h8zm-3 3H4V8h5z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </button>
+
+      <button
+        class="flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100 transition-colors"
+      >
+        <svg fill="none" viewBox="-4 -4 24 24" class="w-6 h-6 text-gray-600">
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M2 4a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-7A.5.5 0 0 0 10 4zm-2 .5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.218l2.137-1.203A1.25 1.25 0 0 1 16 4.605v6.79a1.25 1.25 0 0 1-1.863 1.09L12 11.282v.218a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm12 5.061 2.5 1.407V5.032L12 6.44z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </button>
+
+      <button
+        class="flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100 transition-colors"
+      >
+        <svg fill="none" viewBox="-4 -4 24 24" class="w-6 h-6 text-gray-600">
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M8 0a.75.75 0 0 1 .7.48l1.705 4.434 4.403.338a.75.75 0 0 1 .422 1.324l-3.38 2.818 1.25 4.662a.75.75 0 0 1-1.148.813L8 12.159l-3.95 2.71a.75.75 0 0 1-1.15-.813l1.251-4.662L.77 6.576a.75.75 0 0 1 .422-1.324l4.403-.338L7.3.48A.75.75 0 0 1 8 0m0 2.84L6.655 6.335l-3.506.27 2.7 2.25-.973 3.627L8 10.341l3.124 2.142-.973-3.627 2.7-2.25-3.506-.27z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </button>
+
+      <button
+        class="flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100 transition-colors"
+      >
+        <svg fill="none" viewBox="-4 -4 24 24" class="w-6 h-6 text-gray-600">
+          <path
+            fill="currentColor"
+            d="M5.75 8a2.25 2.25 0 1 1 4.5 0 2.25 2.25 0 0 1-4.5 0"
+          ></path>
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M8 2C4.433 2 1.319 4.232.167 7.38c-.146.4-.146.84 0 1.24C1.32 11.768 4.433 14 8 14c3.566 0 6.681-2.232 7.833-5.38.146-.4.146-.84 0-1.24C14.68 4.232 11.566 2 8 2m0 2.25a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </button>
+
+      <div class="w-px h-4 bg-gray-300 mx-2"></div>
+
+      <!-- Share button -->
+      <div class="flex">
+        <button
+          class="flex items-center gap-1 px-3 py-1.5 bg-transparent border border-gray-300 rounded-l text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+        >
+          <svg fill="none" viewBox="0 0 16 16" class="w-4 h-4">
+            <path
+              fill="currentColor"
+              fill-rule="evenodd"
+              d="M8 1.5A2.5 2.5 0 0 0 5.5 4v3H12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2V4a4 4 0 1 1 8 0h-1.5A2.5 2.5 0 0 0 8 1.5m-4 7a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V9a.5.5 0 0 0-.5-.5z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          Share
+        </button>
+        <button
+          class="flex items-center justify-center w-8 h-8 bg-transparent border-t border-r border-b border-gray-300 rounded-r hover:bg-gray-50 transition-colors"
+        >
+          <svg fill="none" viewBox="0 0 16 16" class="w-4 h-4 text-gray-700">
+            <path
+              fill="currentColor"
+              fill-rule="evenodd"
+              d="M8.22 2.22a3.932 3.932 0 1 1 5.56 5.56l-2.25 2.25-1.06-1.06 2.25-2.25a2.432 2.432 0 0 0-3.44-3.44L7.03 5.53 5.97 4.47zm3.06 3.56-5.5 5.5-1.06-1.06 5.5-5.5zM2.22 8.22l2.25-2.25 1.06 1.06-2.25 2.25a2.432 2.432 0 0 0 3.44 3.44l2.25-2.25 1.06 1.06-2.25 2.25a3.932 3.932 0 1 1-5.56-5.56"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
+      </div>
+
+      <button
+        class="flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100 transition-colors"
+      >
+        <svg fill="none" viewBox="0 0 16 16" class="w-4 h-4 text-gray-600">
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M0 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0m6.5 0a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0M13 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Content Area -->
+  <div class="flex-1 bg-white pt-16">
+    <div class="max-w-4xl mx-auto px-8">
+      <!-- Page Title -->
+      <div class="mb-6 relative group">
+        <h1
+          class="text-3xl font-normal text-gray-900 leading-tight cursor-pointer flex items-center min-h-9 pt-1 break-words">
+          <span>Welcome to Resources Hub</span>
+          <span
+            class="opacity-0 group-hover:opacity-100 absolute left-full ml-2 transition-all duration-200 transform -translate-y-1 group-hover:translate-y-0"
+          >
             <button
-              aria-label="Breadcrumbs"
-              class="flex items-center justify-center w-8 h-8 rounded bg-transparent hover:bg-gray-100 transition-colors"
+              aria-label="Copy link"
+              class="flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100 transition-colors"
             >
               <svg
                 fill="none"
-                viewBox="0 0 16 16"
-                class="w-3 h-3 text-gray-500"
+                viewBox="-4 -4 24 24"
+                class="w-6 h-6 text-gray-600"
               >
                 <path
                   fill="currentColor"
-                  d="m14.53 6.03-6 6a.75.75 0 0 1-1.004.052l-.056-.052-6-6 1.06-1.06L8 10.44l5.47-5.47z"
+                  fill-rule="evenodd"
+                  d="M8.22 2.22a3.932 3.932 0 1 1 5.56 5.56l-2.25 2.25-1.06-1.06 2.25-2.25a2.432 2.432 0 0 0-3.44-3.44L7.03 5.53 5.97 4.47zm3.06 3.56-5.5 5.5-1.06-1.06 5.5-5.5zM2.22 8.22l2.25-2.25 1.06 1.06-2.25 2.25a2.432 2.432 0 0 0 3.44 3.44l2.25-2.25 1.06 1.06-2.25 2.25a3.932 3.932 0 1 1-5.56-5.56"
+                  clip-rule="evenodd"
                 ></path>
               </svg>
             </button>
-            <div
-              class="text-gray-600 text-sm overflow-hidden whitespace-nowrap text-ellipsis max-w-48"
-            >
-              Sumanth
-            </div>
-          </div>
-          <div class="text-gray-400 text-sm">/</div>
-          <span class="flex items-center gap-2 max-w-96 overflow-hidden">
-            <div
-              class="font-semibold text-sm overflow-hidden text-ellipsis whitespace-nowrap min-w-6"
-            >
-              {{ topic() }}
-            </div>
           </span>
-        </div>
+        </h1>
       </div>
 
-      <!-- Right side - Actions -->
-      <div class="flex items-center gap-2">
-        <!-- Active users -->
-        <div class="flex items-center -space-x-2">
+    <ng-container *ngIf="!this.currentContent$.loading ; else elseTemplate">
+      <address class="flex items-center mb-6 not-italic">
+        <div class="inline-flex items-center mr-3 text-sm text-gray-900 ">
+          <div>
+            <a rel="author" class="text-2xl font-bold text-gray-900 ">{{topic()}}</a>
+            <!-- <p class="text-sm text-gray-500 dark:text-gray-400">Updated by Sumanth - Fullstack web developer</p> -->
+            <p class="text-sm text-gray-500 dark:text-gray-400"><time>Updated On {{currentContent$?.data[0]?.updatedOn |
+                date:'medium'}}</time></p>
+          </div>
+        </div>
+      </address>
+      <app-editor (content)="saveContent($event)" [mode]="mode()" [data]="currentContent$?.data[0]?.content"></app-editor>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <div class="flex items-center justify-center h-10">
+        <app-loader></app-loader>
+      </div>
+    </ng-template>
+      <!-- Bottom Section -->
+      <div class="mt-20 mb-10 max-w-3xl">
+        <!-- Add Label Section -->
+        <div class="mb-4 relative">
           <div
-            class="w-6 h-6 rounded-full bg-blue-500 border-2 border-white flex items-center justify-center"
-          >
-            <img
-              alt="Sumanth"
-              src="https://secure.gravatar.com/avatar/627e7713e2d624e97d77193a8079e0e1?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FS-5.png"
-              class="w-full h-full rounded-full object-cover"
-            />
-          </div>
-        </div>
-
-        <div class="w-px h-4 bg-gray-300 mx-2"></div>
-
-        <!-- Action buttons -->
-        <button
-          class="flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100 transition-colors"
-          (click)="toggleEditMode()"
-        >
-          <svg fill="none" viewBox="-4 -4 24 24" class="w-6 h-6 text-gray-600">
-            <path
-              fill="currentColor"
-              fill-rule="evenodd"
-              d="M11.586.854a2 2 0 0 1 2.828 0l.732.732a2 2 0 0 1 0 2.828L10.01 9.551a2 2 0 0 1-.864.51l-3.189.91a.75.75 0 0 1-.927-.927l.91-3.189a2 2 0 0 1 .51-.864zm1.768 1.06a.5.5 0 0 0-.708 0l-.585.586L13.5 3.94l.586-.586a.5.5 0 0 0 0-.707zM12.439 5 11 3.56 7.51 7.052a.5.5 0 0 0-.128.217l-.54 1.89 1.89-.54a.5.5 0 0 0 .217-.127zM3 2.501a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-3H15v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2h3v1.5z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </button>
-
-        <button
-          class="flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100 transition-colors"
-        >
-          <svg fill="none" viewBox="-4 -4 24 24" class="w-6 h-6 text-gray-600">
-            <path
-              fill="currentColor"
-              fill-rule="evenodd"
-              d="M0 3.125A2.625 2.625 0 0 1 2.625.5h10.75A2.625 2.625 0 0 1 16 3.125v8.25A2.625 2.625 0 0 1 13.375 14H4.449l-3.327 1.901A.75.75 0 0 1 0 15.25zM2.625 2C2.004 2 1.5 2.504 1.5 3.125v10.833L4.05 12.5h9.325c.621 0 1.125-.504 1.125-1.125v-8.25C14.5 2.504 13.996 2 13.375 2zM12 6.5H4V5h8zm-3 3H4V8h5z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </button>
-
-        <button
-          class="flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100 transition-colors"
-        >
-          <svg fill="none" viewBox="-4 -4 24 24" class="w-6 h-6 text-gray-600">
-            <path
-              fill="currentColor"
-              fill-rule="evenodd"
-              d="M2 4a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-7A.5.5 0 0 0 10 4zm-2 .5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.218l2.137-1.203A1.25 1.25 0 0 1 16 4.605v6.79a1.25 1.25 0 0 1-1.863 1.09L12 11.282v.218a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm12 5.061 2.5 1.407V5.032L12 6.44z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </button>
-
-        <button
-          class="flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100 transition-colors"
-        >
-          <svg fill="none" viewBox="-4 -4 24 24" class="w-6 h-6 text-gray-600">
-            <path
-              fill="currentColor"
-              fill-rule="evenodd"
-              d="M8 0a.75.75 0 0 1 .7.48l1.705 4.434 4.403.338a.75.75 0 0 1 .422 1.324l-3.38 2.818 1.25 4.662a.75.75 0 0 1-1.148.813L8 12.159l-3.95 2.71a.75.75 0 0 1-1.15-.813l1.251-4.662L.77 6.576a.75.75 0 0 1 .422-1.324l4.403-.338L7.3.48A.75.75 0 0 1 8 0m0 2.84L6.655 6.335l-3.506.27 2.7 2.25-.973 3.627L8 10.341l3.124 2.142-.973-3.627 2.7-2.25-3.506-.27z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </button>
-
-        <button
-          class="flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100 transition-colors"
-        >
-          <svg fill="none" viewBox="-4 -4 24 24" class="w-6 h-6 text-gray-600">
-            <path
-              fill="currentColor"
-              d="M5.75 8a2.25 2.25 0 1 1 4.5 0 2.25 2.25 0 0 1-4.5 0"
-            ></path>
-            <path
-              fill="currentColor"
-              fill-rule="evenodd"
-              d="M8 2C4.433 2 1.319 4.232.167 7.38c-.146.4-.146.84 0 1.24C1.32 11.768 4.433 14 8 14c3.566 0 6.681-2.232 7.833-5.38.146-.4.146-.84 0-1.24C14.68 4.232 11.566 2 8 2m0 2.25a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </button>
-
-        <div class="w-px h-4 bg-gray-300 mx-2"></div>
-
-        <!-- Share button -->
-        <div class="flex">
-          <button
-            class="flex items-center gap-1 px-3 py-1.5 bg-transparent border border-gray-300 rounded-l text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-          >
-            <svg fill="none" viewBox="0 0 16 16" class="w-4 h-4">
-              <path
-                fill="currentColor"
-                fill-rule="evenodd"
-                d="M8 1.5A2.5 2.5 0 0 0 5.5 4v3H12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2V4a4 4 0 1 1 8 0h-1.5A2.5 2.5 0 0 0 8 1.5m-4 7a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V9a.5.5 0 0 0-.5-.5z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-            Share
-          </button>
-          <button
-            class="flex items-center justify-center w-8 h-8 bg-transparent border-t border-r border-b border-gray-300 rounded-r hover:bg-gray-50 transition-colors"
-          >
-            <svg fill="none" viewBox="0 0 16 16" class="w-4 h-4 text-gray-700">
-              <path
-                fill="currentColor"
-                fill-rule="evenodd"
-                d="M8.22 2.22a3.932 3.932 0 1 1 5.56 5.56l-2.25 2.25-1.06-1.06 2.25-2.25a2.432 2.432 0 0 0-3.44-3.44L7.03 5.53 5.97 4.47zm3.06 3.56-5.5 5.5-1.06-1.06 5.5-5.5zM2.22 8.22l2.25-2.25 1.06 1.06-2.25 2.25a2.432 2.432 0 0 0 3.44 3.44l2.25-2.25 1.06 1.06-2.25 2.25a3.932 3.932 0 1 1-5.56-5.56"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </button>
-        </div>
-
-        <button
-          class="flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100 transition-colors"
-        >
-          <svg fill="none" viewBox="0 0 16 16" class="w-4 h-4 text-gray-600">
-            <path
-              fill="currentColor"
-              fill-rule="evenodd"
-              d="M0 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0m6.5 0a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0M13 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Content Area -->
-    <div class="flex-1 bg-white pt-16">
-      <div class="max-w-4xl mx-auto px-8">
-        <!-- Page Title -->
-        <div class="mb-6 relative group">
-          <h1
-            class="text-3xl font-normal text-gray-900 leading-tight cursor-pointer flex items-center min-h-9 pt-1 break-words"
-          >
-            <span>{{ topic() }}</span>
-            <span
-              class="opacity-0 group-hover:opacity-100 absolute left-full ml-2 transition-all duration-200 transform -translate-y-1 group-hover:translate-y-0"
-            >
-              <button
-                aria-label="Copy link"
-                class="flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100 transition-colors"
-              >
-                <svg
-                  fill="none"
-                  viewBox="-4 -4 24 24"
-                  class="w-6 h-6 text-gray-600"
-                >
-                  <path
-                    fill="currentColor"
-                    fill-rule="evenodd"
-                    d="M8.22 2.22a3.932 3.932 0 1 1 5.56 5.56l-2.25 2.25-1.06-1.06 2.25-2.25a2.432 2.432 0 0 0-3.44-3.44L7.03 5.53 5.97 4.47zm3.06 3.56-5.5 5.5-1.06-1.06 5.5-5.5zM2.22 8.22l2.25-2.25 1.06 1.06-2.25 2.25a2.432 2.432 0 0 0 3.44 3.44l2.25-2.25 1.06 1.06-2.25 2.25a3.932 3.932 0 1 1-5.56-5.56"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-            </span>
-          </h1>
-        </div>
-
-        <!-- Page Metadata -->
-        <div class="flex items-center mb-5 text-xs">
-          <div class="flex items-center mr-2">
-            <ul class="flex items-center -space-x-2">
-              <li class="relative">
-                <div
-                  class="w-8 h-8 rounded-full bg-white border-2 border-white relative z-1"
-                >
-                  <span
-                    class="flex items-center justify-center w-full h-full bg-blue-500 rounded-full"
-                  >
-                    <img
-                      alt="Sumanth"
-                      src="https://secure.gravatar.com/avatar/627e7713e2d624e97d77193a8079e0e1?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FS-5.png"
-                      class="w-full h-full rounded-full object-cover"
-                    />
-                  </span>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="ml-2 w-full">
-            <div class="flex">
-              <span class="mr-1">
-                <span class="inline align-middle">
-                  <span>Owned by </span>
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href="#"
-                    class="text-gray-700 underline hover:text-gray-900"
-                  >
-                    Sumanth
-                  </a>
-                </span>
-              </span>
-              <div>
-                <button
-                  aria-expanded="false"
-                  class="flex items-center justify-center w-5 h-5 rounded hover:bg-gray-100 transition-colors"
-                >
-                  <svg
-                    fill="none"
-                    viewBox="0 0 16 16"
-                    class="w-4 h-4 text-gray-600"
-                  >
-                    <path
-                      fill="currentColor"
-                      fill-rule="evenodd"
-                      d="M0 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0m6.5 0a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0M13 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0"
-                      clip-rule="evenodd"
-                    ></path>
+            class="flex items-center justify-between bg-white border border-gray-200 rounded min-h-10 p-2 hover:border-gray-300 transition-colors">
+            <div class="flex items-center flex-1 gap-1 overflow-hidden p-1 relative">
+              <div class="flex-1 grid grid-cols-1 max-w-0 mb-1 mt-1">
+                <input
+                  type="text"
+                  placeholder="Add label"
+                  class="text-sm bg-transparent border-none outline-none min-w-0.5 overflow-clip p-0"
+                  autocomplete="off"
+                  autocorrect="off"
+                  spellcheck="false"
+                />
+              </div>
+              <div class="flex items-center text-gray-600">
+                <div class="flex items-center">
+                  <svg fill="none" viewBox="-4 -4 24 24" class="w-6 h-6">
+                    <path fill="currentColor" fill-rule="evenodd"
+                      d="M7.25 8.75V15h1.5V8.75H15v-1.5H8.75V1h-1.5v6.25H1v1.5z" clip-rule="evenodd"></path>
                   </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="text-xs">
-            <div class="inline-block">
-              <span class="break-anywhere">
-                <time>{{
-                  currentContent$?.data[0]?.updatedOn | date: "medium"
-                }}</time>
-              </span>
-            </div>
-            <span class="inline">
-              <span class="inline">
-                <button
-                  class="inline-flex items-center justify-center text-xs hover:bg-gray-100 rounded transition-colors"
-                >
-                  <span class="inline mr-1 align-middle">
-                    <svg
-                      fill="none"
-                      viewBox="0 0 16 16"
-                      class="w-4 h-4 text-gray-600"
-                    >
-                      <path
-                        fill="currentColor"
-                        fill-rule="evenodd"
-                        d="M1 1h1.5v7.94l3.22-3.22a.75.75 0 0 1 1.06 0L8.5 7.44l3.94-3.94H10V2h4.25a.75.75 0 0 1 .75.75V7h-1.5V4.56L9.03 9.03a.75.75 0 0 1-1.06 0L6.25 7.31 2.5 11.06V13a.5.5 0 0 0 .5.5h12V15H3a2 2 0 0 1-2-2z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  </span>
-                  <span class="inline"> See how many people viewed this </span>
-                </button>
-              </span>
-            </span>
-          </div>
-        </div>
-
-        <!-- Editor/Content Area -->
-        <div class="relative bg-white">
-          <div
-            class="font-normal text-base leading-6 max-w-3xl mx-auto break-words"
-          >
-            <app-editor
-              (content)="saveContent($event)"
-              [mode]="currentMode"
-              [data]="currentContent$?.data[0]?.content"
-            ></app-editor>
-          </div>
-        </div>
-
-        <!-- Bottom Section - only show in view mode -->
-        <div class="mt-20 mb-10 max-w-3xl" *ngIf="currentMode === 'view'">
-          <!-- Add Label Section -->
-          <div class="mb-4 relative">
-            <div
-              class="flex items-center justify-between bg-white border border-gray-200 rounded min-h-10 p-2 hover:border-gray-300 transition-colors"
-            >
-              <div
-                class="flex items-center flex-1 gap-1 overflow-hidden p-1 relative"
-              >
-                <div class="flex-1 grid grid-cols-1 max-w-0 mb-1 mt-1">
-                  <input
-                    type="text"
-                    placeholder="Add label"
-                    class="text-sm bg-transparent border-none outline-none min-w-0.5 overflow-clip p-0"
-                    autocomplete="off"
-                    autocorrect="off"
-                    spellcheck="false"
-                  />
-                </div>
-                <div class="flex items-center text-gray-600">
-                  <div class="flex items-center">
-                    <svg fill="none" viewBox="-4 -4 24 24" class="w-6 h-6">
-                      <path
-                        fill="currentColor"
-                        fill-rule="evenodd"
-                        d="M7.25 8.75V15h1.5V8.75H15v-1.5H8.75V1h-1.5v6.25H1v1.5z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                    <span class="text-sm">Add label</span>
-                  </div>
+                  <span class="text-sm">Add label</span>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Reactions Section -->
-          <div
-            class="flex items-flex-start justify-between border-b border-gray-200 pb-5 pt-0 w-full clear-both"
-          >
-            <div class="flex flex-col items-start mt-1 mr-5">
-              <div class="flex items-center text-xs rounded-2xl -mt-1 relative">
-                <div class="flex gap-0 relative">
-                  <!-- Thumbs up -->
-                  <div class="relative">
-                    <button
-                      aria-label="React with thumbs up emoji"
-                      class="flex items-center border border-gray-200 rounded h-6 text-xs min-w-9 overflow-hidden text-center bg-transparent hover:bg-gray-50 transition-colors mr-0 mt-1"
-                    >
-                      <div class="flex items-center rounded h-5.5 w-full">
-                        <div class="flex items-start">
-                          <div
-                            class="text-xs leading-3 pb-1 pl-2.5 pr-0.5 pt-1 text-center"
-                          >
-                            <span class="inline">
-                              <span
-                                role="img"
-                                aria-label=":thumbsup:"
-                                class="inline-block rounded mb-0 mt-0 text-center align-middle"
-                              >
-                                <img
-                                  loading="lazy"
-                                  alt="thumbs up"
-                                  width="16"
-                                  height="16"
-                                  src="https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/standard/ef8b0642-7523-4e13-9fd3-01b65648acf6/64x64/1f44d.png"
-                                  class="max-w-7.5 overflow-clip h-4 w-4"
-                                />
-                              </span>
-                            </span>
-                          </div>
-                          <div
-                            class="text-gray-500 text-xs leading-3.5 overflow-hidden pb-1 pr-2 pt-1 relative text-center"
-                          >
-                            <div class="flex flex-col">
-                              <span class="text-xs font-mono"></span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                  </div>
-
-                  <!-- Clap -->
-                  <div class="relative">
-                    <button
-                      aria-label="React with clapping hands emoji"
-                      class="flex items-center border border-gray-200 rounded h-6 text-xs min-w-9 overflow-hidden text-center bg-transparent hover:bg-gray-50 transition-colors mr-0 mt-1"
-                    >
-                      <div class="flex items-center rounded h-5.5 w-full">
-                        <div class="flex items-start">
-                          <div
-                            class="text-xs leading-3 pb-1 pl-2.5 pr-0.5 pt-1 text-center"
-                          >
-                            <span class="inline">
-                              <span
-                                role="img"
-                                aria-label=":clap:"
-                                class="inline-block rounded mb-0 mt-0 text-center align-middle"
-                              >
-                                <img
-                                  loading="lazy"
-                                  alt="clapping hands"
-                                  width="16"
-                                  height="16"
-                                  src="https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/standard/ef8b0642-7523-4e13-9fd3-01b65648acf6/64x64/1f44f.png"
-                                  class="max-w-7.5 overflow-clip h-4 w-4"
-                                />
-                              </span>
-                            </span>
-                          </div>
-                          <div
-                            class="text-gray-500 text-xs leading-3.5 overflow-hidden pb-1 pr-2 pt-1 relative text-center"
-                          >
-                            <div class="flex flex-col">
-                              <span class="text-xs font-mono"></span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                  </div>
-
-                  <!-- Party -->
-                  <div class="relative">
-                    <button
-                      aria-label="React with party popper emoji"
-                      class="flex items-center border border-gray-200 rounded h-6 text-xs min-w-9 overflow-hidden text-center bg-transparent hover:bg-gray-50 transition-colors mr-0 mt-1"
-                    >
-                      <div class="flex items-center rounded h-5.5 w-full">
-                        <div class="flex items-start">
-                          <div
-                            class="text-xs leading-3 pb-1 pl-2.5 pr-0.5 pt-1 text-center"
-                          >
-                            <span class="inline">
-                              <span
-                                role="img"
-                                aria-label=":tada:"
-                                class="inline-block rounded mb-0 mt-0 text-center align-middle"
-                              >
-                                <img
-                                  loading="lazy"
-                                  alt="party popper"
-                                  width="16"
-                                  height="16"
-                                  src="https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/standard/ef8b0642-7523-4e13-9fd3-01b65648acf6/64x64/1f389.png"
-                                  class="max-w-7.5 overflow-clip h-4 w-4"
-                                />
-                              </span>
-                            </span>
-                          </div>
-                          <div
-                            class="text-gray-500 text-xs leading-3.5 overflow-hidden pb-1 pr-2 pt-1 relative text-center"
-                          >
-                            <div class="flex flex-col">
-                              <span class="text-xs font-mono"></span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                  </div>
-
-                  <!-- Add reaction -->
-                  <div class="text-xs mt-1 align-middle">
-                    <div>
-                      <div>
-                        <button
-                          aria-expanded="false"
-                          type="button"
-                          class="flex items-center border border-gray-200 rounded h-6 justify-center text-xs min-w-8 overflow-hidden text-center bg-transparent hover:bg-gray-50 transition-colors"
+        <!-- Reactions Section -->
+        <div class="flex items-flex-start justify-between border-b border-gray-200 pb-5 pt-0 w-full clear-both">
+          <div class="flex flex-col items-start mt-1 mr-5">
+            <div class="flex items-center text-xs rounded-2xl -mt-1 relative">
+              <div class="flex gap-0 relative">
+                <!-- Thumbs up -->
+                <div class="relative">
+                  <button
+                    aria-label="React with thumbs up emoji"
+                    class="flex items-center border border-gray-200 rounded h-6 text-xs min-w-9 overflow-hidden text-center bg-transparent hover:bg-gray-50 transition-colors mr-0 mt-1"
+                  >
+                    <div class="flex items-center rounded h-5.5 w-full">
+                      <div class="flex items-start">
+                        <div
+                          class="text-xs leading-3 pb-1 pl-2.5 pr-0.5 pt-1 text-center"
                         >
-                          <span
-                            role="img"
-                            aria-label="Add reaction"
-                            class="flex-shrink-0 text-center"
-                          >
-                            <svg
-                              fill="none"
-                              viewBox="0 0 16 16"
-                              class="w-4 h-4 text-gray-600"
+                          <span class="inline">
+                            <span
+                              role="img"
+                              aria-label=":thumbsup:"
+                              class="inline-block rounded mb-0 mt-0 text-center align-middle"
                             >
-                              <path
-                                fill="currentColor"
-                                fill-rule="evenodd"
-                                d="M1.5 8a6.5 6.5 0 1 0 13 0H16a8 8 0 1 1-8-8v1.5A6.5 6.5 0 0 0 1.5 8m4.585 2.033c.486.378 1.14.717 1.915.717s1.43-.34 1.915-.717a4.4 4.4 0 0 0 .721-.714l.005-.007-.001.002.61.436.61.436-.001.002-.002.003-.006.007-.016.023-.056.071q-.07.091-.2.235c-.17.189-.42.439-.744.69-.64.497-1.61 1.033-2.835 1.033s-2.196-.536-2.835-1.033a6 6 0 0 1-.944-.925l-.056-.071-.016-.023-.006-.007-.002-.003v-.001s-.001-.001.609-.437l.61-.436-.001-.002.005.007.03.04q.045.056.139.161c.126.14.313.327.552.513M5.75 7.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5m4.5 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5m2.25-4h-2V2h2V0H14v2h2v1.5h-2v2h-1.5z"
-                                clip-rule="evenodd"
-                              ></path>
-                            </svg>
+                              <img
+                                loading="lazy"
+                                alt="thumbs up"
+                                width="16"
+                                height="16"
+                                src="https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/standard/ef8b0642-7523-4e13-9fd3-01b65648acf6/64x64/1f44d.png"
+                                class="max-w-7.5 overflow-clip h-4 w-4"
+                              />
+                            </span>
                           </span>
-                        </button>
+                        </div>
+                        <div
+                          class="text-gray-500 text-xs leading-3.5 overflow-hidden pb-1 pr-2 pt-1 relative text-center"
+                        >
+                          <div class="flex flex-col">
+                            <span class="text-xs font-mono"></span>
+                          </div>
+                        </div>
                       </div>
+                    </div>
+                  </button>
+                </div>
+
+                <!-- Clap -->
+                <div class="relative">
+                  <button
+                    aria-label="React with clapping hands emoji"
+                    class="flex items-center border border-gray-200 rounded h-6 text-xs min-w-9 overflow-hidden text-center bg-transparent hover:bg-gray-50 transition-colors mr-0 mt-1"
+                  >
+                    <div class="flex items-center rounded h-5.5 w-full">
+                      <div class="flex items-start">
+                        <div
+                          class="text-xs leading-3 pb-1 pl-2.5 pr-0.5 pt-1 text-center"
+                        >
+                          <span class="inline">
+                            <span
+                              role="img"
+                              aria-label=":clap:"
+                              class="inline-block rounded mb-0 mt-0 text-center align-middle"
+                            >
+                              <img
+                                loading="lazy"
+                                alt="clapping hands"
+                                width="16"
+                                height="16"
+                                src="https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/standard/ef8b0642-7523-4e13-9fd3-01b65648acf6/64x64/1f44f.png"
+                                class="max-w-7.5 overflow-clip h-4 w-4"
+                              />
+                            </span>
+                          </span>
+                        </div>
+                        <div
+                          class="text-gray-500 text-xs leading-3.5 overflow-hidden pb-1 pr-2 pt-1 relative text-center"
+                        >
+                          <div class="flex flex-col">
+                            <span class="text-xs font-mono"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+
+                <!-- Party -->
+                <div class="relative">
+                  <button
+                    aria-label="React with party popper emoji"
+                    class="flex items-center border border-gray-200 rounded h-6 text-xs min-w-9 overflow-hidden text-center bg-transparent hover:bg-gray-50 transition-colors mr-0 mt-1"
+                  >
+                    <div class="flex items-center rounded h-5.5 w-full">
+                      <div class="flex items-start">
+                        <div
+                          class="text-xs leading-3 pb-1 pl-2.5 pr-0.5 pt-1 text-center"
+                        >
+                          <span class="inline">
+                            <span
+                              role="img"
+                              aria-label=":tada:"
+                              class="inline-block rounded mb-0 mt-0 text-center align-middle"
+                            >
+                              <img
+                                loading="lazy"
+                                alt="party popper"
+                                width="16"
+                                height="16"
+                                src="https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/standard/ef8b0642-7523-4e13-9fd3-01b65648acf6/64x64/1f389.png"
+                                class="max-w-7.5 overflow-clip h-4 w-4"
+                              />
+                            </span>
+                          </span>
+                        </div>
+                        <div
+                          class="text-gray-500 text-xs leading-3.5 overflow-hidden pb-1 pr-2 pt-1 relative text-center"
+                        >
+                          <div class="flex flex-col">
+                            <span class="text-xs font-mono"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+
+                <!-- Add reaction -->
+                <div class="text-xs mt-1 align-middle">
+                  <div>
+                    <div>
+                      <button
+                        aria-expanded="false"
+                        type="button"
+                        class="flex items-center border border-gray-200 rounded h-6 justify-center text-xs min-w-8 overflow-hidden text-center bg-transparent hover:bg-gray-50 transition-colors"
+                      >
+                        <span
+                          role="img"
+                          aria-label="Add reaction"
+                          class="flex-shrink-0 text-center"
+                        >
+                          <svg
+                            fill="none"
+                            viewBox="0 0 16 16"
+                            class="w-4 h-4 text-gray-600"
+                          >
+                            <path
+                              fill="currentColor"
+                              fill-rule="evenodd"
+                              d="M1.5 8a6.5 6.5 0 1 0 13 0H16a8 8 0 1 1-8-8v1.5A6.5 6.5 0 0 0 1.5 8m4.585 2.033c.486.378 1.14.717 1.915.717s1.43-.34 1.915-.717a4.4 4.4 0 0 0 .721-.714l.005-.007-.001.002.61.436.61.436-.001.002-.002.003-.006.007-.016.023-.056.071q-.07.091-.2.235c-.17.189-.42.439-.744.69-.64.497-1.61 1.033-2.835 1.033s-2.196-.536-2.835-1.033a6 6 0 0 1-.944-.925l-.056-.071-.016-.023-.006-.007-.002-.003v-.001s-.001-.001.609-.437l.61-.436-.001-.002.005.007.03.04q.045.056.139.161c.126.14.313.327.552.513M5.75 7.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5m4.5 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5m2.25-4h-2V2h2V0H14v2h2v1.5h-2v2h-1.5z"
+                              clip-rule="evenodd"
+                            ></path>
+                          </svg>
+                        </span>
+                      </button>
                     </div>
                   </div>
                 </div>
-                <div class="text-xs ml-1 text-gray-600">
-                  <span class="inline"> Be the first to add a reaction </span>
-                </div>
+              </div>
+              <div class="text-xs ml-1 text-gray-600">
+                <span class="inline"> Be the first to add a reaction </span>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Comments Section -->
-          <div class="relative z-0">
-            <div class="pt-5 w-full">
-              <div class="mt-3.5">
-                <div
-                  class="bg-white rounded-sm sticky bottom-0 pb-4 w-full z-1"
-                >
-                  <div class="float-left h-8 mr-2.5 w-8">
-                    <span class="inline">
-                      <div
-                        class="rounded-full box-border cursor-pointer inline-flex"
-                      >
-                        <div role="img" class="cursor-pointer relative">
-                          <span
-                            class="flex items-stretch bg-white rounded-full border-2 border-white cursor-pointer flex-col justify-center h-8 mb-0.5 ml-0 mr-0 mt-0 overflow-hidden relative w-8"
-                          >
-                            <img
-                              alt=""
-                              aria-hidden="true"
-                              src="https://secure.gravatar.com/avatar/627e7713e2d624e97d77193a8079e0e1?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FS-5.png"
-                              class="rounded-full cursor-pointer flex flex-basis-full flex-grow h-8 overflow-clip w-8"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                    </span>
-                  </div>
-                  <div class="ml-12.5 relative">
-                    <button
-                      title="Add a Comment"
-                      class="bg-white rounded border border-gray-500 box-border text-gray-600 cursor-default flex h-10 text-center w-full z-2.5"
+        <!-- Comments Section -->
+        <div class="relative z-0">
+          <div class="pt-5 w-full">
+            <div class="mt-3.5">
+              <div class="bg-white rounded-sm sticky bottom-0 pb-4 w-full z-1">
+                <div class="float-left h-8 mr-2.5 w-8">
+                  <span class="inline">
+                    <div
+                      class="rounded-full box-border cursor-pointer inline-flex"
                     >
-                      <span
-                        class="flex items-center text-gray-600 cursor-default pb-2.5 pl-2.5 pr-2.5 pt-2.5 text-center"
-                      >
-                        Write a comment…
-                      </span>
-                    </button>
-                  </div>
+                      <div role="img" class="cursor-pointer relative">
+                        <span
+                          class="flex items-stretch bg-white rounded-full border-2 border-white cursor-pointer flex-col justify-center h-8 mb-0.5 ml-0 mr-0 mt-0 overflow-hidden relative w-8"
+                        >
+                          <img
+                            alt=""
+                            aria-hidden="true"
+                            src="https://secure.gravatar.com/avatar/627e7713e2d624e97d77193a8079e0e1?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FS-5.png"
+                            class="rounded-full cursor-pointer flex flex-basis-full flex-grow h-8 overflow-clip w-8"
+                          />
+                        </span>
                 </div>
               </div>
+              </span>
+            </div>
+            <div class="ml-12.5 relative">
+              <button
+                    title="Add a Comment"
+                    class="bg-white rounded border border-gray-500 box-border text-gray-600 cursor-default flex h-10 text-center w-full z-2.5"
+                  >
+                    <span
+                      class="flex items-center text-gray-600 cursor-default pb-2.5 pl-2.5 pr-2.5 pt-2.5 text-center"
+                    >
+                      Write a comment…
+                    </span>
+                  </button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</ng-container>
-
-<ng-template #elseTemplate>
-  <div class="flex items-center justify-center h-10">
-    <app-loader></app-loader>
-  </div>
-</ng-template>
+</div>
+</div>
+</div>
