@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import { ResourcesService } from "../../services/resources.service";
 import { LoaderComponent } from "../loader/loader.component";
 import { Observable, of } from "rxjs";
@@ -8,7 +8,7 @@ import { catchError, finalize } from "rxjs/operators";
 @Component({
   selector: "app-serverless-content",
   standalone: true,
-  imports: [CommonModule, LoaderComponent],
+  imports: [CommonModule, LoaderComponent, DatePipe],
   templateUrl: "./serverless-content.component.html",
   styleUrls: ["./serverless-content.component.css"],
 })
