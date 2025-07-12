@@ -21,14 +21,13 @@ export class DataLayoutComponent {
   currentContent$: any;
   @Output() technologyName = new EventEmitter<any>();
   constructor() {
-
-
     effect(() => {
-  sessionStorage.setItem('currentTechnology', this.technology());
       this.store.dispatch(loadCurrentContent({ contentID: this.category() }));
       this.store.select(selectCurentContent).subscribe((content: any) => {
         console.log('Current content:', content?.loading);
         this.currentContent$ = content;
+          sessionStorage.setItem('currentTechnology', this.technology());
+
       })
     })
   }
