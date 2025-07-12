@@ -203,7 +203,9 @@
     <!-- Page Title -->
     <div class="mb-6">
       <h1 class="text-3xl font-bold text-gray-900 mb-4 flex items-center group">
-        Serverless Computing
+        {{
+          contentData?.content?.introduction?.title || "Serverless Computing"
+        }}
         <button
           (click)="copyLink()"
           class="ml-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-gray-100 rounded"
