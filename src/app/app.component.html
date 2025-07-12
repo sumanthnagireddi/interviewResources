@@ -63,21 +63,21 @@
   </div>
 
   <!-- Main Content Area -->
-  <div class="flex-1 flex flex-col min-w-0 lg:ml-0">
+  <div class="main-content-wrapper">
     <!-- Main Content Wrapper -->
-    <main class="flex-1 relative overflow-y-auto focus:outline-none">
+    <main class="main-content">
       <div class="py-6 lg:py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="content-container">
           <!-- Content padding for mobile menu button -->
-          <div class="lg:hidden h-12"></div>
+          <div class="mobile-spacer"></div>
 
           <!-- Home Component -->
-          <div class="mb-8">
+          <div class="home-section">
             <app-home />
           </div>
 
           <!-- Router Outlet -->
-          <div class="max-w-4xl mx-auto">
+          <div class="router-outlet-section">
             <router-outlet />
           </div>
         </div>
