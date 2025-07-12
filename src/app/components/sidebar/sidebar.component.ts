@@ -4,6 +4,7 @@ import {
   inject,
   QueryList,
   ViewChildren,
+  HostListener,
 } from "@angular/core";
 import { Store } from "@ngrx/store";
 import {
@@ -160,5 +161,18 @@ export class SidebarComponent {
           a.name.localeCompare(b.name),
         ) || []
     );
+  }
+
+  // Close popovers when clicking outside
+  @HostListener("document:click", ["$event"])
+  onDocumentClick(event: Event) {
+    const target = event.target as HTMLElement;
+    const clickedInsidePopover =
+      target.closest('[role="menu"]') || target.closest(".popover-trigger");
+
+    if (!clickedInsidePopover) {
+      this.showManagePopover = false;
+      this.showManageSubPopover = false;
+    }
   }
 }
