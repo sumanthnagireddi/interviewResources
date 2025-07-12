@@ -269,17 +269,10 @@
 
     <!-- Article Content -->
     <div class="prose prose-lg max-w-none">
-      <p class="text-lg leading-relaxed">
-        Serverless computing is a
-        <strong>cloud-native execution model</strong> that lets developers
-        <strong
-          >build and run applications without managing the
-          infrastructure</strong
-        >
-        (servers, VMs, containers). The cloud provider
-        <strong>automatically provisions, scales, and manages</strong> the
-        infrastructure needed to run the code.
-      </p>
+      <p
+        class="text-lg leading-relaxed"
+        [innerHTML]="contentData?.content?.introduction?.description"
+      ></p>
 
       <ul class="list-disc pl-6 space-y-2 mt-4">
         <li>You write the code → deploy it → cloud runs it when triggered</li>
