@@ -275,24 +275,16 @@
       ></p>
 
       <ul class="list-disc pl-6 space-y-2 mt-4">
-        <li>You write the code → deploy it → cloud runs it when triggered</li>
-        <li>You pay only when the code runs (no idle cost)</li>
-        <li>
-          <strong>Example: Netflix using AWS Lambda</strong>
-          <ul class="list-disc pl-6 space-y-1 mt-2">
-            <li>
-              Netflix uses <strong>AWS Lambda</strong> to
-              <strong>automate video encoding and metadata creation</strong>.
-            </li>
-            <li>
-              When a new video is uploaded, Lambda is triggered to process it
-              automatically.
-            </li>
-            <li>
-              Netflix engineers don't manage any servers — they just focus on
-              the function logic.
-            </li>
-          </ul>
+        <li *ngFor="let point of contentData?.content?.introduction?.keyPoints">
+          <ng-container *ngIf="typeof point === 'string'; else complexPoint">
+            {{ point }}
+          </ng-container>
+          <ng-template #complexPoint>
+            <strong>{{ point.title }}</strong>
+            <ul class="list-disc pl-6 space-y-1 mt-2" *ngIf="point.details">
+              <li *ngFor="let detail of point.details">{{ detail }}</li>
+            </ul>
+          </ng-template>
         </li>
       </ul>
 
