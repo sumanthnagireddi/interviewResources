@@ -5,6 +5,7 @@ import {
   QueryList,
   ViewChildren,
   HostListener,
+  OnInit,
 } from "@angular/core";
 import { Store } from "@ngrx/store";
 import {
@@ -43,7 +44,7 @@ import { Router, RouterLink } from "@angular/router";
   templateUrl: "./sidebar.component.html",
   styleUrl: "./sidebar.component.css",
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   technologies$: Technologies[] | any;
   subTechnologies$: any;
   currentTechnology: any;
