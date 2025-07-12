@@ -1,16 +1,87 @@
-<div class="flex">
-  <div class=" hidden lg:overflow-x-auto lg:block overflow-auto w-full lg:max-w-[20vw]">
-    <app-sidebar />
-  </div>
-  <div class="space-y-6 flex-1 max-h-[97vh] overflow-y-auto sm:px-6 px-4  ">
-    <!-- <div className="sticky top-0 z-50 bg-white shadow-none">
-      <app-header/>
-      <div> -->
-        <app-home/>
-      <!-- </div> -->
-    <!-- </div> -->
-    <div class="max-w-3xl mx-auto">
-      <router-outlet/>
+<div class="app-container flex">
+  <!-- Mobile Menu Button -->
+  <button
+    class="mobile-menu-button"
+    (click)="sidebar.toggleMobileMenu()"
+    aria-label="Toggle mobile menu"
+  >
+    @if (!sidebar.isMobileMenuOpen) {
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6 text-gray-700"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+        />
+      </svg>
+    }
+    @if (sidebar.isMobileMenuOpen) {
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6 text-gray-700"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    }
+  </button>
+
+  <!-- Mobile Backdrop Overlay -->
+  @if (sidebar.isMobileMenuOpen) {
+    <div
+      class="mobile-backdrop"
+      (click)="sidebar.closeMobileMenu()"
+      aria-hidden="true"
+    ></div>
+  }
+
+  <!-- Sidebar Container -->
+  <div
+    class="sidebar-wrapper"
+    [class.mobile-open]="sidebar.isMobileMenuOpen"
+    [class.mobile-closed]="!sidebar.isMobileMenuOpen"
+    #sidebarRef
+  >
+    <div
+      class="h-full overflow-y-auto bg-white shadow-xl lg:shadow-none border-r border-gray-200"
+    >
+      <app-sidebar #sidebar />
     </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="main-content-wrapper">
+    <!-- Main Content Wrapper -->
+    <main class="main-content">
+      <div class="py-6 lg:py-8">
+        <div class="content-container">
+          <!-- Content padding for mobile menu button -->
+          <div class="mobile-spacer"></div>
+
+          <!-- Home Component -->
+          <div class="home-section">
+            <app-home />
+          </div>
+
+          <!-- Router Outlet -->
+          <div class="router-outlet-section">
+            <router-outlet />
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
 </div>
