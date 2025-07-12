@@ -6,20 +6,20 @@
       RESOURCES
     </span>
 
-    <nav class="mt-8 flex flex-col gap-8">
+    <nav class="mt-6 flex flex-col gap-4">
       <ng-container *ngIf="technologies$.loading; else techList">
         <div class="flex items-center justify-center h-10">
           <app-loader></app-loader>
         </div>
       </ng-container>
       <ng-template #techList>
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-2">
           <h3
             class="text-gray-500 font-mono text-xs font-medium tracking-[1.2px] uppercase"
           >
             Technologies
           </h3>
-          <ul class="border-l border-gray-200 flex flex-col gap-2">
+          <ul class="border-l border-gray-200 flex flex-col gap-1">
             <li
               *ngFor="let item of sortedTechnologies"
               class="relative flex flex-col"
