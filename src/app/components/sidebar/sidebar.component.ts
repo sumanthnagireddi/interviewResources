@@ -84,7 +84,15 @@ export class SidebarComponent implements OnInit {
     this.currentTechnology = technology;
   }
   setSubTechnologies(tech: any) {
-    this.store.dispatch(loadSubTechnologies({ technology: tech.id }));
+    // Close other items and set current technology
+    if (this.currentTechnology === tech.id) {
+      // If clicking the same item, close it
+      this.currentTechnology = null;
+    } else {
+      // Set new current technology and load its sub-technologies
+      this.currentTechnology = tech.id;
+      this.store.dispatch(loadSubTechnologies({ technology: tech.id }));
+    }
   }
   setCurrentSubTechnology(subTech: any) {
     this.currentSubTechnology = subTech;
