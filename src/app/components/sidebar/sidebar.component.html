@@ -1,14 +1,14 @@
 <div class="sidebar-container flex h-screen flex-col justify-between">
   <div class="px-4 py-6 lg:px-6">
     <!-- Enhanced Logo Area -->
-    <div
+    <!-- <div
       class="logo-area grid h-12 w-full place-content-center rounded-xl text-xs text-gray-600 font-mono tracking-wider font-semibold"
     >
       RESOURCES
-    </div>
+    </div> -->
 
     <!-- Navigation Section -->
-    <nav class="mt-8 flex flex-col gap-6">
+    <nav class="mt-8 flex flex-col">
       <ng-container *ngIf="technologies$.loading; else techList">
         <div class="flex items-center justify-center h-16">
           <app-loader></app-loader>
@@ -16,7 +16,7 @@
       </ng-container>
 
       <ng-template #techList>
-        <div class="technology-section flex flex-col gap-3">
+        <div class="technology-section flex flex-col gap-1">
           <h3
             class="text-gray-500 font-mono text-xs font-semibold tracking-wide uppercase px-2"
           >
@@ -37,7 +37,7 @@
                     'border-l-4 border-transparent text-gray-700 hover:text-gray-900 hover:bg-gray-50 hover:border-gray-200':
                       currentTechnology !== item.id,
                   }"
-                  class="-ml-0.5 flex cursor-pointer items-center justify-between pl-4 pr-3 py-3 text-sm transition-all rounded-r-lg"
+                  class="-ml-0.5 flex cursor-pointer items-center justify-between pl-4 pr-3 py-1 text-sm transition-all rounded-r-lg"
                 >
                   <span class="flex items-center gap-3 flex-1 min-w-0">
                     <!-- Modern folder icon with better visual hierarchy -->
@@ -124,7 +124,7 @@
                 </summary>
 
                 <!-- Sub-technologies list -->
-                <ul class="border-l-2 border-gray-100 ml-2 mt-2 pl-2">
+                <ul class="border-l-2 border-gray-100 ml-2 pl-2">
                   <ng-container
                     *ngIf="
                       subTechnologies$.loading && currentTechnology === item.id;
@@ -152,7 +152,7 @@
                             currentSubTechnology !== subItem.id,
                         }"
                         (click)="setCurrentSubTechnology(subItem.id)"
-                        class="-ml-0.5 flex-1 flex items-center pl-6 pr-3 py-2.5 text-sm transition-all cursor-pointer rounded-r-lg"
+                        class="-ml-0.5 flex-1 flex items-center pl-6 pr-3 py-1 text-sm transition-all cursor-pointer rounded-r-lg"
                       >
                         <span class="truncate">{{ subItem.name }}</span>
                       </a>
@@ -184,7 +184,7 @@
                           showManageSubPopover &&
                           currentSubManageForPage.id === subItem.id
                         "
-                        class="popover-menu absolute top-full right-0 z-20 overflow-auto rounded-xl border border-gray-200 bg-white p-2 shadow-xl focus:outline-none"
+                        class="popover-menu absolute top-full right-0 z-20 overflow-auto rounded-xl border border-gray-200 bg-white p-2 shadow-xl fcus:outline-none"
                       >
                         <ul role="menu" class="space-y-1">
                           <li
@@ -259,7 +259,7 @@
               <!-- Main item popover menu -->
               <div
                 *ngIf="showManagePopover && currentManageForPage.id === item.id"
-                class="popover-menu absolute top-full right-0 z-20 overflow-auto rounded-xl border border-gray-200 bg-white p-2 shadow-xl focus:outline-none"
+                class="popover-menu absolute top-full right-0 z-20 overflow-auto rounded-xl border border-gray-200 bg-white p-2 shadow-xl fcus:outline-none"
               >
                 <ul role="menu" class="space-y-1">
                   <li
@@ -397,7 +397,7 @@
         formControlName="name"
         type="text"
         id="pageTitle"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition-all"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg fcus:ring-2 fcus:ring-blue-500 fcus:border-blue-500 block w-full p-3 transition-all"
         placeholder="Enter Page Title"
         required
       />
