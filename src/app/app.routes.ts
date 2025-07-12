@@ -8,11 +8,4 @@ export const routes: Routes = [
         (m) => m.DataLayoutComponent,
       ),
   },
-  {
-    path: "serverless-computing",
-    loadComponent: () =>
-      import(
-        "./components/serverless-content/serverless-content.component"
-      ).then((m) => m.ServerlessContentComponent),
-  },
 ];
