@@ -15,7 +15,7 @@
       <ng-template #techList>
         <div class="flex flex-col gap-2">
           <h3
-            class="text-gray-500 font-mono text-xs font-medium tracking-[1.2px] uppercase"
+            class="text-gray-500 font-mono text-xs font-medium tracking-wide uppercase"
           >
             Technologies
           </h3>
@@ -24,10 +24,7 @@
               *ngFor="let item of sortedTechnologies"
               class="relative flex flex-col"
             >
-              <details
-                class="group [&_summary::-webkit-details-marker]:hidden"
-                [open]="currentTechnology === item.id"
-              >
+              <details class="group" [open]="currentTechnology === item.id">
                 <summary
                   (click)="setSubTechnologies(item)"
                   [ngClass]="{
