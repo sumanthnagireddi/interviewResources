@@ -1,0 +1,99 @@
+/* Custom styles for the serverless content component */
+
+.prose {
+  line-height: 1.7;
+}
+
+.prose p {
+  margin-bottom: 1rem;
+}
+
+.prose ul {
+  margin-bottom: 1rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  scroll-margin-top: 48px;
+}
+
+/* Table styles */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background-color: #f9fafb;
+  font-weight: 500;
+}
+
+/* Button hover effects */
+button:hover {
+  transition: background-color 0.1s ease;
+}
+
+/* Sticky header shadow */
+.sticky {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Group hover effects for copy link buttons */
+.group:hover .group-hover\:opacity-100 {
+  opacity: 1;
+}
+
+/* Reaction button animations */
+.reaction-button {
+  transition: transform 0.1s ease;
+}
+
+.reaction-button:active {
+  transform: scale(0.95);
+}
+
+/* Comment box focus styles */
+textarea:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: -2px;
+}
+
+/* Floating button styles */
+.floating-button {
+  backdrop-filter: blur(8px);
+}
+
+/* Avatar styles */
+.avatar {
+  background-color: #fff;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+/* Custom scrollbar for content area */
+.content-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.content-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.content-scroll::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.content-scroll::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
