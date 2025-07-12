@@ -1,12 +1,240 @@
 <ng-container *ngIf="!this.currentContent$.loading ; else elseTemplate">
-  <address class="flex items-center mb-6 not-italic">
-    <div class="inline-flex items-center mr-3 text-sm text-gray-900 ">
-        <div>
-            <a  rel="author" class="text-2xl font-bold text-gray-900 ">{{topic()}}</a>
-            <!-- <p class="text-sm text-gray-500 dark:text-gray-400">Updated by Sumanth - Fullstack web developer</p> -->
-            <p class="text-sm text-gray-500 dark:text-gray-400"><time>Updated On {{currentContent$?.data[0]?.updatedOn | date:'medium'}}</time></p>
+  <address class="flex items-center  not-italic">
+     <div
+        class="bg-white box-border mx-auto mr-auto max-w-[760px] min-h-[120px] break-words w-full"
+      >
+        <div class="mb-6 break-words relative">
+          <h1
+            class="flex items-center cursor-pointer text-[28px] leading-8 min-h-[35px] break-words pt-1 whitespace-pre-wrap"
+          >
+            <span
+              class="cursor-pointer text-[28px] leading-8 break-words whitespace-pre-wrap"
+            >
+              <span>{{ topic() }}</span>
+              <span
+                class="box-border cursor-pointer opacity-0 break-words pl-2 absolute transition-opacity transition-transform duration-200 ease-out whitespace-pre-wrap transform translate-y-[-4px] hover:opacity-100 hover:translate-y-0"
+              >
+                <div
+                  role="presentation"
+                  class="cursor-pointer break-words whitespace-pre-wrap"
+                >
+                  <button
+                    aria-label="Copy link"
+                    tabindex="0"
+                    type="button"
+                    class="flex items-baseline appearance-auto rounded-[3px] border-0 box-border text-gray-600 cursor-pointer inline-flex font-medium h-8 justify-center max-w-full break-words pl-0.5 pr-0.5 relative text-center no-underline nowrap transition-all duration-100 ease-out align-middle bg-transparent hover:bg-gray-100"
+                  >
+                    <span
+                      class="flex self-center text-gray-600 cursor-pointer flex-shrink-0 text-[0px] font-medium ml-0.5 mr-0.5 break-words text-center nowrap transition-opacity duration-300 select-none"
+                    >
+                      <span
+                        aria-hidden="true"
+                        class="text-gray-600 box-border cursor-pointer flex-shrink-0 text-[0px] font-medium break-words text-center nowrap select-none"
+                      >
+                        <svg
+                          fill="none"
+                          viewBox="-4 -4 24 24"
+                          role="presentation"
+                          class="text-gray-600 cursor-pointer inline fill-none text-[0px] font-medium h-6 leading-[0px] break-words overflow-hidden pointer-events-none text-center nowrap select-none align-bottom w-6"
+                        >
+                          <path
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                            d="M8.22 2.22a3.932 3.932 0 1 1 5.56 5.56l-2.25 2.25-1.06-1.06 2.25-2.25a2.432 2.432 0 0 0-3.44-3.44L7.03 5.53 5.97 4.47zm3.06 3.56-5.5 5.5-1.06-1.06 5.5-5.5zM2.22 8.22l2.25-2.25 1.06 1.06-2.25 2.25a2.432 2.432 0 0 0 3.44 3.44l2.25-2.25 1.06 1.06-2.25 2.25a3.932 3.932 0 1 1-5.56-5.56"
+                            clip-rule="evenodd"
+                          ></path>
+                        </svg>
+                      </span>
+                    </span>
+                  </button>
+                </div>
+              </span>
+            </span>
+          </h1>
         </div>
-    </div>
+        <div class="box-border break-words">
+          <div
+            class="flex items-center text-gray-600 text-xs leading-4 mb-5 mt-0 break-words"
+          >
+            <div class="text-gray-600 text-xs leading-4 mt-1 break-words">
+              <ul
+                aria-label="avatar group"
+                class="text-gray-600 flex text-xs isolate leading-4 mr-2 break-words"
+              >
+                <li
+                  class="text-gray-600 list-item text-xs leading-4 mr-[-8px] break-words text-left"
+                >
+                  <div
+                    role="presentation"
+                    class="text-gray-600 text-xs leading-4 break-words text-left"
+                  >
+                    <span
+                      class="text-gray-600 inline text-xs leading-4 break-words text-left"
+                    >
+                      <div
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        role="button"
+                        aria-label="More information about Sumanth"
+                        tabindex="0"
+                        class="rounded-full text-gray-600 box-border cursor-pointer inline-flex text-xs leading-4 break-words text-left"
+                      >
+                        <div
+                          role="img"
+                          class="text-gray-600 cursor-pointer text-xs leading-4 break-words relative text-left z-[4]"
+                        >
+                          <span
+                            class="flex items-stretch bg-white rounded-full text-gray-600 cursor-pointer flex-col justify-center text-xs h-8 leading-4 mb-0.5 ml-0 mr-0 mt-0 break-words overflow-hidden relative text-left transition-transform transition-opacity duration-200 ease w-8 transform"
+                          >
+                            <img
+                              alt=""
+                              aria-hidden="true"
+                              src="https://sumanthnagireddi2516.atlassian.net/wiki/aa-avatar/712020:ee561769-7c90-48f0-ad47-c93d292f605d"
+                              class="rounded-full text-gray-600 cursor-pointer flex flex-auto flex-grow text-xs h-8 leading-4 break-words overflow-clip text-left w-8"
+                            />
+                          </span>
+                          <span
+                            hidden
+                            class="text-gray-600 cursor-pointer hidden text-xs leading-4 break-words text-left"
+                          >
+                            Sumanth
+                          </span>
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="text-gray-600 text-xs leading-4 ml-2 break-words w-full"
+            >
+              <div class="text-gray-600 text-xs leading-4 break-words">
+                <div class="text-gray-600 flex text-xs leading-4 break-words">
+                  <span
+                    class="text-gray-600 text-xs leading-4 mr-0.5 break-words"
+                  >
+                    <span
+                      class="text-gray-600 inline text-xs leading-4 break-words align-middle"
+                    >
+                      <span>Owned by </span>
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="Owned by Sumanth"
+                        href="#"
+                        class="text-gray-600 cursor-pointer inline text-xs leading-4 break-words underline"
+                      >
+                        Sumanth
+                      </a>
+                    </span>
+                  </span>
+                  <div
+                    role="presentation"
+                    class="text-gray-600 text-xs leading-4 break-words"
+                  >
+                    <button
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      tabindex="0"
+                      type="button"
+                      class="flex items-baseline appearance-auto rounded-[3px] border-0 box-border text-gray-600 cursor-pointer inline-flex text-xs font-medium h-[20.5714px] justify-center leading-4 max-w-full break-words pl-0.5 pr-0.5 relative text-center nowrap transition-all duration-100 ease-out align-middle bg-transparent hover:bg-gray-100"
+                    >
+                      <span
+                        class="flex self-center text-gray-600 cursor-pointer flex-shrink-0 text-[0px] font-medium ml-0.5 mr-0.5 break-words text-center nowrap transition-opacity duration-300 select-none"
+                      >
+                        <span
+                          role="img"
+                          aria-label="Manage ownership"
+                          class="text-gray-600 box-border cursor-pointer flex-shrink-0 text-[0px] font-medium break-words text-center nowrap select-none"
+                        >
+                          <svg
+                            fill="none"
+                            viewBox="0 0 16 16"
+                            role="presentation"
+                            class="text-gray-600 cursor-pointer inline fill-none text-[0px] font-medium h-4 leading-[0px] break-words overflow-hidden pointer-events-none text-center nowrap select-none align-bottom w-4"
+                          >
+                            <path
+                              fill="currentColor"
+                              fill-rule="evenodd"
+                              d="M0 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0m6.5 0a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0M13 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0"
+                              clip-rule="evenodd"
+                            ></path>
+                          </svg>
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="text-gray-600 text-xs leading-4 break-words">
+                <div
+                  class="text-gray-600 inline-block text-xs leading-4 break-words"
+                >
+                  <span
+                    class="text-gray-600 inline text-xs leading-4 break-words break-anywhere"
+                  >
+                    <time>{{
+                      currentContent$?.data[0]?.updatedOn | date: "MMM dd, yyyy"
+                    }}</time>
+                  </span>
+                </div>
+                <span
+                  aria-haspopup="true"
+                  class="text-gray-600 inline text-xs leading-4 break-words"
+                >
+                  <span
+                    class="text-gray-600 inline text-xs leading-4 break-words"
+                  >
+                    <button
+                      tabindex="0"
+                      type="button"
+                      class="flex items-baseline appearance-auto rounded-[3px] border-0 box-border text-gray-600 cursor-pointer inline-flex text-xs justify-center leading-4 max-w-full break-words relative text-center nowrap transition-all duration-100 ease-out bg-transparent hover:bg-gray-100"
+                    >
+                      <span
+                        class="text-gray-600 cursor-pointer flex-grow text-xs leading-4 break-words overflow-hidden text-center text-ellipsis nowrap transition-opacity duration-300"
+                      >
+                        <span
+                          aria-hidden="true"
+                          class="text-gray-600 cursor-pointer inline text-xs leading-4 mr-1 break-words text-center nowrap align-middle"
+                        >
+                          <span
+                            aria-hidden="true"
+                            class="text-gray-600 box-border cursor-pointer inline-block flex-shrink-0 text-xs leading-4 break-words text-center nowrap"
+                          >
+                            <svg
+                              fill="none"
+                              viewBox="0 0 16 16"
+                              role="presentation"
+                              class="text-gray-600 cursor-pointer inline fill-none text-xs h-4 leading-3 break-words overflow-hidden pointer-events-none text-center nowrap align-bottom w-4"
+                            >
+                              <path
+                                fill="currentColor"
+                                fill-rule="evenodd"
+                                d="M1 1h1.5v7.94l3.22-3.22a.75.75 0 0 1 1.06 0L8.5 7.44l3.94-3.94H10V2h4.25a.75.75 0 0 1 .75.75V7h-1.5V4.56L9.03 9.03a.75.75 0 0 1-1.06 0L6.25 7.31 2.5 11.06V13a.5.5 0 0 0 .5.5h12V15H3a2 2 0 0 1-2-2z"
+                                clip-rule="evenodd"
+                              ></path>
+                            </svg>
+                          </span>
+                        </span>
+                        <span
+                          class="text-gray-600 cursor-pointer inline text-xs leading-4 break-words text-center nowrap"
+                        >
+                          See how many people viewed this
+                        </span>
+                      </span>
+                    </button>
+                  </span>
+                </span>
+                <span
+                  class="text-gray-600 inline text-xs leading-4 break-words"
+                >
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 </address>
   <app-editor (content)="saveContent($event)" [mode]="mode()" [data]="currentContent$?.data[0]?.content"></app-editor>
 </ng-container>
