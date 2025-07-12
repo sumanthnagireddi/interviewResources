@@ -1,3 +1,179 @@
-.yoopta-editor{
+/* Enhanced responsive layout styles */
+.app-container {
+  @apply h-screen overflow-hidden bg-gray-50;
+}
+
+/* Mobile menu button enhancements */
+.mobile-menu-button {
+  @apply lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white shadow-lg border border-gray-200 hover:bg-gray-50 transition-all duration-200;
+  backdrop-filter: blur(8px);
+}
+
+.mobile-menu-button:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.mobile-menu-button:active {
+  transform: translateY(0);
+}
+
+/* Sidebar container responsive enhancements */
+.sidebar-wrapper {
+  @apply fixed lg:relative inset-y-0 left-0 z-40 w-80 lg:w-auto lg:min-w-[20rem] lg:max-w-[22rem];
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-wrapper.mobile-open {
+  @apply translate-x-0;
+}
+
+.sidebar-wrapper.mobile-closed {
+  @apply -translate-x-full lg:translate-x-0;
+}
+
+/* Enhanced backdrop */
+.mobile-backdrop {
+  @apply lg:hidden fixed inset-0 z-30 bg-gray-900/50;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Main content area responsive */
+.main-content-wrapper {
+  @apply flex-1 flex flex-col min-w-0;
+}
+
+.main-content {
+  @apply flex-1 relative overflow-y-auto focus:outline-none;
+  scroll-behavior: smooth;
+}
+
+/* Content padding and spacing */
+.content-container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Mobile spacing adjustment */
+.mobile-spacer {
+  @apply lg:hidden h-12;
+}
+
+/* Enhanced scrollbar for main content */
+.main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Home component and router outlet spacing */
+.home-section {
+  @apply mb-8;
+}
+
+.router-outlet-section {
+  @apply max-w-4xl mx-auto;
+}
+
+/* Responsive breakpoint adjustments */
+@media (max-width: 1023px) {
+  .sidebar-wrapper {
+    width: 320px;
+    max-width: 85vw;
+  }
+}
+
+@media (max-width: 640px) {
+  .content-container {
+    @apply px-3;
+  }
+
+  .sidebar-wrapper {
+    width: 280px;
+    max-width: 90vw;
+  }
+
+  .mobile-menu-button {
+    @apply top-3 left-3 p-1.5;
+  }
+}
+
+/* Focus states for accessibility */
+.mobile-menu-button:focus {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .mobile-menu-button {
+    @apply border-2 border-black;
+  }
+
+  .mobile-backdrop {
+    @apply bg-black/80;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-wrapper,
+  .mobile-menu-button,
+  .mobile-backdrop {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Dark mode preparation */
+@media (prefers-color-scheme: dark) {
+  .app-container {
+    @apply bg-gray-900;
+  }
+
+  .mobile-menu-button {
+    @apply bg-gray-800 border-gray-700 text-white hover:bg-gray-700;
+  }
+}
+
+/* Print styles */
+@media print {
+  .mobile-menu-button,
+  .mobile-backdrop,
+  .sidebar-wrapper {
+    display: none !important;
+  }
+
+  .main-content-wrapper {
+    margin-left: 0 !important;
+  }
+}
+
+/* Legacy yoopta-editor override with better specificity */
+.yoopta-editor {
   width: auto !important;
+  max-width: 100% !important;
 }
