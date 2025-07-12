@@ -1,10 +1,17 @@
 import { Component } from "@angular/core";
-import { ServerlessContentComponent } from "../serverless-content/serverless-content.component";
 
 @Component({
   selector: "app-home",
-  imports: [ServerlessContentComponent],
+  imports: [],
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.css",
 })
-export class HomeComponent {}
+export class HomeComponent {
+  getCurrentDate(): string {
+    return new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  }
+}
