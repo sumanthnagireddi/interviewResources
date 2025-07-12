@@ -148,8 +148,8 @@
   }
 }
 
-/* Dark mode preparation */
-@media (prefers-color-scheme: dark) {
+/* darkk mode preparation */
+@media (prefers-color-scheme: darkk) {
   .app-container {
     @apply bg-gray-900;
   }

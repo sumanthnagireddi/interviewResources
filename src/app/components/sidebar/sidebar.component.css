@@ -348,8 +348,8 @@ details[open] ul {
   }
 }
 
-/* Dark mode preparation */
-@media (prefers-color-scheme: dark) {
+/* darkk mode preparation */
+@media (prefers-color-scheme: darkk) {
   .sidebar-container {
     @apply bg-gray-900 text-white;
   }
