@@ -59,6 +59,7 @@ export class SidebarComponent implements OnInit {
   showDeleteDialog: boolean = false;
   currentSubManageForPage: any;
   showManageSubPopover: boolean = false;
+  isMobileMenuOpen: boolean = false;
   router = inject(Router);
   constructor(private fb: FormBuilder) {
     this.dataForm = this.fb.group({
@@ -134,6 +135,21 @@ export class SidebarComponent implements OnInit {
     this.showManagePopover = false;
     this.showManageSubPopover = false;
   }
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    // Prevent body scroll when menu is open
+    if (this.isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
+    document.body.style.overflow = "auto";
+  }
   handleOutput() {
     const payload = {
       name: this.dataForm.value.name,
@@ -182,6 +198,24 @@ export class SidebarComponent implements OnInit {
     if (!clickedInsidePopover) {
       this.showManagePopover = false;
       this.showManageSubPopover = false;
+    }
+  }
+
+  // Handle escape key to close mobile menu
+  @HostListener("document:keydown.escape", ["$event"])
+  onEscapeKey(event: KeyboardEvent) {
+    if (this.isMobileMenuOpen) {
+      this.closeMobileMenu();
+    }
+  }
+
+  // Handle window resize to close mobile menu on larger screens
+  @HostListener("window:resize", ["$event"])
+  onWindowResize(event: Event) {
+    const target = event.target as Window;
+    if (target.innerWidth >= 1024) {
+      // lg breakpoint
+      this.closeMobileMenu();
     }
   }
 }
