@@ -133,11 +133,12 @@
                         [routerLink]="
                           'course/' + subItem.name + '/' + subItem.id + '/view'
                         "
-                        [ngClass]="
-                          currentSubTechnology === subItem.id
-                            ? 'border-l border-blue-600 bg-blue-50 text-blue-600 font-semibold'
-                            : 'border-l border-transparent text-gray-600 hover:text-gray-700 hover:bg-gray-50'
-                        "
+                        [ngClass]="{
+                          'border-l border-blue-600 bg-blue-50 text-blue-600 font-semibold':
+                            currentSubTechnology === subItem.id,
+                          'border-l border-transparent text-gray-600 hover:text-gray-700 hover:bg-gray-50':
+                            currentSubTechnology !== subItem.id,
+                        }"
                         (click)="setCurrentSubTechnology(subItem.id)"
                         class="-ml-px flex-1 flex items-center pl-8 pr-2 py-2 text-sm transition-all cursor-pointer"
                       >
