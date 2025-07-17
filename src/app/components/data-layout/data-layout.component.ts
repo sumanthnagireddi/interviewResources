@@ -42,4 +42,7 @@ export class DataLayoutComponent {
 
     }
   }
+  getTopic(){
+    return this.topic().replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
+  }
 }
