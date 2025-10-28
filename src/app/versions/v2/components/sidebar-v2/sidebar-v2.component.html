@@ -1,5 +1,5 @@
 <div class="flex h-screen  fixed overflow-x-hidden flex-col justify-between border-e border-gray-100 bg-white">
-  <div class="px-4 py-6">
+  <div class=" py-6">
     <a class="flex items-center gap-2">
       <p
         class=" text-xl font-bold bg-gradient-to-l from-orange-500 via-indigo-500 to-green-500 text-transparent bg-clip-text  text-gray-700 cursor-pointer px-4">
@@ -9,7 +9,7 @@
 
     <ul class="mt-6 space-y-1 ">
       <li *ngFor="let item of sidebarMapper">
-        <details class="group [&amp;_summary::-webkit-details-marker]:hidden">
+        <details class="group [&amp;_summary::-webkit-details-marker]:hidden" [attr.open]="isOpen(item)">
           <summary
             class="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
             <span class="text-sm font-medium"> {{item.name}} </span>

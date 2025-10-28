@@ -1,5 +1,5 @@
-<div class="flex h-full">
-  <div *ngIf="showSidebar" class="max-h-screen sticky top-0 overflow-y-auto w-[20vw] sm:block hidden">
+<div class="flex h-full ">
+  <div *ngIf="showSidebar" class="max-h-screen sticky top-0 overflow-y-auto w-[18vw] sm:block hidden">
     <app-sidebar-v2 (sidebarState)="manageSidebar($event)" (emitContent)="receiveContent($event)"></app-sidebar-v2>
   </div>
 
@@ -12,7 +12,7 @@
     <div class="flex-1" (click)="manageSidebar(false)"></div>
   </div>
 
-  <div class="flex-1 max-h-screen overflow-y-auto bg-gray-50">
+  <div class="flex-1 ml-6 max-h-screen overflow-y-auto bg-gray-50">
     <div class="p-6">
       <div class="flex gap-2 ">
         <div *ngIf="!showSidebar" class="pt-2">

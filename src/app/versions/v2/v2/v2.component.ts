@@ -10,7 +10,7 @@ import { CollapseIconComponent } from "../components/collapse-icon/collapse-icon
 
 @Component({
   selector: 'app-v2',
-  imports: [SidebarV2Component, NgIf, EditorComponent, NgFor, HomeComponent, HeaderComponent, CollapseIconComponent],
+  imports: [SidebarV2Component, NgIf, EditorComponent, NgFor, CollapseIconComponent],
   standalone: true,
   templateUrl: './v2.component.html',
   styleUrl: './v2.component.css',
@@ -22,7 +22,7 @@ export class V2Component {
   mode = input<string>('view');
   isReady: boolean = false;
   headings: string[] = [];
-  showSidebar = false
+  showSidebar = true;
   currentItem:any
   private readonly apiService = inject(ResourcesService)
 

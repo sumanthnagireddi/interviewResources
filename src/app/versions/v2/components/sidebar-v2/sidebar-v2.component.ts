@@ -8,7 +8,7 @@ import { CollapseIconComponent } from "../collapse-icon/collapse-icon.component"
 
 @Component({
   selector: 'app-sidebar-v2',
-  imports: [NgFor, NgIf, CommonModule, CollapseIconComponent],
+  imports: [NgFor, CommonModule, CollapseIconComponent],
   templateUrl: './sidebar-v2.component.html',
   styleUrl: './sidebar-v2.component.css'
 })
@@ -25,6 +25,8 @@ export class SidebarV2Component {
     const cachedSidebar = sessionStorage.getItem('sidebarMapper');
     if (cachedSidebar) {
       this.sidebarMapper = JSON.parse(cachedSidebar);
+      this.selectedCategoryId = this.sidebarMapper[1].categories[5].id;
+      this.emitContent.emit(this.sidebarMapper[1].categories[5]);
     } else {
       this.store$.dispatch(loadTechnologies());
       this.store$.select(selectTechnologies).subscribe((data) => {
@@ -34,12 +36,15 @@ export class SidebarV2Component {
         data.data.forEach(element => {
           this.apiService.getCategoriesByTechnologyId(element.id).subscribe((categories) => {
             this.pushToSidebarMapper(element, categories);
+
             pending--;
             if (pending === 0) {
               sessionStorage.setItem('sidebarMapper', JSON.stringify(this.sidebarMapper));
             }
           });
         });
+        this.selectedCategoryId = this.sidebarMapper[1].categories[5].id;
+        this.emitContent.emit(this.sidebarMapper[1].categories[5]);
       });
     }
   }
@@ -57,6 +62,9 @@ export class SidebarV2Component {
   updateContent(subItem: any) {
     this.selectedCategoryId = subItem.id; // Track selected category
     this.emitContent.emit(subItem);
+  }
+  isOpen(item: any): boolean {
+    return  this.selectedCategoryId !== null && item.categories.some((subItem: any) => subItem.id === this.selectedCategoryId);
   }
 }
 
