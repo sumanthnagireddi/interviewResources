@@ -16,12 +16,13 @@ export class EditorComponent {
   @ViewChild('editorElem') editorEl!: ElementRef;
 
   constructor() {
-    // Effect can be used to react to changes in `data`
+    console.log(this.data(),'ds')
     effect(() => {
       if (this.editorEl && this.data()) {
         this.setContent(this.data());
       }
     });
+
   }
 
   ngAfterViewInit(): void {

@@ -5,10 +5,11 @@ import { selectCurentContent, selectTechnologies } from '../../store/selectors/s
 import { EditorComponent } from "../editor/editor.component";
 import { LoaderComponent } from "../loader/loader.component";
 import { DatePipe, NgIf } from '@angular/common';
+import { V2Component } from '../../versions/v2/v2/v2.component';
 
 @Component({
   selector: 'app-data-layout',
-  imports: [EditorComponent, LoaderComponent, NgIf,DatePipe],
+  imports: [EditorComponent, LoaderComponent, NgIf,DatePipe,V2Component],
   templateUrl: './data-layout.component.html',
   styleUrl: './data-layout.component.css'
 })

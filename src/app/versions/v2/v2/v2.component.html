@@ -1,0 +1,45 @@
+<div class="flex h-full">
+  <div *ngIf="showSidebar" class="max-h-screen sticky top-0 overflow-y-auto w-[20vw] sm:block hidden">
+    <app-sidebar-v2 (sidebarState)="manageSidebar($event)" (emitContent)="receiveContent($event)"></app-sidebar-v2>
+  </div>
+
+  <!-- Mobile overlay sidebar -->
+  <div *ngIf="showSidebar" class="fixed inset-0 z-50 bg-black bg-opacity-40 flex sm:hidden">
+    <div class="bg-white w-full max-w-xs h-full overflow-y-auto shadow-lg relative">
+      <app-sidebar-v2 (sidebarState)="manageSidebar($event)" (emitContent)="receiveContent($event)"></app-sidebar-v2>
+    </div>
+    <!-- Click outside to close -->
+    <div class="flex-1" (click)="manageSidebar(false)"></div>
+  </div>
+
+  <div class="flex-1 max-h-screen overflow-y-auto bg-gray-50">
+    <div class="p-6">
+      <div class="flex gap-2 ">
+        <div *ngIf="!showSidebar" class="pt-2">
+          <app-collapse-icon (sidebarState)="manageSidebar($event)"></app-collapse-icon>
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold">{{(currentItem?.name)?(currentItem?.name):'Welcome to V2 Component'}}</h1>
+          <span class="text-gray-700"></span>
+        </div>
+      </div>
+      <div *ngIf="isReady" class="mt-6">
+        <app-editor (content)="saveContent($event)" [mode]="mode()" [data]="data()"></app-editor>
+      </div>
+      <ng-template #default>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Desktop headings sidebar -->
+  <div *ngIf="isReady" class="w-[20vw] sm:block hidden border-e border-gray-100 bg-white">
+    <ul class="mt-6 space-y-1 ">
+      <li *ngFor="let item of headings; let i = index">
+        <a (click)="scrollToHeading(item)"
+          class="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+          {{item}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
