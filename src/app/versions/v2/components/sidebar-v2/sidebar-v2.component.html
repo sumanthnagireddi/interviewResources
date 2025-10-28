@@ -26,9 +26,13 @@
           <ul class="mt-2 space-y-1 px-4">
             <li (click)="updateContent(subItem)" *ngFor="let subItem of item.categories">
               <a
-                class="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                {{subItem.name}}
-              </a>
+            [ngClass]="{
+              'bg-indigo-100 text-indigo-700 font-semibold': selectedCategoryId === subItem.id,
+              'text-gray-500 hover:bg-gray-100 hover:text-gray-700': selectedCategoryId !== subItem.id
+            }"
+            class="block cursor-pointer rounded-lg px-4 py-2 text-sm font-medium">
+            {{subItem.name}}
+          </a>
             </li>
 
 
@@ -41,7 +45,7 @@
   </div>
 
   <div class="sticky inset-x-0 bottom-0 border-t border-gray-100">
-    <a href="#" class="flex items-center gap-2 bg-white p-4 hover:bg-gray-50">
+    <a class="flex items-center gap-2 bg-white p-4 hover:bg-gray-50">
       <img alt="" src="https://sumanthnagireddi1.web.app/assets/imag3.jpg" class="size-10 rounded-full object-cover">
 
       <div>

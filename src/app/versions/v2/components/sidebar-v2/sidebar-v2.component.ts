@@ -20,6 +20,7 @@ export class SidebarV2Component {
   currentContent$: any;
   emitContent = output<any>()
   sidebarState = output<boolean>()
+  selectedCategoryId: string | null = null;
   ngOnInit(): void {
     const cachedSidebar = sessionStorage.getItem('sidebarMapper');
     if (cachedSidebar) {
@@ -54,6 +55,7 @@ export class SidebarV2Component {
     });
   }
   updateContent(subItem: any) {
+    this.selectedCategoryId = subItem.id; // Track selected category
     this.emitContent.emit(subItem);
   }
 }
