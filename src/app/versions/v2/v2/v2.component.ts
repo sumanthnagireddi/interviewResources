@@ -24,18 +24,25 @@ export class V2Component {
   isReady: boolean = false;
   headings: string[] = [];
   showSidebar = true;
-  currentItem:any
+  currentItem: any
+  contentAvailable: boolean = false;
   private readonly apiService = inject(ResourcesService)
 
   receiveContent(event: any) {
     this.isReady = false;
-    this.currentItem=event
+    this.contentAvailable = true;
+    this.currentItem = event
     this.apiService.getTopicById(event.id).subscribe((content) => {
-      const rawHtml = content[0]?.content || '';
+      const rawHtml = content[0]?.content;
       const htmlWithIds = this.addHeadingIds(rawHtml);
       this.data.set(htmlWithIds);
       this.headings = this.extractHeadings(htmlWithIds);
       this.isReady = true;
+     if(content[0]?.content){
+      this.contentAvailable = true;
+     }else{
+      this.contentAvailable = false;
+     }
     });
   }
   addHeadingIds(html: string): string {
@@ -45,8 +52,8 @@ export class V2Component {
       return `<h${level}${attrs} id="${id}">${text}</h${level}>`;
     });
   }
-  manageSidebar(event:any){
-    this.showSidebar=!this.showSidebar;
+  manageSidebar(event: any) {
+    this.showSidebar = !this.showSidebar;
   }
   scrollToHeading(text: string) {
     // Find all heading elements in the document
