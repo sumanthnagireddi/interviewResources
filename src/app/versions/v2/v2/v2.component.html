@@ -23,10 +23,11 @@
           <span class="text-gray-700"></span>
         </div>
       </div>
-      <div *ngIf="isReady" class="mt-6">
+      <div *ngIf="isReady;else loader" class="mt-6">
         <app-editor (content)="saveContent($event)" [mode]="mode()" [data]="data()"></app-editor>
       </div>
-      <ng-template #default>
+      <ng-template #loader>
+        <app-loader></app-loader>
       </ng-template>
     </div>
   </div>

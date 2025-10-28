@@ -7,10 +7,11 @@ import { ResourcesService } from '../../../services/resources.service';
 import { HomeComponent } from "../../../components/home/home.component";
 import { HeaderComponent } from "../../../components/header/header.component";
 import { CollapseIconComponent } from "../components/collapse-icon/collapse-icon.component";
+import { LoaderComponent } from "../../../components/loader/loader.component";
 
 @Component({
   selector: 'app-v2',
-  imports: [SidebarV2Component, NgIf, EditorComponent, NgFor, CollapseIconComponent],
+  imports: [SidebarV2Component, NgIf, EditorComponent, NgFor, CollapseIconComponent, LoaderComponent],
   standalone: true,
   templateUrl: './v2.component.html',
   styleUrl: './v2.component.css',
