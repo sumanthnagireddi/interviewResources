@@ -1,45 +1,83 @@
-<aside class="w-64 border-r bg-white h-full flex flex-col text-sm">
+<div class="p-4 w-[20vw] bg-white border-r h-screen">
+  <ng-container *ngFor="let item of menuItems">
 
-  <!-- Nav -->
-  <div class="p-4 space-y-1">
-    <div class="px-2 py-1 rounded bg-blue-50 text-blue-600 font-medium">
-      For you
-    </div>
-    <div class="px-2 py-1 rounded hover:bg-gray-100">Recent</div>
-    <div class="px-2 py-1 rounded hover:bg-gray-100">Starred</div>
-    <div class="px-2 py-1 rounded hover:bg-gray-100">Spaces</div>
-    <div class="px-2 py-1 rounded hover:bg-gray-100">Apps</div>
-  </div>
+    <!-- LEVEL 1 -->
+    <div
+      class="px-2 py-1 mb-1 flex items-center gap-3 rounded-md cursor-pointer
+             hover:bg-gray-100 text-sm font-medium"
+      [class.bg-blue-50]="selectedMenuItem === item.id"
+      [class.text-blue-600]="selectedMenuItem === item.id"
+      (click)="selectMenuItem(item)"
+      [routerLink]="!item.hasItems ? item.url : null"
+    >
+      <span class="material-symbols-outlined text-xl">
+        {{ item.icon }}
+      </span>
 
-  <!-- Starred Spaces -->
-  <div class="px-4 py-2 border-t text-gray-500">Starred spaces</div>
+      <span class="flex-1">{{ item.label }}</span>
 
-  <div class="px-4 space-y-1">
-    <div class="flex items-center gap-2 px-2 py-1 hover:bg-gray-100 rounded">
-      📘 Interview Resources
+      <span
+        *ngIf="item.hasItems"
+        class="material-symbols-outlined transition-transform duration-200"
+        [class.rotate-180]="item.isOpen"
+      >
+        keyboard_arrow_down
+      </span>
     </div>
-    <div class="flex items-center gap-2 px-2 py-1 hover:bg-gray-100 rounded">
-      📕 My first space
-    </div>
-    <div class="flex items-center gap-2 px-2 py-1 hover:bg-gray-100 rounded">
-      <span class="w-5 h-5 bg-green-500 text-white rounded-full text-xs flex items-center justify-center">S</span>
-      Sumanth
-    </div>
-  </div>
 
-  <div class="px-4 py-2 text-blue-600 cursor-pointer">View all spaces</div>
+    <!-- LEVEL 2 -->
+    <div *ngIf="item.hasItems && item.isOpen" class="ml-6 mt-1 space-y-1">
 
-  <!-- Bottom -->
-  <div class="mt-auto px-4 py-3 border-t space-y-2">
-    <div class="flex justify-between">
-      <span>Company hub</span>
-      <span>↗</span>
-    </div>
-    <div class="flex justify-between">
-      <span>Teams</span>
-      <span>↗</span>
-    </div>
-    <div>More</div>
-  </div>
+      <ng-container *ngFor="let child of item.children">
 
-</aside>
+        <div
+          class="px-2 py-1 flex items-center gap-2 rounded-md text-sm cursor-pointer
+                 hover:bg-gray-100"
+          [class.bg-blue-50]="selectedMenuItem === child.id"
+          [class.text-blue-600]="selectedMenuItem === child.id"
+          (click)="selectMenuItem(child)"
+          [routerLink]="!child.hasItems ? child.url : null"
+        >
+          <span class="material-symbols-outlined text-lg">
+            {{ child.icon }}
+          </span>
+
+          <span class="flex-1">{{ child.label }}</span>
+
+          <span
+            *ngIf="child.hasItems"
+            class="material-symbols-outlined text-base transition-transform duration-200"
+            [class.rotate-180]="child.isOpen"
+          >
+            keyboard_arrow_down
+          </span>
+        </div>
+
+        <!-- LEVEL 3 -->
+        <div
+          *ngIf="child.hasItems && child.isOpen"
+          class="ml-6 space-y-1"
+        >
+          <div
+            *ngFor="let subChild of child.childern"
+            [routerLink]="subChild.url"
+            (click)="selectedMenuItem = subChild.id"
+            class="flex items-center gap-2 px-2 py-1 text-sm rounded-md cursor-pointer
+                   hover:bg-gray-100"
+            [class.bg-blue-50]="selectedMenuItem === subChild.id"
+            [class.text-blue-600]="selectedMenuItem === subChild.id"
+          >
+          <span class="material-symbols-outlined text-lg">
+            {{ child.icon }}
+          </span>
+
+          <span class="flex-1">{{ child.label }}</span>
+          </div>
+        </div>
+
+      </ng-container>
+
+    </div>
+
+  </ng-container>
+</div>

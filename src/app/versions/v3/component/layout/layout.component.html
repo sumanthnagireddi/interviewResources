@@ -1,1 +1,10 @@
-<p>layout works!</p>
+<div class="h-screen  bg-gray-50">
+  <app-header></app-header>
+  <div class="flex h-[calc(100vh-56px)]">
+    <div *ngIf="sidebarToggleStatus">
+      <app-sidebar-v3></app-sidebar-v3>
+    </div>
+    <div [ngClass]="!sidebarToggleStatus?'mx-[5vw]':'mx-0'" class="flex-1   p-6 overflow-y-scroll">
+      <router-outlet></router-outlet>
+    </div>
+  </div>

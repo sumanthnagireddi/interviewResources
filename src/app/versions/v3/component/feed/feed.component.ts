@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FeedCardComponent } from "../feed-card/feed-card.component";
 import { CommonModule } from '@angular/common';
+import { RecentDocsComponent } from "../recent-docs/recent-docs.component";
 
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [CommonModule, FeedCardComponent],
+  imports: [CommonModule, FeedCardComponent, RecentDocsComponent],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.css'
 })

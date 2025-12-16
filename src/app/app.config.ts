@@ -9,7 +9,7 @@ import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient } from '@angular/common/http';
-import { metaReducers, reducers } from './store/reducers';
+import { metaReducers, reducers } from './versions/v3/store/reducers';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { SidebarEffects } from './store/effects/sidebar.effects';
 
