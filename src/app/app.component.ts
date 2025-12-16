@@ -7,18 +7,14 @@ import {
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Router, RouterOutlet } from "@angular/router";
-import { SidebarComponent } from "./components/sidebar/sidebar.component";
-import { HomeComponent } from "./components/home/home.component";
 import { ResourcesService } from "./services/resources.service";
-import { V2Component } from "./versions/v2/v2/v2.component";
-import { V3Component } from "./versions/v3/v3.component";
 
 @Component({
   selector: "app-root",
   standalone: true,
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
-  imports: [CommonModule, V2Component, V3Component, RouterOutlet],
+  imports: [CommonModule, RouterOutlet],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppComponent {

@@ -1,6 +1,8 @@
 import { createAction, props } from "@ngrx/store";
 
 export enum SidebarActionTypes {
+  showSidebar = '[Sidebar] showSidebar',
+  hideSidebar = '[Sidebar] hideSidebar',
   setTechnologies = '[Sidebar] getTechnologies from firestore',
   getSubTechnologies = '[Sidebar] getSubTechnologies from firestore',
   loadTechnologies = '[Sidebar] loadTechnologies from firestore',
@@ -41,3 +43,4 @@ export const loadCurrentContent = createAction(SidebarActionTypes.loadCurrentCon
 export const setCurrentContent = createAction(SidebarActionTypes.setCurrentContent, props<{ content: any }>());
 export const updateCurrentContent = createAction(SidebarActionTypes.updateCurrentContent, props<{ contentPayload: { id: string, data: string ,updatedOn : string} }>());
 export const setNewCurrentContent = createAction(SidebarActionTypes.setCurrentContent, props<{ contentPayload: { parent: string, content: string,updatedOn : string } }>());
+export const toggleSidebar = createAction(SidebarActionTypes.showSidebar,props<{show:boolean}>());

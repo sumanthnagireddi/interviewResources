@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, ElementRef, input, output, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, ElementRef, Input, input, OnInit, output, SimpleChanges, ViewChild } from '@angular/core';
 import { set } from '@angular/fire/database';
 
 @Component({
@@ -10,24 +10,20 @@ import { set } from '@angular/fire/database';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class EditorComponent {
-  data = input<string>();
-  mode = input('view');
-  content=output()
+  @Input() data: any
+  @Input() mode: string = 'view'
+  content = output()
   @ViewChild('editorElem') editorEl!: ElementRef;
 
-  constructor() {
-    console.log(this.data(),'ds')
-    effect(() => {
-      if (this.editorEl && this.data()) {
-        this.setContent(this.data());
-      }
-    });
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data'] && !changes['data'].firstChange) {
+      this.setContent(this.data);
+    }
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      (this.editorEl.nativeElement as any).setHTML(this.data());
+      (this.editorEl.nativeElement as any).setHTML(this.data);
     }, 100);
   }
 

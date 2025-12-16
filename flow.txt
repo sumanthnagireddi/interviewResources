@@ -1,0 +1,164 @@
+COLLECTION OVERVIEW
+/users
+/contents
+/technologies
+/topics
+/userActivity
+
+1️⃣ contents (Single Source of Truth)
+
+This holds every content item (draft, published, starred, etc).
+
+contents (collection)
+└── contentId (document)
+    ├── title: "Understanding NgRx Effects"
+    ├── body: "<html or markdown>"
+    ├── technologyId: "angular"
+    ├── topicId: "ngrx"
+    ├── authorId: "user_123"
+    ├── status: "draft" | "published"
+    ├── createdAt: Timestamp
+    ├── updatedAt: Timestamp
+    ├── publishedAt: Timestamp | null
+    ├── isDeleted: false
+
+    ✅ Why this works
+
+Draft → Published = just update status
+
+All screens react automatically
+
+Deleting removes it from everywhere
+
+2️⃣ technologies (Sidebar – Level 1)
+technologies
+└── angular
+    ├── name: "Angular"
+    ├── icon: "article"
+    ├── order: 1
+
+3️⃣ topics (Sidebar – Level 2)
+topics
+└── ngrx
+    ├── name: "NgRx"
+    ├── technologyId: "angular"
+    ├── order: 1
+
+
+⚠️ Do NOT store content IDs here
+We query contents by technologyId + topicId.
+
+4️⃣ userActivity (For You / Starred / Recent)
+
+This is user-specific, lightweight metadata.
+
+userActivity
+└── user_123
+    ├── starred: {
+    │     contentId1: true,
+    │     contentId2: true
+    │   }
+    ├── recentlyVisited: {
+    │     contentId1: Timestamp,
+    │     contentId2: Timestamp
+    │   }
+
+🧠 SCREEN-WISE DATA STRATEGY
+🏠 1. For You Screen
+
+Logic
+
+Recently visited
+
+Plus latest published content
+
+Query 1 – Recently Visited
+const recentIds = Object.keys(userActivity.recentlyVisited);
+
+Query 2 – Latest Published
+query(
+  collection(db, 'contents'),
+  where('status', '==', 'published'),
+  orderBy('publishedAt', 'desc'),
+  limit(10)
+)
+
+🕒 2. Recent Screen (Published Only)
+query(
+  collection(db, 'contents'),
+  where('status', '==', 'published'),
+  orderBy('publishedAt', 'desc')
+)
+
+⭐ 3. Starred Screen
+
+Fetch starred IDs from userActivity
+
+Query contents by IDs
+
+query(
+  collection(db, 'contents'),
+  where(documentId(), 'in', starredIds)
+)
+
+
+💡 If starred list > 10, paginate IDs
+
+📝 4. Drafts Screen
+query(
+  collection(db, 'contents'),
+  where('authorId', '==', userId),
+  where('status', '==', 'draft')
+)
+
+Publish Draft (Single Update)
+updateDoc(doc(db, 'contents', contentId), {
+  status: 'published',
+  publishedAt: serverTimestamp(),
+  updatedAt: serverTimestamp()
+});
+
+
+🔥 Automatically:
+
+Removed from drafts
+
+Appears in Recent
+
+Appears in For You
+
+📂 5. Content Folder (Technology → Topic → Content)
+Sidebar
+technologies → topics
+
+Content List
+query(
+  collection(db, 'contents'),
+  where('technologyId', '==', 'angular'),
+  where('topicId', '==', 'ngrx'),
+  where('status', '==', 'published')
+)
+
+🗑️ DELETE LOGIC (Deletes Everywhere)
+Delete Content
+deleteDoc(doc(db, 'contents', contentId));
+
+Cleanup User Activity (Cloud Function)
+exports.cleanupContent = onDelete(
+  firestore.document('contents/{contentId}'),
+  async (snap, context) => {
+    const contentId = context.params.contentId;
+    // remove from starred & recent
+  }
+);
+
+
+✔ Removed from:
+
+For You
+
+Recent
+
+Starred
+
+Content tree  

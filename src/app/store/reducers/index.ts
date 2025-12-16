@@ -1,4 +1,3 @@
-import * as fromSidebar from './sidebar.reducer';
 import { isDevMode } from '@angular/core';
 import {
   ActionReducer,
@@ -7,6 +6,7 @@ import {
   createSelector,
   MetaReducer
 } from '@ngrx/store';
+import * as fromSidebar from './sidebar-new.reducer';
 import { localStorageSync } from 'ngrx-store-localstorage';
 
 export interface State {
@@ -14,14 +14,15 @@ export interface State {
 }
 
 export const reducers: ActionReducerMap<State> = {
-sidebar: fromSidebar.sidebarReducer
+  sidebar: fromSidebar.sidebarReducer
 };
 
 
 export function localStorageSyncReducer(reducer: any) {
-  return localStorageSync({ keys: ['sidebar'], rehydrate: true })(reducer);
+  return localStorageSync({ keys: ['user'], rehydrate: true })(reducer);
 }
 
 export const metaReducers: Array<MetaReducer<any, any>> = [
   localStorageSyncReducer,
+
 ];

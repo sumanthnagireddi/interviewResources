@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
-import { V3Component } from './versions/v3/v3.component';
-import { FeedComponent } from './versions/v3/component/feed/feed.component';
-import { RecentComponent } from './versions/v3/component/recent/recent.component';
-import { StarredComponent } from './versions/v3/component/starred/starred.component';
-import { DraftsComponent } from './versions/v3/component/drafts/drafts.component';
+import { LayoutComponent } from './component/layout/layout.component';
+import { ContentLayoutComponent } from './component/content-layout/content-layout.component';
+import { DraftsComponent } from './component/drafts/drafts.component';
+import { StarredComponent } from './component/starred/starred.component';
+import { RecentComponent } from './component/recent/recent.component';
+import { FeedComponent } from './component/feed/feed.component';
 
 export const routes: Routes = [
   // {
@@ -11,8 +12,8 @@ export const routes: Routes = [
   //   loadComponent: () => import('./components/data-layout/data-layout.component').then(m => m.DataLayoutComponent)
   // }
   {
-    path: 'v2',
-    component: V3Component,
+    path: '',
+    component: LayoutComponent,
     children: [
       {
         path: 'home',
@@ -32,7 +33,7 @@ export const routes: Routes = [
       },
       {
         path: 'pages/:pageId',
-        loadComponent: () => import('./versions/v3/component/content-layout/content-layout.component').then(m => m.ContentLayoutComponent)
+        component: ContentLayoutComponent
       }
     ]
   },
