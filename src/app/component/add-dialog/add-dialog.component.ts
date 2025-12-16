@@ -1,5 +1,7 @@
 import { NgClass } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { toggleDialog } from '../../store/actions/dialog.actions';
 
 @Component({
   selector: 'app-add-dialog',
@@ -13,12 +15,14 @@ export class AddDialogComponent {
   dialogOutputButton = input('Add');
   closeDialogButton = output();
   emiOutput = output();
+  private readonly store = inject(Store);
   onCloseDialog() {
     this.closeDialogButton.emit();
+    this.store.dispatch(toggleDialog({ show: false }));
   }
   onDialogOutput() {
-    // Logic to handle the output when the dialog is confirmed
-    console.log('Dialog output button clicked');
     this.emiOutput.emit();
+    this.store.dispatch(toggleDialog({ show: false }));
   }
+
 }

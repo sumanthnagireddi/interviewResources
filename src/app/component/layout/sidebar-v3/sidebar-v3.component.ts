@@ -1,3 +1,4 @@
+import { DialogActionTypes, toggleDialog } from './../../../store/actions/dialog.actions';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -19,6 +20,7 @@ export interface MenuItem {
   styleUrl: './sidebar-v3.component.css'
 })
 export class SidebarV3Component {
+  private readonly store = inject(Store);
   menuItems = [
     { id: 'for-you', label: 'For you', icon: 'account_circle', url: 'home' },
     { id: 'recent', label: 'Recent', icon: 'history', url: 'recent' },
@@ -64,12 +66,34 @@ export class SidebarV3Component {
 
   selectedMenuItem: string | null = null;
 
-  selectMenuItem(item: MenuItem) {
+  selectMenuItem(event: Event, item: MenuItem) {
+    event.stopPropagation();
     this.selectedMenuItem = item.id;
 
     if (item.hasItems) {
       item.isOpen = !item.isOpen;
     }
   }
+  addTechnology(event: Event, item: MenuItem) {
+    event.stopPropagation();
+    this.store.dispatch(toggleDialog({ show: true }));
+  }
+
+  /** Click on row */
+  onItemClick(item: MenuItem) {
+    this.selectedMenuItem = item.id;
+
+    // Navigate only if no children
+    if (!item.hasItems && item.url) {
+      // router handles navigation via routerLink
+    }
+  }
+
+  /** Toggle only from arrow */
+  toggleOpen(event: Event, item: MenuItem) {
+    event.stopPropagation();
+    item.isOpen = !item.isOpen;
+  }
+
 
 }

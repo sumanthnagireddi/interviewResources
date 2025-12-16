@@ -7,14 +7,17 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import * as fromSidebar from './sidebar-new.reducer';
+import * as fromDialog from './dialog.reducer';
 import { localStorageSync } from 'ngrx-store-localstorage';
 
 export interface State {
   sidebar: fromSidebar.SidebarState;
+  dialog: fromDialog.DialogState;
 }
 
 export const reducers: ActionReducerMap<State> = {
-  sidebar: fromSidebar.sidebarReducer
+  sidebar: fromSidebar.sidebarReducer,
+  dialog: fromDialog.dialogReducer
 };
 
 

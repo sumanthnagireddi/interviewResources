@@ -5,20 +5,27 @@ import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectShowSidebar } from '../../store/selectors/sidebar.selectors';
 import { CommonModule } from '@angular/common';
+import { AddDialogComponent } from "../add-dialog/add-dialog.component";
+import { combineLatest } from 'rxjs';
+import { selectShowDialog } from '../../store/selectors/general.selector';
 
 @Component({
   selector: 'app-layout',
-  imports: [HeaderComponent, SidebarV3Component, RouterOutlet,CommonModule],
+  imports: [HeaderComponent, SidebarV3Component, RouterOutlet, CommonModule, AddDialogComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
 })
 export class LayoutComponent implements OnInit {
   sidebarToggleStatus = true;
+  dialogToggleStatus = false;
   private readonly store = inject(Store);
   ngOnInit(): void {
-    this.store.select(selectShowSidebar).subscribe((sidebar) => {
-      console.log('sidebar status', sidebar);
+    combineLatest([
+      this.store.select(selectShowDialog),
+      this.store.select(selectShowSidebar)
+    ]).subscribe(([dialog, sidebar]) => {
       this.sidebarToggleStatus = sidebar;
+      this.dialogToggleStatus = dialog;
     });
   }
 }
