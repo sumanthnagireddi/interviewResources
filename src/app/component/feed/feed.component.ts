@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectRecentContents, selectTopContents } from '../../store/selectors/content.selector';
 import { combineLatest } from 'rxjs';
+import { loadRecentVisited, loadTopContents } from '../../store/actions/content.actions';
 export interface FeedItem {
   id: string;
   title: string;
@@ -32,7 +33,12 @@ export class FeedComponent {
     const contentId = item.id.toLowerCase().replace(/\s+/g, '-');
     this.router.navigate([`/pages/${contentId}/view`]);
   }
+  constructor(){
+    this.store.dispatch(loadTopContents());
+    this.store.dispatch(loadRecentVisited())
+  }
   ngOnInit(): void {
+
     combineLatest([
       this.store.select(selectTopContents),
       this.store.select(selectRecentContents)
@@ -56,7 +62,7 @@ export class FeedComponent {
       date: this.formatDate(item.publishedAt || item.createdAt),
       content: this.extractFirstWordsFromHtml(item.content, 40),
       lastViewed: item?.lastViewed,
-      updatedOn:item?.updatedOn
+      updatedOn: item?.updatedOn
     }));
   }
   getTitle(content: any): string {

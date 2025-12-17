@@ -1,7 +1,7 @@
 <h2 class="text-lg font-semibold mb-4">Pick up where you left off</h2>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-  <div *ngFor="let doc of docs" class="bg-white border border-gray-200 rounded-lg p-4 cursor-pointer shadow-sm hover:shadow-md hover:border-gray-300">
+  <div (click)="navigateTo(doc)" *ngFor="let doc of docs" class="bg-white border border-gray-200 rounded-lg p-4 cursor-pointer shadow-sm hover:shadow-md hover:border-gray-300">
 
     <div class="font-medium  flex items-center gap-2">
       <span class="material-symbols-outlined text-lg px-1 border rounded-sm">

@@ -24,7 +24,6 @@ export class AppComponent {
   store = inject(Store);
   router = inject(Router)
   ngOnInit(): void {
-    this.store.dispatch(loadTopContents());
-    this.store.dispatch(loadRecentVisited())
+   
   }
 }

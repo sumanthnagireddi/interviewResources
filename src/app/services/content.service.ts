@@ -59,9 +59,9 @@ export class ContentService {
 
   addContent(contentName: string, id: string): Observable<any> {
     const docRef = doc(this.firestore, this.contentCollectionRefString, id)
-    return from(setDoc(docRef, { content: contentName, updatedOn: serverTimestamp(), lastViewed: serverTimestamp() }, { merge: true }))
+    return from(setDoc(docRef, { content: contentName, updatedOn: serverTimestamp(), lastViewed: serverTimestamp(), status: 'Published' }, { merge: true }))
   }
-  
+
   updateLastViewed(id: string): Observable<any> {
     const docRef = doc(this.firestore, this.contentCollectionRefString, id)
     return from(setDoc(docRef, { lastViewed: serverTimestamp() }, { merge: true }))
