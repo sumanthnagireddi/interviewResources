@@ -1,0 +1,19 @@
+<div class="w-full">
+  <app-recent-docs></app-recent-docs>
+  <div class="mt-8">
+    <h2 class="text-lg font-semibold mb-4">Discover what’s happening</h2>
+
+    <div class="flex gap-2 mb-4">
+      <button class="px-3 py-1.5 rounded-full bg-blue-600 text-white text-sm">
+        Content
+      </button>
+      <button class="px-3 py-1.5 rounded-full border text-sm">Popular</button>
+      <button class="px-3 py-1.5 rounded-full border text-sm">Blogs</button>
+    </div>
+
+    <div class="">
+      <app-feed-card *ngFor="let item of feed" [item]="item">
+      </app-feed-card>
+    </div>
+  </div>
+</div>

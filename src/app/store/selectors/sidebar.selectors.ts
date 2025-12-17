@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { SidebarState } from "../reducers/sidebar.reducer";
+import { SidebarState } from "../reducers/sidebar-new.reducer";
 
 export const selectAppState = createFeatureSelector<SidebarState>('sidebar');
 
@@ -18,4 +18,9 @@ export const selectSubTechnologies = createSelector(
 export const selectCurentContent = createSelector(
   selectAppState,
   (state: SidebarState) => state?.content
+);
+
+export const selectShowSidebar = createSelector(
+  selectAppState,
+  (state: SidebarState) => state?.showSidebar
 );

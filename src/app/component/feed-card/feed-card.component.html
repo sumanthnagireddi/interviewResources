@@ -1,0 +1,23 @@
+<div class="bg-white border rounded-lg px-6 py-8 my-4">
+
+  <div class="flex gap-3 mb-2">
+    <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">
+      {{ item.owner[0] }}
+    </div>
+
+    <div>
+      <div class="font-medium items-center gap-[2px] cursor-pointer hover:text-blue-700 flex text-blue-600 pb-[2px]"><span
+          class="material-symbols-outlined text-lg ">
+          article
+        </span>{{ item.title }}</div>
+      <div class="text-xs text-gray-500">
+        Owned by {{ item.owner }} • {{ item.date }}
+      </div>
+    </div>
+  </div>
+
+  <p class="text-sm text-gray-700">
+    {{ item.content }}
+  </p>
+
+</div>
