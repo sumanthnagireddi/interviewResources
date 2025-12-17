@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { collection, deleteDoc, doc, Firestore, getDoc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
+import { collection, deleteDoc, doc, limit, Firestore, getDoc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
 import { v4 as uuidv4 } from "uuid";
 @Injectable({
@@ -25,14 +25,14 @@ export class ContentService {
     );
   }
 
-  getAllContents(): Observable<any> {
+  getAllContents(limitCount: number): Observable<any> {
     const docRef = collection(this.firestore, this.contentCollectionRefString);
-    const q = query(docRef, where('id', '==', 'a22907c8-5f21-4cfe-89b6-a754859ac88e'));
+    const q = query(docRef, limit(limitCount));
     return from(getDocs(q)).pipe(
       map(querySnapshot =>
         querySnapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data()[0],
+          ...doc.data(),
         }))
       )
     );

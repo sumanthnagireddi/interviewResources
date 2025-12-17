@@ -12,7 +12,7 @@
     </div>
 
     <div class="">
-      <app-feed-card *ngFor="let item of feed" [item]="item">
+      <app-feed-card (click)="navigateTo(item)" *ngFor="let item of feed" [item]="item">
       </app-feed-card>
     </div>
   </div>
