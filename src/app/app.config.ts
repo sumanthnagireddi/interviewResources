@@ -12,6 +12,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { SidebarEffects } from './store/effects/sidebar.effects';
 import { reducers,metaReducers } from './store/reducers';
+import { TechnologyEffects } from './store/effects/technology.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,7 +31,7 @@ export const appConfig: ApplicationConfig = {
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
     provideStore(reducers, { metaReducers }),
-    provideEffects(SidebarEffects),
+    provideEffects(SidebarEffects, TechnologyEffects),
     provideHttpClient(),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode(),autoPause: true,
       trace: false,

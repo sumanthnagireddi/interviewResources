@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { selectTechnologies } from '../../../store/selectors/technology.selector';
+import { getTechnologies } from '../../../store/actions/technology.actions';
+import { Technology, } from '../../../model/content.model';
 export interface MenuItem {
   id: string;
   label: string;
@@ -21,7 +24,7 @@ export interface MenuItem {
 })
 export class SidebarV3Component {
   private readonly store = inject(Store);
-  menuItems = [
+  menuItems: MenuItem[] = [
     { id: 'for-you', label: 'For you', icon: 'account_circle', url: 'home' },
     { id: 'recent', label: 'Recent', icon: 'history', url: 'recent' },
     { id: 'starred', label: 'Starred', icon: 'star', url: 'starred' },
@@ -33,15 +36,6 @@ export class SidebarV3Component {
       hasItems: true,
       isOpen: false,
       children: [
-        {
-          id: 'Angular', label: 'Angular', icon: 'article', url: 'blogs', isOpen: false, hasItems: true, childern: [
-            { id: 'ngrx', label: 'NGRX', icon: 'article', url: 'pages/12345' },
-            { id: 'angular-forms', label: 'Angular Forms', icon: 'article', url: 'pages/1234wr' }
-          ]
-        },
-        { id: 'React', label: 'React', icon: 'article', url: 'blogs' },
-        { id: 'Vue', label: 'Vue', icon: 'article', url: 'blogs' }
-
       ]
     },
     { id: 'blogs', label: 'Blogs', icon: 'post_add', url: 'blogs' }
@@ -53,19 +47,14 @@ export class SidebarV3Component {
     { name: 'Interview Resources', open: false },
     { name: 'AWS JS Developer training', open: false }
   ];
-  // menuItems = [
-  //   { id: 'for-you', label: 'For you', icon: 'account_circle', url: 'home' },
-  //   { id: 'recent', label: 'Recent', icon: 'history', url: 'recent' },
-  //   { id: 'starred', label: 'Starred', icon: 'star', url: 'starred' },
-  //   { id: 'drafts', label: 'Drafts', icon: 'draft', url: 'drafts' },
-  //   { id: 'content', label: 'Content', icon: 'bookmark_stacks',hasItems:true },
-  //   { id: 'blogs', label: 'Blogs', icon: 'post_add' }
-  // ];
-
-  // selectedMenuItem: string = 'for-you'; // Default selected item
 
   selectedMenuItem: string | null = null;
-
+  ngOnInit(): void {
+    this.store.dispatch(getTechnologies());
+    this.store.select(selectTechnologies).subscribe(technologies => {
+      this.updateContentChildren(technologies);
+    });
+  }
   selectMenuItem(event: Event, item: MenuItem) {
     event.stopPropagation();
     this.selectedMenuItem = item.id;
@@ -76,8 +65,36 @@ export class SidebarV3Component {
   }
   addTechnology(event: Event, item: MenuItem) {
     event.stopPropagation();
-    this.store.dispatch(toggleDialog({ show: true }));
+    this.store.dispatch(toggleDialog({ show: true, level: 'technologies' }));
   }
+  updateContentChildren(technologies: Technology[]) {
+    const contentNode = this.menuItems.find(i => i.id === 'content');
+    if (contentNode) {
+      contentNode.children = technologies.map(tech => ({
+        id: tech.id,
+        label: tech.name,
+        icon: 'article',
+        url: `/pages/${tech.id}-${tech.name.replace(/\s+/g, '-').toLowerCase()}/view`,
+        hasItems: false
+      }));
+    }
+  }
+
+  // getTopicsForTechnology(technologyId: string): MenuItem[] {
+  //   let topics: Topic[] = [];
+
+  //   this.store.select(selectTopicsByTechnology(technologyId))
+  //     .subscribe(t => topics = t)
+  //     .unsubscribe(); // ⚠️ IMPORTANT: Unsubscribe immediately to avoid memory leaks
+  //   return topics.map(topic => ({
+  //     id: topic.id,
+  //     label: topic.name,
+  //     icon: 'article',
+  //     url: `/pages/${topic.id}`,
+  //     hasItems: false
+  //   }));
+  // }
+
 
   /** Click on row */
   onItemClick(item: MenuItem) {

@@ -28,7 +28,7 @@ export const routes: Routes = [{
       component: DraftsComponent
     },
     {
-      path: 'pages/:pageId',
+      path: 'pages/:pageId/:mode',
       component: ContentLayoutComponent
     },
   ]

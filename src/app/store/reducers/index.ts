@@ -8,16 +8,19 @@ import {
 } from '@ngrx/store';
 import * as fromSidebar from './sidebar-new.reducer';
 import * as fromDialog from './dialog.reducer';
+import * as fromTechnology from './technology.reducer';
 import { localStorageSync } from 'ngrx-store-localstorage';
 
 export interface State {
   sidebar: fromSidebar.SidebarState;
   dialog: fromDialog.DialogState;
+  technologies: fromTechnology.TechnologyState;
 }
 
 export const reducers: ActionReducerMap<State> = {
   sidebar: fromSidebar.sidebarReducer,
-  dialog: fromDialog.dialogReducer
+  dialog: fromDialog.dialogReducer,
+  technologies: fromTechnology.technologyReducer
 };
 
 
