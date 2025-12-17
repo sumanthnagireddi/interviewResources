@@ -30,6 +30,7 @@ export class ContentLayoutComponent {
       this.currentId = params['pageId'];
       this.editorMode = params['mode'];
       this.prepareContent(this.currentId);
+      this.service.updateLastViewed(this.currentId)
       const lastSegment = this.currentId.split('-').pop() ?? '';
       this.currentContentTopic =
         lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1);

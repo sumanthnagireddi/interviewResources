@@ -8,6 +8,8 @@ import {
 import { CommonModule } from "@angular/common";
 import { Router, RouterOutlet } from "@angular/router";
 import { ResourcesService } from "./services/resources.service";
+import { Store } from "@ngrx/store";
+import { loadRecentVisited, loadTopContents } from "./store/actions/content.actions";
 
 @Component({
   selector: "app-root",
@@ -19,24 +21,10 @@ import { ResourcesService } from "./services/resources.service";
 })
 export class AppComponent {
   title = "resources";
-  resourceService = inject(ResourcesService);
-  router =inject(Router)
-  @ViewChild("editorElem") editorEl!: ElementRef;
+  store = inject(Store);
+  router = inject(Router)
   ngOnInit(): void {
-    // this.router.navigate(["/course/angular/components/51baafe2-aa57-4a80-b2b9-f1c8f19b04f6/view"]);
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    // this.resourceService.getTechnologies().subscribe((data) => {
-    //   console.log("All contents:", data);
-    // });
-  }
-  getContent() {
-    const html = (this.editorEl.nativeElement as any).getHTML();
-    console.log(html);
-  }
-
-  setContent() {
-    const html = "<p>Hello from Angular!</p>";
-    (this.editorEl.nativeElement as any).setHTML(html);
+    this.store.dispatch(loadTopContents());
+    this.store.dispatch(loadRecentVisited())
   }
 }

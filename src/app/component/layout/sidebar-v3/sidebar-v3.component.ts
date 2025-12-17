@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { selectTechnologies } from '../../../store/selectors/technology.selector';
 import { getTechnologies } from '../../../store/actions/technology.actions';
 import { Technology, } from '../../../model/content.model';
+import { ProfileCardComponent } from "../../profile-card/profile-card.component";
 export interface MenuItem {
   id: string;
   label: string;

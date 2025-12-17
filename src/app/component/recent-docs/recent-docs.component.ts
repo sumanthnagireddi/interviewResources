@@ -1,20 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { FirestoreDatePipe } from '../../pipes/firestore-date.pipe';
 
 @Component({
   selector: 'app-recent-docs',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,FirestoreDatePipe],
   templateUrl: './recent-docs.component.html',
   styleUrls: ['./recent-docs.component.css']
 })
 export class RecentDocsComponent {
-  docs = [
-    { title: 'Execution Context', owner: 'Sumanth', time: 'Visited 15 minutes ago' },
-    { title: 'Untitled', owner: 'Sumanth', time: 'Visited 20 minutes ago', draft: true },
-    { title: 'Hoisting in JS', owner: 'Sumanth', time: 'Visited December 13, 2025' },
-    { title: 'How JavaScript code Executes...', owner: 'Sumanth', time: 'Visited December 12, 2025' },
-    { title: 'How Web works', owner: 'Sumanth', time: 'Visited December 12, 2025' },
-    { title: 'How Functions works in JS', owner: 'Sumanth', time: 'Visited December 12, 2025' }
-  ];
+  @Input() docs: any
+  ngOnInit(): void {
+    console.log("d",this.docs)
+  }
 }

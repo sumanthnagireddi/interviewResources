@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { collection, deleteDoc, doc, limit, Firestore, getDoc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
+import { collection, deleteDoc, doc, limit, Firestore, getDoc, getDocs, query, setDoc, where, serverTimestamp, orderBy } from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
 import { v4 as uuidv4 } from "uuid";
 @Injectable({
@@ -37,9 +37,33 @@ export class ContentService {
       )
     );
   }
+  getAllRecentViewed(limitCount: number): Observable<any[]> {
+    const colRef = collection(this.firestore, this.contentCollectionRefString);
+
+    const q = query(
+      colRef,
+      where('lastViewed', '!=', null),      // ✅ only viewed docs
+      orderBy('lastViewed', 'desc'),        // ✅ most recent first
+      limit(limitCount)
+    );
+
+    return from(getDocs(q)).pipe(
+      map(snapshot =>
+        snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+      )
+    );
+  }
 
   addContent(contentName: string, id: string): Observable<any> {
     const docRef = doc(this.firestore, this.contentCollectionRefString, id)
-    return from(setDoc(docRef, { content: contentName }))
+    return from(setDoc(docRef, { content: contentName, updatedOn: serverTimestamp(), lastViewed: serverTimestamp() }, { merge: true }))
+  }
+  
+  updateLastViewed(id: string): Observable<any> {
+    const docRef = doc(this.firestore, this.contentCollectionRefString, id)
+    return from(setDoc(docRef, { lastViewed: serverTimestamp() }, { merge: true }))
   }
 }

@@ -4,6 +4,9 @@ import { FeedCardComponent } from "../feed-card/feed-card.component";
 import { CommonModule } from '@angular/common';
 import { RecentDocsComponent } from "../recent-docs/recent-docs.component";
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { selectRecentContents, selectTopContents } from '../../store/selectors/content.selector';
+import { combineLatest } from 'rxjs';
 export interface FeedItem {
   id: string;
   title: string;
@@ -21,7 +24,8 @@ export interface FeedItem {
 })
 export class FeedComponent {
   feed: FeedItem[] = [];
-  private readonly contentService = inject(ContentService);
+  recentContent: any
+  private readonly store = inject(Store);
   private readonly router = inject(Router);
 
   navigateTo(item: FeedItem) {
@@ -29,10 +33,14 @@ export class FeedComponent {
     this.router.navigate([`/pages/${contentId}/view`]);
   }
   ngOnInit(): void {
-    this.contentService.getAllContents(3).subscribe({
-      next: (res) => {
-        console.log('All contents fetched successfully:', res);
-        this.feed = this.transformToFeed(res);
+    combineLatest([
+      this.store.select(selectTopContents),
+      this.store.select(selectRecentContents)
+    ]).subscribe({
+      next: ([topContents, recentContents]) => {
+        console.log('All contents fetched successfully:', topContents, recentContents);
+        this.feed = this.transformToFeed(topContents);
+        this.recentContent = this.transformToFeed(recentContents)
       },
       error: (err) => {
         console.error('Error fetching all contents:', err);
@@ -46,11 +54,13 @@ export class FeedComponent {
       title: this.getTitle(item.id),
       owner: 'Sumanth Nagireddi',
       date: this.formatDate(item.publishedAt || item.createdAt),
-      content: this.extractFirstWordsFromHtml(item.content, 40)
+      content: this.extractFirstWordsFromHtml(item.content, 40),
+      lastViewed: item?.lastViewed,
+      updatedOn:item?.updatedOn
     }));
   }
   getTitle(content: any): string {
-    const lastSegment = content.split('-').pop() ?? '';
+    const lastSegment = content?.split('-').pop() ?? '';
     return lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1);
   }
   private extractFirstWordsFromHtml(

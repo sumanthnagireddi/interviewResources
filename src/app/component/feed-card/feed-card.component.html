@@ -11,7 +11,7 @@
           article
         </span>{{ item.title }}</div>
       <div class="text-xs text-gray-500">
-        Owned by {{ item.owner }} • {{ item.date }}
+        Owned by {{ item.owner }} • {{ item.updatedOn | firestoreDate | date:'medium' }}
       </div>
     </div>
   </div>

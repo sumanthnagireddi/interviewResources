@@ -11,8 +11,9 @@ import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient } from '@angular/common/http';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { SidebarEffects } from './store/effects/sidebar.effects';
-import { reducers,metaReducers } from './store/reducers';
+import { reducers, metaReducers } from './store/reducers';
 import { TechnologyEffects } from './store/effects/technology.effects';
+import { ContentEffects } from './store/effects/content.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,11 +32,13 @@ export const appConfig: ApplicationConfig = {
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
     provideStore(reducers, { metaReducers }),
-    provideEffects(SidebarEffects, TechnologyEffects),
+    provideEffects(SidebarEffects, TechnologyEffects, ContentEffects),
     provideHttpClient(),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode(),autoPause: true,
+    provideStoreDevtools({
+      maxAge: 25, logOnly: !isDevMode(), autoPause: true,
       trace: false,
       traceLimit: 75,
-      connectInZone: true })
+      connectInZone: true
+    })
   ],
 };

@@ -1,4 +1,5 @@
-<div class="p-4 w-[20vw] bg-white border-r h-screen">
+<div class="p-4 w-[20vw] relative bg-white border-r h-[94vh]">
+  <!-- <app-profile-card></app-profile-card> -->
   <ng-container *ngFor="let item of menuItems">
 
     <!-- LEVEL 1 -->
@@ -77,4 +78,20 @@
     </div>
 
   </ng-container>
+  <div class="border-t absolute bottom-0 border-gray-200 mt-auto">
+    <a href="#" class="flex items-center gap-3 p-4 hover:bg-gray-50 transition-all duration-200 group">
+
+      <img src="https://sumanthnagireddi1.web.app/assets/imag3.jpg" alt="User Avatar" class="w-10 h-10 rounded-full object-cover ring-2 ring-gray-200
+               group-hover:ring-blue-300 transition-all" />
+
+      <div class="flex-1 min-w-0">
+        <p class="block font-medium text-sm text-gray-800 truncate">
+          Sumanth Nagireddi
+        </p>
+        <span class="text-gray-500  text-xs truncate block">
+          {{'sumanthnagireddi@gmail.com'}}
+        </span>
+      </div>
+    </a>
+  </div>
 </div>
