@@ -1,16 +1,11 @@
 <div class="flex w-full gap-4">
   <div class="flex-1 p-4  h-screen overflow-y-hidden">
-    <div *ngIf="contentAvailable;else noContentTemplate">
+    <div >
       <div class="flex justify-between items-center">
         <app-breadcrumb [category]="currentContentTopic"></app-breadcrumb>
-        <div>
-          <span (click)="edit()" class="material-symbols-outlined cursor-pointer">
-            edit_note
-          </span>
-        </div>
       </div>
-      <app-editor [mode]="editorMode" [data]="content" (content)="handleContent($event)"
-        [contentData]="content"></app-editor>
+      <app-editor [mode]="'edit'" (content)="handleContent($event)"
+        ></app-editor>
     </div>
     <ng-template #noContentTemplate>
       <div class="flex flex-col items-center justify-center h-96 text-center text-gray-500">

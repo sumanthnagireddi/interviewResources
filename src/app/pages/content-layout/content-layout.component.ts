@@ -1,15 +1,18 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, signal, ViewChild } from '@angular/core';
-import { ContentTagsComponent } from "../content-tags/content-tags.component";
-import { EditorComponent } from "../editor/editor.component";
-import { ActivatedRoute, Router } from '@angular/router';
+// import { ContentTagsComponent } from "../content-tags/content-tags.component";
+// import { EditorComponent } from "../editor/editor.component";
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { ContentService } from '../../services/content.service';
-import { BreadcrumbComponent } from "../breadcrumb/breadcrumb.component";
+import { ContentTagsComponent } from '../../component/content-tags/content-tags.component';
+import { EditorComponent } from '../../component/editor/editor.component';
+import { BreadcrumbComponent } from '../../component/breadcrumb/breadcrumb.component';
+// import { BreadcrumbComponent } from "../breadcrumb/breadcrumb.component";
 
 @Component({
   selector: 'app-content-layout',
-  imports: [ContentTagsComponent, EditorComponent, CommonModule, BreadcrumbComponent],
+  imports: [EditorComponent, CommonModule, BreadcrumbComponent, RouterLink],
   templateUrl: './content-layout.component.html',
   styleUrl: './content-layout.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -61,6 +64,7 @@ export class ContentLayoutComponent {
     });
   }
   edit() {
-    // this.route.navigate([`/pages/${this.currentId}/edit`]);
+    this.editorMode = 'edit';
+    this.route.navigate([`/edit/${this.currentId}`]);
   }
 }

@@ -1,11 +1,13 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './component/layout/layout.component';
-import { ContentLayoutComponent } from './component/content-layout/content-layout.component';
+import { ContentLayoutComponent } from './pages/content-layout/content-layout.component';
 import { DraftsComponent } from './component/drafts/drafts.component';
 import { StarredComponent } from './pages/starred/starred.component';
 import { FeedComponent } from './component/feed/feed.component';
 import { RecentComponent } from './pages/recent/recent.component';
 import { AddDialogComponent } from './component/add-dialog/add-dialog.component';
+import { CreateDocComponent } from './pages/create-doc/create-doc.component';
+import { EditDocComponent } from './pages/edit-doc/edit-doc.component';
 
 export const routes: Routes = [{
   path: '',
@@ -31,6 +33,14 @@ export const routes: Routes = [{
       path: 'pages/:pageId/:mode',
       component: ContentLayoutComponent
     },
+    {
+      path: 'create-new/:pageId',
+      component: CreateDocComponent
+    },
+    {
+      path: 'edit/:pageId',
+      component: EditDocComponent
+    }
   ]
 },
 ];

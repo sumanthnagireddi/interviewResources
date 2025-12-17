@@ -1,0 +1,13 @@
+<div class="flex w-full gap-4">
+  <div class="flex-1 p-4  h-screen overflow-y-hidden">
+    <div>
+      <div class="flex justify-between items-center">
+        <app-breadcrumb [category]="currentContentTopic"></app-breadcrumb>
+      </div>
+      <app-editor [mode]="'edit'" [data]="content" (content)="handleContent($event)"></app-editor>
+    </div>
+  </div>
+  <!-- <div *ngIf="contentAvailable" class="flex-shrink-0">
+    <app-content-tags></app-content-tags>
+  </div> -->
+</div>
