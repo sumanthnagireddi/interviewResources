@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { SidebarV3Component } from "./sidebar-v3/sidebar-v3.component";
 import { RouterOutlet } from '@angular/router';
@@ -28,8 +28,19 @@ export class LayoutComponent implements OnInit {
       this.dialogToggleStatus = dialog;
     });
   }
+
+  // 🔁 Listen to window resize
+  @HostListener('window:resize')
+  onResize() {
+    this.setSidebarState();
+  }
+
+  // 📏 Decide based on screen width
+  private setSidebarState() {
+    this.sidebarToggleStatus = window.innerWidth >= 768; // Tailwind md breakpoint
+  }
+
   handleSidebarToggle() {
-    console.log("clicked")
-    this.sidebarToggleStatus = false
+    this.sidebarToggleStatus = !this.sidebarToggleStatus;
   }
 }
