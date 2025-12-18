@@ -10,7 +10,7 @@
     <div *ngIf="sidebarToggleStatus" class="fixed inset-0 z-10" (click)="handleSidebarToggle()">
     </div>
 
-    <div [ngClass]="!sidebarToggleStatus ? 'md:mx-[5vw]' : 'mx-0'" class="flex-1 h-screen md:p-6 relative z-0">
+    <div [ngClass]="!sidebarToggleStatus ? 'md:mx-[5vw] mx-[1vw]' : 'mx-0'" class="flex-1 h-screen md:p-6 relative z-0">
       <router-outlet></router-outlet>
     </div>
 
