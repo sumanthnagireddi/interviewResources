@@ -1,9 +1,10 @@
-<div class="p-4 w-[20vw] relative bg-white border-r h-[94vh]">
+<div class="p-4 w-[70vw] md:w-[20vw] fixed z-40 top-12 left-0 h-[96vh] bg-white border-r md:h-[94vh] text-gray-700 ">
   <!-- <app-profile-card></app-profile-card> -->
-  <ng-container *ngFor="let item of menuItems">
+  <div class="md:block relative h-[88vh]">
+    <ng-container *ngFor="let item of menuItems">
 
     <!-- LEVEL 1 -->
-    <div class="px-2 py-1 mb-1 flex items-center gap-3 rounded-md cursor-pointer
+    <div [routerLink]="item.url" class="px-2 py-1 mb-1 flex items-center gap-3 rounded-md cursor-pointer
          hover:bg-gray-100 text-sm font-medium" [class.bg-blue-50]="selectedMenuItem === item.id"
       [class.text-blue-600]="selectedMenuItem === item.id" (click)="onItemClick(item)">
 
@@ -11,7 +12,7 @@
         {{ item.icon }}
       </span>
 
-      <span [routerLink]="item.url" class="flex-1">{{ item.label }}</span>
+      <span class="flex-1">{{ item.label }}</span>
 
       <!-- ADD BUTTON -->
       <span *ngIf="item.hasItems" class="material-symbols-outlined text-base cursor-pointer"
@@ -93,5 +94,6 @@
         </span>
       </div>
     </a>
+  </div>
   </div>
 </div>

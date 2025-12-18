@@ -8,6 +8,7 @@ import { RecentComponent } from './pages/recent/recent.component';
 import { AddDialogComponent } from './component/add-dialog/add-dialog.component';
 import { CreateDocComponent } from './pages/create-doc/create-doc.component';
 import { EditDocComponent } from './pages/edit-doc/edit-doc.component';
+import { BlogsComponent } from './pages/blogs/blogs.component';
 
 export const routes: Routes = [{
   path: '',
@@ -47,6 +48,10 @@ export const routes: Routes = [{
     {
       path: 'edit/:pageId',
       component: EditDocComponent
+    },
+    {
+      path: 'blogs',
+      component: BlogsComponent
     }
   ]
 },

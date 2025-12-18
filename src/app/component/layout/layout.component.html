@@ -1,13 +1,22 @@
-<div class="h-screen  bg-gray-50/25">
+<div class="h-screen w-full bg-gray-50/25 relative">
   <app-header></app-header>
-  <div class="flex h-[calc(100vh-56px)]">
-    <div *ngIf="sidebarToggleStatus">
+
+  <div class="flex h-[calc(100vh-56px)] relative">
+
+    <div *ngIf="sidebarToggleStatus" class="relative z-20">
       <app-sidebar-v3></app-sidebar-v3>
     </div>
-    <div [ngClass]="!sidebarToggleStatus?'mx-[5vw]':'mx-0'" class="flex-1   p-6 overflow-y-scroll">
+
+    <div *ngIf="sidebarToggleStatus" class="fixed inset-0 z-10" (click)="handleSidebarToggle()">
+    </div>
+
+    <div [ngClass]="!sidebarToggleStatus ? 'md:mx-[5vw]' : 'mx-0'" class="flex-1 h-screen md:p-6 relative z-0">
       <router-outlet></router-outlet>
     </div>
+
   </div>
+
   <div *ngIf="dialogToggleStatus">
     <app-add-dialog />
   </div>
+</div>

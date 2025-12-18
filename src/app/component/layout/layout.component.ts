@@ -28,4 +28,8 @@ export class LayoutComponent implements OnInit {
       this.dialogToggleStatus = dialog;
     });
   }
+  handleSidebarToggle() {
+    console.log("clicked")
+    this.sidebarToggleStatus = false
+  }
 }
