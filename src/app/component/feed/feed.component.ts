@@ -8,12 +8,15 @@ import { Store } from '@ngrx/store';
 import { selectRecentContents, selectTopContents } from '../../store/selectors/content.selector';
 import { combineLatest } from 'rxjs';
 import { loadRecentVisited, loadTopContents } from '../../store/actions/content.actions';
+import { Timestamp } from '@angular/fire/firestore';
 export interface FeedItem {
   id: string;
   title: string;
   owner: string;
   date: string;
   content: string;
+  lastViewed: Timestamp,
+  updatedOn: Timestamp
 }
 
 @Component({
@@ -33,7 +36,7 @@ export class FeedComponent {
     const contentId = item.id.toLowerCase().replace(/\s+/g, '-');
     this.router.navigate([`/pages/${contentId}/view`]);
   }
-  constructor(){
+  constructor() {
     this.store.dispatch(loadTopContents());
     this.store.dispatch(loadRecentVisited())
   }

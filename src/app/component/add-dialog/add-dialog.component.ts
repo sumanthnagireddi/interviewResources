@@ -2,7 +2,7 @@ import { NgClass } from '@angular/common';
 import { Component, inject, input, output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { toggleDialog } from '../../store/actions/dialog.actions';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { addTechnology } from '../../store/actions/technology.actions';
 @Component({
   selector: 'app-add-dialog',
@@ -23,7 +23,8 @@ export class AddDialogComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.dialogForm = this.fb.group({
-      name: ['']
+      name: ['', Validators.required],
+      topic: ['']
     })
   }
   onCloseDialog() {
@@ -33,7 +34,7 @@ export class AddDialogComponent {
   onDialogOutput() {
     console.log('Dialog form value:', this.dialogForm.value);
     this.store.dispatch(toggleDialog({ show: false, value: this.dialogForm.value.name }));
-    this.store.dispatch(addTechnology({ technologyName: this.dialogForm.value.name }));
+    this.store.dispatch(addTechnology({ technologyName: this.dialogForm.value }));
   }
 
 }

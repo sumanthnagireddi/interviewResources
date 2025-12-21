@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { collection, deleteDoc, doc, limit, Firestore, getDoc, getDocs, query, setDoc, where, serverTimestamp, orderBy } from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
-import { v4 as uuidv4 } from "uuid";
 @Injectable({
   providedIn: 'root'
 })
@@ -57,13 +56,21 @@ export class ContentService {
     );
   }
 
-  addContent(contentName: string, id: string): Observable<any> {
+  addContent(contentName: string, id: string, topicId: string): Observable<any> {
     const docRef = doc(this.firestore, this.contentCollectionRefString, id)
-    return from(setDoc(docRef, { content: contentName, updatedOn: serverTimestamp(), lastViewed: serverTimestamp(), status: 'Published' }, { merge: true }))
+      return from(setDoc(docRef, { content: contentName, updatedOn: serverTimestamp(), lastViewed: serverTimestamp(), status: 'Published', topicId: topicId, isDeleted: false }, { merge: true }))
   }
 
   updateLastViewed(id: string): Observable<any> {
     const docRef = doc(this.firestore, this.contentCollectionRefString, id)
     return from(setDoc(docRef, { lastViewed: serverTimestamp() }, { merge: true }))
+  }
+  updateStarred(id: string): Observable<any> {
+    const docRef = doc(this.firestore, this.contentCollectionRefString, id)
+    return from(setDoc(docRef, { isStarred: true, updatedOn: serverTimestamp() }, { merge: true }))
+  }
+  updateUnStarred(id: string): Observable<any> {
+    const docRef = doc(this.firestore, this.contentCollectionRefString, id)
+    return from(setDoc(docRef, { isStarred: false, updatedOn: serverTimestamp() }, { merge: true }))
   }
 }

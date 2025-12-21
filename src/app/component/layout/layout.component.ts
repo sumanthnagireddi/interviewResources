@@ -29,18 +29,18 @@ export class LayoutComponent implements OnInit {
     });
   }
 
-  // 🔁 Listen to window resize
-  @HostListener('window:resize')
-  onResize() {
-    this.setSidebarState();
-  }
+  // // 🔁 Listen to window resize
+  // @HostListener('window:resize')
+  // onResize() {
+  //   this.setSidebarState();
+  // }
 
-  // 📏 Decide based on screen width
-  private setSidebarState() {
-    this.sidebarToggleStatus = window.innerWidth >= 768; // Tailwind md breakpoint
-  }
+  // // 📏 Decide based on screen width
+  // private setSidebarState() {
+  //   this.sidebarToggleStatus = window.innerWidth >= 768; // Tailwind md breakpoint
+  // }
 
   handleSidebarToggle() {
-    this.sidebarToggleStatus = !this.sidebarToggleStatus;
+    this.sidebarToggleStatus = false;
   }
 }

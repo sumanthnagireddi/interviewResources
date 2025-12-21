@@ -23,12 +23,13 @@ export class ContentLayoutComponent {
   editorMode: string = 'view' // 'view' | 'edit'
   contentAvailable: boolean = true
   currentContentTopic: string = 'JavaScript';
+  currentTechnology!: string
   currentId: string = '';
   constructor(private activatedRoute: ActivatedRoute, private store: Store, private service: ContentService, private route: Router) { }
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.currentId = params['pageId'];
-      this.editorMode = params['mode'];
+      this.currentTechnology = params['technology'];
       this.prepareContent(this.currentId);
       this.service.updateLastViewed(this.currentId)
       const lastSegment = this.currentId.split('-').pop() ?? '';
@@ -55,7 +56,7 @@ export class ContentLayoutComponent {
     });
   }
   handleContent(updatedContent: any) {
-    this.service.addContent(updatedContent, this.currentId).subscribe({
+    this.service.addContent(updatedContent, this.currentId, this.currentContentTopic).subscribe({
       next: (res) => {
         // this.route.navigate([`/pages/${this.currentId}/view`]);
       },

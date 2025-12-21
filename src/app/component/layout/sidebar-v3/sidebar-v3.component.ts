@@ -75,7 +75,7 @@ export class SidebarV3Component {
         id: tech.id,
         label: tech.name,
         icon: 'article',
-        url: `/pages/${tech.id}-${tech.name.replace(/\s+/g, '-').toLowerCase()}/view`,
+        url: `/pages/${tech.id}/${tech.name.replace(/\s+/g, '-').toLowerCase()}`,
         hasItems: false
       }));
     }

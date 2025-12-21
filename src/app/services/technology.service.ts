@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { collection, deleteDoc, doc, Firestore, getDoc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
+import { collection, deleteDoc, doc, Firestore, getDoc, getDocs, query, serverTimestamp, setDoc, where } from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
 import { v4 as uuidv4 } from "uuid";
 @Injectable({
@@ -10,6 +10,8 @@ export class TechnologyService {
   firestore = inject(Firestore);
   technologiesCollectionRef = collection(this.firestore, 'technologies_new');
   technologiesCollectionRefString = 'technologies_new';
+  topicsCollectionRef = collection(this.firestore, 'topics_new');
+  topicsCollectionRefString = 'topics_new';
 
   constructor(private http: HttpClient) { }
   getTechnologies(): Observable<any> {
@@ -23,8 +25,38 @@ export class TechnologyService {
     );
   }
 
-  addTechnology(technologyName: string): Observable<any> {
-    const docRef = doc(this.firestore, this.technologiesCollectionRefString, uuidv4())
-    return from(setDoc(docRef, { name: technologyName }))
+  addTechnology(technology: any): Observable<{ id: string; name: string, topic?: string }> {
+    const id = uuidv4();
+    const docRef = doc(this.firestore, this.technologiesCollectionRefString, id);
+    const technologyName = technology?.name;
+    const topicName = technology?.name
+    const data = {
+      name: technologyName,
+      createdOn: serverTimestamp(),
+    };
+
+    return from(setDoc(docRef, data)).pipe(
+      map(() => ({
+        id,
+        name: technologyName,
+        topic: topicName
+      }))
+    );
+  }
+  addTopic(topic: { id: string; name: string, topic: string }): Observable<{id: string; name: string, topic: string}> {
+    const id = uuidv4();
+    const docRef = doc(this.firestore, this.technologiesCollectionRefString, id);
+    const data = {
+      topic: topic.topic,
+      technologyId: topic.name,
+      createdOn: serverTimestamp(),
+    };
+    return from(setDoc(docRef, data)).pipe(
+      map(() => ({
+        id,
+        topic: topic.topic,
+        name: topic.name,
+      }))
+    );
   }
 }

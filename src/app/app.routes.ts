@@ -38,7 +38,7 @@ export const routes: Routes = [{
       component: DraftsComponent
     },
     {
-      path: 'pages/:pageId/:mode',
+      path: 'pages/:pageId/:technology',
       component: ContentLayoutComponent
     },
     {

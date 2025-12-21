@@ -31,7 +31,7 @@ export class CreateDocComponent {
     )
   }
   handleContent(updatedContent: any) {
-    this.service.addContent(updatedContent, this.currentId).subscribe({
+    this.service.addContent(updatedContent, this.currentId,this.currentContentTopic).subscribe({
       next: (res) => {
         this.route.navigate([`/pages/${this.currentId}/view`]);
       },
