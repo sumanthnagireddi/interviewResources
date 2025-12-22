@@ -9,6 +9,7 @@ import { AddDialogComponent } from './component/add-dialog/add-dialog.component'
 import { CreateDocComponent } from './pages/create-doc/create-doc.component';
 import { EditDocComponent } from './pages/edit-doc/edit-doc.component';
 import { BlogsComponent } from './pages/blogs/blogs.component';
+import { ProfileComponent } from './component/profile/profile.component';
 
 export const routes: Routes = [{
   path: '',
@@ -51,7 +52,7 @@ export const routes: Routes = [{
     },
     {
       path: 'blogs',
-      component: BlogsComponent
+      component: ProfileComponent
     }
   ]
 },

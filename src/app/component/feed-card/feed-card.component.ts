@@ -11,13 +11,37 @@ import { FeedItem } from '../feed/feed.component';
   imports: [CommonModule, FirestoreDatePipe],
   standalone: true,
   templateUrl: './feed-card.component.html',
-  styleUrl: './feed-card.component.css'
+  styleUrl: './feed-card.component.css',
 })
 export class FeedCardComponent {
   @Input() item!: FeedItem;
   private readonly store = inject(Store);
-  private readonly ContentService = inject(ContentService)
-  addToStarred(item: FeedItem) {
-    this.ContentService.updateStarred(item.id)
+  private readonly ContentService = inject(ContentService);
+  // addToStarred(item: FeedItem) {
+  //   this.ContentService.updateStarred(item.id);
+  // }
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    // this.readingTime();
   }
+  openArticle(item: any) {
+    // navigate to article
+  }
+  readingTime() {
+    const text: any = this.item.content;
+    const wpm = 300;
+    const words = text.trim().split(/\s+/).length;
+    const time = Math.ceil(words / wpm);
+    return time;
+  }
+  editItem(item: any) {}
+
+  deleteItem(item: any) {}
+
+  publishItem(item: any) {}
+
+  addToStarred(item: any) {}
+
+  navigateToAuthor(authorId: string) {}
 }
