@@ -4,26 +4,36 @@ import {
   ElementRef,
   inject,
   ViewChild,
-} from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { Router, RouterOutlet } from "@angular/router";
-import { ResourcesService } from "./services/resources.service";
-import { Store } from "@ngrx/store";
-import { loadRecentVisited, loadTopContents } from "./store/actions/content.actions";
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, RouterOutlet } from '@angular/router';
+import { ResourcesService } from './services/resources.service';
+import { Store } from '@ngrx/store';
+import {
+  loadRecentVisited,
+  loadTopContents,
+} from './store/actions/content.actions';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: "app-root",
+  selector: 'app-root',
   standalone: true,
-  templateUrl: "./app.component.html",
-  styleUrl: "./app.component.css",
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
   imports: [CommonModule, RouterOutlet],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppComponent {
-  title = "resources";
+  title = 'resources';
   store = inject(Store);
-  router = inject(Router)
+  router = inject(Router);
+  value: any;
+  constructor(private http: HttpClient) {}
   ngOnInit(): void {
-   
+    this.http
+      .get('https://webservices-rqvr.onrender.com/api')
+      .subscribe((data) => {
+        this.value = data;
+      });
   }
 }
