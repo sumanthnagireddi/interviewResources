@@ -1,10 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { collection, deleteDoc, doc, Firestore, getDoc, getDocs, query, serverTimestamp, setDoc, where } from '@angular/fire/firestore';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  Firestore,
+  getDoc,
+  getDocs,
+  query,
+  serverTimestamp,
+  setDoc,
+  where,
+} from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TechnologyService {
   firestore = inject(Firestore);
@@ -13,10 +24,10 @@ export class TechnologyService {
   topicsCollectionRef = collection(this.firestore, 'topics_new');
   topicsCollectionRefString = 'topics_new';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   getTechnologies(): Observable<any> {
     return from(getDocs(this.technologiesCollectionRef)).pipe(
-      map(querySnapshot =>
+      map((querySnapshot) =>
         querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -24,12 +35,21 @@ export class TechnologyService {
       )
     );
   }
-
-  addTechnology(technology: any): Observable<{ id: string; name: string, topic?: string }> {
+  getTechnologiesFromMongo() {
+    return this.http.get('https://webservices-rqvr.onrender.com/technologies');
+  }
+  addTechnologyToMongo(technology_payload: any) {}
+  addTechnology(
+    technology: any
+  ): Observable<{ id: string; name: string; topic?: string }> {
     const id = uuidv4();
-    const docRef = doc(this.firestore, this.technologiesCollectionRefString, id);
+    const docRef = doc(
+      this.firestore,
+      this.technologiesCollectionRefString,
+      id
+    );
     const technologyName = technology?.name;
-    const topicName = technology?.name
+    const topicName = technology?.name;
     const data = {
       name: technologyName,
       createdOn: serverTimestamp(),
@@ -39,13 +59,21 @@ export class TechnologyService {
       map(() => ({
         id,
         name: technologyName,
-        topic: topicName
+        topic: topicName,
       }))
     );
   }
-  addTopic(topic: { id: string; name: string, topic: string }): Observable<{id: string; name: string, topic: string}> {
+  addTopic(topic: {
+    id: string;
+    name: string;
+    topic: string;
+  }): Observable<{ id: string; name: string; topic: string }> {
     const id = uuidv4();
-    const docRef = doc(this.firestore, this.technologiesCollectionRefString, id);
+    const docRef = doc(
+      this.firestore,
+      this.technologiesCollectionRefString,
+      id
+    );
     const data = {
       topic: topic.topic,
       technologyId: topic.name,

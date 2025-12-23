@@ -30,10 +30,6 @@ export class AppComponent {
   value: any;
   constructor(private http: HttpClient) {}
   ngOnInit(): void {
-    this.http
-      .get('https://webservices-rqvr.onrender.com/api')
-      .subscribe((data) => {
-        this.value = data;
-      });
+   
   }
 }
