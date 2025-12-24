@@ -1,11 +1,10 @@
-<app-dialog [dialogTitle]="dialogTitle" [dialogContent]="dialogContent" [dialogOutputButton]="dialogOutputButton"
-  (closeDialogButton)="onCloseDialog()" (onDialogOutputButton)="onDialogOutput()">
-  <div [formGroup]="dialogForm">
+<app-dialog>
+  <div [formGroup]="form">
     <div class="w-full my-2 mx-3 max-w-sm">
       <label class="block mb-2 text-sm text-slate-600">
         Technology
       </label>
-      <input [ngClass]="dialogValue?.label ? 'bg-gray-300' : 'bg-white'" type="text" formControlName="name" class="w-full bg-transparent placeholder:text-slate-400 text-slate-700
+      <input type="text" formControlName="name" class="w-full bg-transparent placeholder:text-slate-400 text-slate-700
          text-sm border border-slate-200 rounded-md px-3 py-2 transition
          duration-300 ease focus:outline-none focus:border-slate-400
          hover:border-slate-300 shadow-sm focus:shadow" placeholder="Enter Name" />
@@ -15,18 +14,18 @@
       <label class="block mb-2 text-sm text-slate-600">
         Description
       </label>
-      <input [ngClass]="dialogValue?.description ? 'bg-gray-300' : 'bg-white'" type="text" formControlName="description"
+      <input type="text" formControlName="description"
         class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
         placeholder="Enter Description" />
     </div>
-    <div *ngIf="dialogType == 'topics'" class="w-full my-2 mx-3 max-w-sm">
+    <!-- <div *ngIf="dialogType == 'topics'" class="w-full my-2 mx-3 max-w-sm">
       <label class="block mb-2 text-sm text-slate-600">
         Topic
       </label>
       <input type="text" formControlName="topic"
         class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
         placeholder="Enter Name" />
-    </div>
+    </div> -->
   </div>
 </app-dialog>
 

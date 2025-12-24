@@ -1,5 +1,4 @@
 import { createReducer, on } from "@ngrx/store";
-import { toggleDialog } from "../actions/dialog.actions";
 import { loadTopContents, loadTopContentsSuccess, updateRecentVisited } from "../actions/content.actions";
 
 export interface ContentState {

@@ -1,7 +1,4 @@
-import {
-  DialogActionTypes,
-  toggleDialog,
-} from './../../../store/actions/dialog.actions';
+import { openDialog } from './../../../store/actions/dialog.actions';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -10,6 +7,7 @@ import { selectTechnologies } from '../../../store/selectors/technology.selector
 import { getTechnologies } from '../../../store/actions/technology.actions';
 import { Technology } from '../../../model/content.model';
 import { ProfileCardComponent } from '../../profile-card/profile-card.component';
+import { DialogType } from '../../../model/dialog.model';
 export interface MenuItem {
   id: string;
   label: string;
@@ -65,12 +63,29 @@ export class SidebarV3Component {
       item.isOpen = !item.isOpen;
     }
   }
-  addTechnology(event: Event, item: MenuItem) {
+  addTechnology(event: Event) {
     event.stopPropagation();
     this.store.dispatch(
-      toggleDialog({ show: true, value: 'tech', dialogName: 'add' })
+      openDialog({
+        config: {
+          type: DialogType.ADD_TECH,
+        },
+      })
     );
   }
+
+  addChildTechnology(event: Event, techId: string) {
+    event.stopPropagation();
+    this.store.dispatch(
+      openDialog({
+        config: {
+          type: DialogType.ADD_TOPIC,
+          payload: { technologyId: techId },
+        },
+      })
+    );
+  }
+
   updateContentChildren(technologies: Technology[]) {
     const contentNode = this.menuItems.find((i) => i.id === 'content');
     if (contentNode) {
@@ -83,32 +98,51 @@ export class SidebarV3Component {
       }));
     }
   }
-  addChildTechnology(event: Event, parent: any, child: any) {
-    event.stopPropagation();
-    this.store.dispatch(
-      toggleDialog({
-        show: true,
-        value: 'topics',
-        child: child,
-        dialogName: 'add',
-      })
-    );
-  }
 
   editChild(event: Event, child: any) {
     event.stopPropagation();
     this.store.dispatch(
-      toggleDialog({ show: true, value: 'topics', dialogName: 'edit' })
+      openDialog({
+        config: {
+          type: DialogType.EDIT_TOPIC,
+          payload: { technologyId: child },
+        },
+      })
     );
   }
-
+  editTechnology(event: Event, child: any) {
+    event.stopPropagation();
+    this.store.dispatch(
+      openDialog({
+        config: {
+          type: DialogType.EDIT_TECH,
+          payload: { technologyId: child },
+        },
+      })
+    );
+  }
   deleteChildMenu(event: Event, child: any) {
     event.stopPropagation();
     this.store.dispatch(
-      toggleDialog({ show: true, value: 'topics', dialogName: 'delete' })
+      openDialog({
+        config: {
+          type: DialogType.DELETE_TOPIC,
+          payload: { technologyId: child },
+        },
+      })
     );
   }
-
+  deleteTechnology(event: Event, child: any) {
+    event.stopPropagation();
+    this.store.dispatch(
+      openDialog({
+        config: {
+          type: DialogType.DELETE_TECH,
+          payload: { technologyId: child },
+        },
+      })
+    );
+  }
   toggleChildOpen(event: Event, child: any) {
     event.stopPropagation();
     child.isOpen = !child.isOpen;

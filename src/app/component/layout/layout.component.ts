@@ -7,7 +7,14 @@ import { selectShowSidebar } from '../../store/selectors/sidebar.selectors';
 import { CommonModule } from '@angular/common';
 import { AddDialogComponent } from '../add-dialog/add-dialog.component';
 import { combineLatest } from 'rxjs';
-import { selectShowDialog } from '../../store/selectors/general.selector';
+import {
+  selectDialogConfig,
+  selectDialogOpen,
+} from '../../store/selectors/general.selector';
+import { DialogConfig, DialogType } from '../../model/dialog.model';
+import { AddTopicDialogComponent } from '../dialogs/add-topic-dialog/add-topic-dialog.component';
+import { DeleteTechDialogComponent } from '../dialogs/delete-tech-dialog/delete-tech-dialog.component';
+import { DeleteTopicDialogComponent } from '../dialogs/delete-topic-dialog/delete-topic-dialog.component';
 
 @Component({
   selector: 'app-layout',
@@ -17,25 +24,29 @@ import { selectShowDialog } from '../../store/selectors/general.selector';
     RouterOutlet,
     CommonModule,
     AddDialogComponent,
+    AddTopicDialogComponent,
+    DeleteTechDialogComponent,
+    DeleteTopicDialogComponent,
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })
 export class LayoutComponent implements OnInit {
   sidebarToggleStatus = true;
-  dialogToggleStatus = false;
-  dialogType: any;
-  dialogValue: any;
+  isDialogOpen: boolean = false;
+  dialogConfig: DialogConfig | null = null;
+  DialogType=DialogType
   private readonly store = inject(Store);
   ngOnInit(): void {
     combineLatest([
-      this.store.select(selectShowDialog),
+      this.store.select(selectDialogOpen),
+      this.store.select(selectDialogConfig),
       this.store.select(selectShowSidebar),
-    ]).subscribe(([dialog, sidebar]) => {
+    ]).subscribe(([isDialogOpen, dialogConfig, sidebar]) => {
       this.sidebarToggleStatus = sidebar;
-      this.dialogToggleStatus = dialog?.showDialog;
-      this.dialogType = dialog?.value;
-      this.dialogValue = dialog?.child || {};
+      this.isDialogOpen = isDialogOpen;
+      this.dialogConfig = dialogConfig;
+      console.log(this.isDialogOpen, this.dialogConfig);
     });
   }
 

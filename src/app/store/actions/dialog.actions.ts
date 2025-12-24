@@ -1,10 +1,10 @@
+// dialog.actions.ts
 import { createAction, props } from '@ngrx/store';
+import { DialogConfig } from '../../model/dialog.model';
 
-export enum DialogActionTypes {
-  showDialog = '[Dialog] showDialog',
-}
-
-export const toggleDialog = createAction(
-  DialogActionTypes.showDialog,
-  props<{ show: boolean; value?: string; child?: any; dialogName?: string }>()
+export const openDialog = createAction(
+  '[Dialog] Open',
+  props<{ config: DialogConfig }>()
 );
+
+export const closeDialog = createAction('[Dialog] Close');

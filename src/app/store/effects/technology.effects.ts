@@ -54,19 +54,19 @@ export class TechnologyEffects {
   //     )
   //   )
   // );
-  addTopic$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(addTopic),
-      exhaustMap(({ technology }) =>
-        this.technologyService.addTopic(technology).pipe(
-          map((technology) => {
-            return addTopicSuccess({ technology: technology });
-          }),
-          catchError((error) => of(addTechnologyFailure({ error })))
-        )
-      )
-    )
-  );
+  // addTopic$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(addTopic),
+  //     exhaustMap(({ technology }) =>
+  //       this.technologyService.addTopic(technology).pipe(
+  //         map((technology) => {
+  //           return addTopicSuccess({ technology: technology });
+  //         }),
+  //         catchError((error) => of(addTechnologyFailure({ error })))
+  //       )
+  //     )
+  //   )
+  // );
 
   getTechnologies$ = createEffect(() =>
     this.actions$.pipe(

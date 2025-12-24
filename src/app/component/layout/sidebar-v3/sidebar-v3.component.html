@@ -17,7 +17,7 @@
 
       <!-- ADD -->
       <span *ngIf="item.hasItems" class="material-symbols-outlined text-base cursor-pointer"
-        (click)="addTechnology($event, item)">
+        (click)="addTechnology($event)">
         add
       </span>
 
@@ -47,12 +47,12 @@
 
           <!-- ADD -->
           <span class="material-symbols-outlined text-lg hover:text-green-600 cursor-pointer"
-            (click)="addChildTechnology($event, item, child)">
+            (click)="addChildTechnology($event, child.id)">
             add
           </span>
 
           <!-- EDIT -->
-          <span (click)="editChild($event, child)">
+          <span (click)="editTechnology($event, child)">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
               class="size-3 cursor-pointer hover:text-blue-600">
               <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157
@@ -63,7 +63,7 @@
             </svg>
           </span>
           <!-- MORE -->
-          <span class="cursor-pointer" (click)="deleteChildMenu($event, child)">
+          <span class="cursor-pointer" (click)="deleteTechnology($event, child)">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
               class="size-[14px] hover:text-red-600">
               <path fill-rule="evenodd"

@@ -1,23 +1,22 @@
 <div class=" w-full bg-gray-50/25 relative">
   <app-header></app-header>
-
   <div class="flex h-[calc(100vh-56px)] relative">
-
     <div *ngIf="sidebarToggleStatus" class="relative z-20 overflow-y-auto">
       <app-sidebar-v3></app-sidebar-v3>
     </div>
-
     <div *ngIf="sidebarToggleStatus" class="fixed md:hidden inset-0 z-10" (click)="handleSidebarToggle()">
     </div>
-
     <div [ngClass]="!sidebarToggleStatus ? 'md:mx-[1vw] mx-[2vw]' : 'mx-0'"
       class="flex-1 h-screen overflow-y-auto md:p-6 relative z-0">
       <router-outlet></router-outlet>
     </div>
-
   </div>
-
-  <div *ngIf="dialogToggleStatus">
-    <app-add-dialog [dialogType]="dialogType" [dialogValue]="dialogValue"></app-add-dialog>
-  </div>
+  <ng-container *ngIf="isDialogOpen && dialogConfig as config">
+    <ng-container [ngSwitch]="config.type">
+      <app-add-dialog *ngSwitchCase="DialogType.ADD_TECH" [payload]="config?.payload" />
+      <app-add-topic-dialog *ngSwitchCase="DialogType.ADD_TOPIC"></app-add-topic-dialog>
+      <app-delete-tech-dialog *ngSwitchCase="DialogType.DELETE_TECH"></app-delete-tech-dialog>
+      <app-delete-topic-dialog *ngSwitchCase="DialogType.DELETE_TOPIC"></app-delete-topic-dialog>
+    </ng-container>
+  </ng-container>
 </div>

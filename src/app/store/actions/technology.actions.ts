@@ -38,7 +38,7 @@ export const getTechnologiesFailure = createAction(
 );
 export const addTopic = createAction(
   TechnologyActionTypes.addTopic,
-  props<{ technology: { id: string; name: string; topic: string } }>()
+  props<{ technologyId: string; topic: { name: string; description: string } }>()
 );
 export const addTopicSuccess = createAction(
   TechnologyActionTypes.addTechnologySuccess,

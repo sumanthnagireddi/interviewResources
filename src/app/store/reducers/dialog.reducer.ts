@@ -1,23 +1,22 @@
 import { createReducer, on } from '@ngrx/store';
-import { toggleDialog } from '../actions/dialog.actions';
+import { closeDialog, openDialog } from '../actions/dialog.actions';
+import { DialogConfig } from '../../model/dialog.model';
 
 export interface DialogState {
-  showDialog: boolean;
-  value?: string | undefined;
-  child?: any;
+  isOpen: boolean;
+  config: DialogConfig | null;
 }
-export const initialState: DialogState = {
-  showDialog: false,
-  value: undefined,
-  child: null,
+
+export const initialDialogState: DialogState = {
+  isOpen: false,
+  config: null,
 };
 
 export const dialogReducer = createReducer(
-  initialState,
-  on(toggleDialog, (state, { show, value, child }) => ({
-    ...state,
-    showDialog: show,
-    value: value,
-    child: child,
-  }))
+  initialDialogState,
+  on(openDialog, (_, { config }) => ({
+    isOpen: true,
+    config,
+  })),
+  on(closeDialog, () => initialDialogState)
 );

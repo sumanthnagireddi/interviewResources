@@ -1,13 +1,15 @@
+// dialog.selectors.ts
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { DialogState } from '../reducers/dialog.reducer';
 
 export const selectDialogState = createFeatureSelector<DialogState>('dialog');
 
-export const selectShowDialog = createSelector(
+export const selectDialogOpen = createSelector(
   selectDialogState,
-  (state: DialogState) => state
+  (s) => s.isOpen
 );
-export const selectShowEditDialog = createSelector(
+
+export const selectDialogConfig = createSelector(
   selectDialogState,
-  (state: DialogState) => state
+  (s) => s.config
 );
