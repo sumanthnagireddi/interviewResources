@@ -1,12 +1,15 @@
-import { DialogActionTypes, toggleDialog } from './../../../store/actions/dialog.actions';
+import {
+  DialogActionTypes,
+  toggleDialog,
+} from './../../../store/actions/dialog.actions';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectTechnologies } from '../../../store/selectors/technology.selector';
 import { getTechnologies } from '../../../store/actions/technology.actions';
-import { Technology, } from '../../../model/content.model';
-import { ProfileCardComponent } from "../../profile-card/profile-card.component";
+import { Technology } from '../../../model/content.model';
+import { ProfileCardComponent } from '../../profile-card/profile-card.component';
 export interface MenuItem {
   id: string;
   label: string;
@@ -21,7 +24,7 @@ export interface MenuItem {
   selector: 'app-sidebar-v3',
   imports: [CommonModule, RouterLink],
   templateUrl: './sidebar-v3.component.html',
-  styleUrl: './sidebar-v3.component.css'
+  styleUrl: './sidebar-v3.component.css',
 })
 export class SidebarV3Component {
   private readonly store = inject(Store);
@@ -36,23 +39,21 @@ export class SidebarV3Component {
       icon: 'bookmark_stacks',
       hasItems: true,
       isOpen: false,
-      children: [
-      ]
+      children: [],
     },
-    { id: 'blogs', label: 'Blogs', icon: 'post_add', url: 'blogs' }
+    { id: 'blogs', label: 'Blogs', icon: 'post_add', url: 'blogs' },
   ];
-
 
   folders = [
     { name: 'Technical', open: false },
     { name: 'Interview Resources', open: false },
-    { name: 'AWS JS Developer training', open: false }
+    { name: 'AWS JS Developer training', open: false },
   ];
 
   selectedMenuItem: string | null = null;
   ngOnInit(): void {
     this.store.dispatch(getTechnologies());
-    this.store.select(selectTechnologies).subscribe(technologies => {
+    this.store.select(selectTechnologies).subscribe((technologies) => {
       this.updateContentChildren(technologies);
     });
   }
@@ -66,19 +67,51 @@ export class SidebarV3Component {
   }
   addTechnology(event: Event, item: MenuItem) {
     event.stopPropagation();
-    this.store.dispatch(toggleDialog({ show: true, level: 'technologies' }));
+    this.store.dispatch(
+      toggleDialog({ show: true, value: 'tech', dialogName: 'add' })
+    );
   }
   updateContentChildren(technologies: Technology[]) {
-    const contentNode = this.menuItems.find(i => i.id === 'content');
+    const contentNode = this.menuItems.find((i) => i.id === 'content');
     if (contentNode) {
-      contentNode.children = technologies.map(tech => ({
-        id: tech.id,
+      contentNode.children = technologies.map((tech) => ({
+        id: tech._id,
         label: tech.name,
         icon: 'article',
-        url: `/pages/${tech.id}/${tech.name.replace(/\s+/g, '-').toLowerCase()}`,
-        hasItems: false
+        description: tech?.description,
+        hasItems: true,
       }));
     }
+  }
+  addChildTechnology(event: Event, parent: any, child: any) {
+    event.stopPropagation();
+    this.store.dispatch(
+      toggleDialog({
+        show: true,
+        value: 'topics',
+        child: child,
+        dialogName: 'add',
+      })
+    );
+  }
+
+  editChild(event: Event, child: any) {
+    event.stopPropagation();
+    this.store.dispatch(
+      toggleDialog({ show: true, value: 'topics', dialogName: 'edit' })
+    );
+  }
+
+  deleteChildMenu(event: Event, child: any) {
+    event.stopPropagation();
+    this.store.dispatch(
+      toggleDialog({ show: true, value: 'topics', dialogName: 'delete' })
+    );
+  }
+
+  toggleChildOpen(event: Event, child: any) {
+    event.stopPropagation();
+    child.isOpen = !child.isOpen;
   }
 
   // getTopicsForTechnology(technologyId: string): MenuItem[] {
@@ -96,7 +129,6 @@ export class SidebarV3Component {
   //   }));
   // }
 
-
   /** Click on row */
   onItemClick(item: MenuItem) {
     this.selectedMenuItem = item.id;
@@ -112,6 +144,4 @@ export class SidebarV3Component {
     event.stopPropagation();
     item.isOpen = !item.isOpen;
   }
-
-
 }

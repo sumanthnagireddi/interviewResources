@@ -1,11 +1,13 @@
-<div class="p-4 w-[70vw] md:w-[20vw] md:relative fixed z-40 md:top-0 top-12 left-0 h-[96vh] bg-white border-r md:h-[92vh] text-gray-700 ">
-  <!-- <app-profile-card></app-profile-card> -->
-    <ng-container *ngFor="let item of menuItems">
+<div
+  class="p-4 w-[70vw] md:w-[21vw] md:relative fixed z-40 md:top-0 top-12 left-0 h-[96vh] bg-white border-r md:h-[92vh] text-gray-700">
 
-    <!-- LEVEL 1 -->
-    <div [routerLink]="item.url" class="px-2 py-1 mb-1 flex items-center gap-3 rounded-md cursor-pointer
-         hover:bg-gray-100 text-sm font-medium" [class.bg-blue-50]="selectedMenuItem === item.id"
-      [class.text-blue-600]="selectedMenuItem === item.id" (click)="onItemClick(item)">
+  <ng-container *ngFor="let item of menuItems">
+
+    <!-- ================= LEVEL 1 ================= -->
+    <div class="px-2 py-1 mb-1 flex items-center gap-3 rounded-md cursor-pointer
+             hover:bg-gray-100 text-sm font-medium" [routerLink]="item.url"
+      [class.bg-blue-50]="selectedMenuItem === item.id" [class.text-blue-600]="selectedMenuItem === item.id"
+      (click)="onItemClick(item)">
 
       <span class="material-symbols-outlined text-xl">
         {{ item.icon }}
@@ -13,85 +15,104 @@
 
       <span class="flex-1">{{ item.label }}</span>
 
-      <!-- ADD BUTTON -->
+      <!-- ADD -->
       <span *ngIf="item.hasItems" class="material-symbols-outlined text-base cursor-pointer"
         (click)="addTechnology($event, item)">
         add
       </span>
 
-      <!-- MORE -->
-      <span *ngIf="item.hasItems" class="material-symbols-outlined text-base">
-        more_horiz
-      </span>
 
-      <!-- TOGGLE ARROW -->
+      <!-- TOGGLE -->
       <span *ngIf="item.hasItems" class="material-symbols-outlined transition-transform duration-200 cursor-pointer"
         [class.rotate-180]="item.isOpen" (click)="toggleOpen($event, item)">
         keyboard_arrow_down
       </span>
-
     </div>
 
-
-    <!-- LEVEL 2 -->
+    <!-- ================= LEVEL 2 ================= -->
     <div *ngIf="item.hasItems && item.isOpen" class="ml-6 mt-1 space-y-1">
 
       <ng-container *ngFor="let child of item.children">
 
         <div class="px-2 py-1 flex items-center gap-2 rounded-md text-sm cursor-pointer
-                 hover:bg-gray-100" [class.bg-blue-50]="selectedMenuItem === child.id"
-          [class.text-blue-600]="selectedMenuItem === child?.id" (click)="selectMenuItem($event,child)"
-          [routerLink]="!child.hasItems ? child.url : null">
+                 hover:bg-gray-100" [routerLink]="!child.hasItems ? child.url : null"
+          [class.bg-blue-50]="selectedMenuItem === child.id" [class.text-blue-600]="selectedMenuItem === child.id"
+          (click)="selectMenuItem($event, child)">
+
           <span class="material-symbols-outlined text-lg">
             {{ child.icon }}
           </span>
 
           <span class="flex-1">{{ child.label }}</span>
-          <span class="material-symbols-outlined text-base transition-transform duration-200">
+
+          <!-- ADD -->
+          <span class="material-symbols-outlined text-lg hover:text-green-600 cursor-pointer"
+            (click)="addChildTechnology($event, item, child)">
             add
           </span>
-          <span class="material-symbols-outlined text-base transition-transform duration-200">
-            more_horiz
+
+          <!-- EDIT -->
+          <span (click)="editChild($event, child)">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+              class="size-3 cursor-pointer hover:text-blue-600">
+              <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157
+                   3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM
+                   19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25
+                   0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933
+                   l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+            </svg>
           </span>
-          <span *ngIf="child.hasItems" class="material-symbols-outlined text-base transition-transform duration-200"
-            [class.rotate-180]="child.isOpen">
+          <!-- MORE -->
+          <span class="cursor-pointer" (click)="deleteChildMenu($event, child)">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+              class="size-[14px] hover:text-red-600">
+              <path fill-rule="evenodd"
+                d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                clip-rule="evenodd" />
+            </svg>
+          </span>
+
+          <!-- TOGGLE -->
+          <span *ngIf="child.hasItems"
+            class="material-symbols-outlined text-xl  transition-transform duration-200 cursor-pointer"
+            [class.rotate-180]="child.isOpen" (click)="toggleChildOpen($event, child)">
             keyboard_arrow_down
           </span>
         </div>
 
-        <!-- LEVEL 3 -->
+        <!-- ================= LEVEL 3 ================= -->
         <div *ngIf="child.hasItems && child.isOpen" class="ml-6 space-y-1">
-          <div *ngFor="let subChild of child.children" [routerLink]="subChild.url"
-            (click)="selectedMenuItem = subChild.id" class="flex items-center gap-2 px-2 py-1 text-sm rounded-md cursor-pointer
-                   hover:bg-gray-100" [class.bg-blue-50]="selectedMenuItem === subChild.id"
-            [class.text-blue-600]="selectedMenuItem === subChild.id">
+          <div *ngFor="let subChild of child.children" class="flex items-center gap-2 px-2 py-1 text-sm rounded-md cursor-pointer
+                   hover:bg-gray-100" [routerLink]="subChild.url" [class.bg-blue-50]="selectedMenuItem === subChild.id"
+            [class.text-blue-600]="selectedMenuItem === subChild.id" (click)="selectedMenuItem = subChild.id">
+
             <span class="material-symbols-outlined text-lg">
-              {{ child.icon }}
+              {{ subChild.icon }}
             </span>
 
-            <span class="flex-1">{{ child.label }}</span>
+            <span class="flex-1">{{ subChild.label }}</span>
           </div>
         </div>
 
       </ng-container>
-
     </div>
-
   </ng-container>
-  <div class="border-t absolute bottom-0 border-gray-200 mt-auto">
-    <a href="#" class="flex items-center gap-3 p-4 hover:bg-gray-50 transition-all duration-200 group">
 
-      <img src="https://sumanthnagireddi1.web.app/assets/imag3.jpg" alt="User Avatar" class="w-10 h-10 rounded-full object-cover ring-2 ring-gray-200
-               group-hover:ring-blue-300 transition-all" />
+  <!-- ================= PROFILE ================= -->
+  <div class="border-t absolute bottom-0 border-gray-200 w-full">
+    <a class="flex items-center gap-3 p-4 hover:bg-gray-50 transition-all">
+
+      <img src="https://sumanthnagireddi1.web.app/assets/imag3.jpg"
+        class="w-10 h-10 rounded-full object-cover ring-2 ring-gray-200" />
 
       <div class="flex-1 min-w-0">
-        <p class="block font-medium text-sm text-gray-800 truncate">
+        <p class="font-medium text-sm text-gray-800 truncate">
           Sumanth Nagireddi
         </p>
-        <span class="text-gray-500  text-xs truncate block">
+        <span class="text-gray-500 text-xs truncate block">
           {{'sumanthnagireddi@gmail.com'}}
         </span>
       </div>
     </a>
   </div>
-  </div>
+</div>

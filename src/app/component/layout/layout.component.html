@@ -10,13 +10,14 @@
     <div *ngIf="sidebarToggleStatus" class="fixed md:hidden inset-0 z-10" (click)="handleSidebarToggle()">
     </div>
 
-    <div [ngClass]="!sidebarToggleStatus ? 'md:mx-[1vw] mx-[2vw]' : 'mx-0'" class="flex-1 h-screen overflow-y-auto md:p-6 relative z-0">
+    <div [ngClass]="!sidebarToggleStatus ? 'md:mx-[1vw] mx-[2vw]' : 'mx-0'"
+      class="flex-1 h-screen overflow-y-auto md:p-6 relative z-0">
       <router-outlet></router-outlet>
     </div>
 
   </div>
 
   <div *ngIf="dialogToggleStatus">
-    <app-add-dialog />
+    <app-add-dialog [dialogType]="dialogType" [dialogValue]="dialogValue"></app-add-dialog>
   </div>
 </div>

@@ -1,31 +1,41 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
-import { SidebarV3Component } from "./sidebar-v3/sidebar-v3.component";
+import { SidebarV3Component } from './sidebar-v3/sidebar-v3.component';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectShowSidebar } from '../../store/selectors/sidebar.selectors';
 import { CommonModule } from '@angular/common';
-import { AddDialogComponent } from "../add-dialog/add-dialog.component";
+import { AddDialogComponent } from '../add-dialog/add-dialog.component';
 import { combineLatest } from 'rxjs';
 import { selectShowDialog } from '../../store/selectors/general.selector';
 
 @Component({
   selector: 'app-layout',
-  imports: [HeaderComponent, SidebarV3Component, RouterOutlet, CommonModule, AddDialogComponent],
+  imports: [
+    HeaderComponent,
+    SidebarV3Component,
+    RouterOutlet,
+    CommonModule,
+    AddDialogComponent,
+  ],
   templateUrl: './layout.component.html',
-  styleUrl: './layout.component.css'
+  styleUrl: './layout.component.css',
 })
 export class LayoutComponent implements OnInit {
   sidebarToggleStatus = true;
   dialogToggleStatus = false;
+  dialogType: any;
+  dialogValue: any;
   private readonly store = inject(Store);
   ngOnInit(): void {
     combineLatest([
       this.store.select(selectShowDialog),
-      this.store.select(selectShowSidebar)
+      this.store.select(selectShowSidebar),
     ]).subscribe(([dialog, sidebar]) => {
       this.sidebarToggleStatus = sidebar;
-      this.dialogToggleStatus = dialog;
+      this.dialogToggleStatus = dialog?.showDialog;
+      this.dialogType = dialog?.value;
+      this.dialogValue = dialog?.child || {};
     });
   }
 
