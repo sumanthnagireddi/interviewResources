@@ -18,10 +18,11 @@ export interface Content {
 }
 
 export interface Technology {
-  id: string;                    // angular
+  _id: string;                    // angular
   name: string;                  // Angular
   icon?: string;                 // article
   order: number;
+  description?:string
 }
 
 export interface Topic {

@@ -14,6 +14,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -23,8 +24,25 @@ export class TechnologyService {
   technologiesCollectionRefString = 'technologies_new';
   topicsCollectionRef = collection(this.firestore, 'topics_new');
   topicsCollectionRefString = 'topics_new';
-
+  Technologies_Endpoint = environment.API_URL + '/technologies';
   constructor(private http: HttpClient) {}
+
+  getTechnologiesFromMongo() {
+    return this.http.get(this.Technologies_Endpoint);
+  }
+  addTechnologyToMongo(technology_payload: any) {
+    const payload = {
+      ...technology_payload,
+      slug: technology_payload?.name
+        ?.trim() // remove leading/trailing spaces
+        .toLowerCase() // convert to lowercase
+        .replace(/\s+/g, '-') // replace spaces (one or more) with hyphens
+        .replace(/[^a-z0-9-]/g, ''), // optional: remove special characters
+    };
+
+    return this.http.post(this.Technologies_Endpoint, payload);
+  }
+
   getTechnologies(): Observable<any> {
     return from(getDocs(this.technologiesCollectionRef)).pipe(
       map((querySnapshot) =>
@@ -35,10 +53,7 @@ export class TechnologyService {
       )
     );
   }
-  getTechnologiesFromMongo() {
-    return this.http.get('https://webservices-rqvr.onrender.com/technologies');
-  }
-  addTechnologyToMongo(technology_payload: any) {}
+
   addTechnology(
     technology: any
   ): Observable<{ id: string; name: string; topic?: string }> {

@@ -24,24 +24,36 @@ export class TechnologyEffects {
     private technologyService: TechnologyService,
     private router: Router
   ) {}
-
   addTechnology$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addTechnology),
-      exhaustMap(({ technologyName }) =>
-        this.technologyService.addTechnology(technologyName).pipe(
-          map((technology) => {
-            return technology?.topic
-              ? addTopic({
-                  technology: { ...technology, topic: technology.topic },
-                })
-              : addTechnologySuccess({ technology });
-          }),
-          catchError((error) => of(addTechnologyFailure({ error })))
+      exhaustMap(({ technology }) =>
+        this.technologyService.addTechnologyToMongo(technology).pipe(
+          catchError((error) => of(addTechnologyFailure({ error }))),
+          map((technology: any) => {
+            return addTechnologySuccess(technology);
+          })
         )
       )
     )
   );
+  // addTechnology$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(addTechnology),
+  //     exhaustMap(({ technologyName }) =>
+  //       this.technologyService.addTechnology(technologyName).pipe(
+  //         map((technology) => {
+  //           return technology?.topic
+  //             ? addTopic({
+  //                 technology: { ...technology, topic: technology.topic },
+  //               })
+  //             : addTechnologySuccess({ technology });
+  //         }),
+  //         catchError((error) => of(addTechnologyFailure({ error })))
+  //       )
+  //     )
+  //   )
+  // );
   addTopic$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addTopic),
@@ -73,19 +85,10 @@ export class TechnologyEffects {
       )
     )
   );
-  navigateAfterAdd$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(addTechnologySuccess, addTopicSuccess),
-        tap(({ technology }) => {
-          this.router.navigate([
-            `/create-new/${technology?.id}-${technology?.name
-              .trim()
-              ?.replace(/\s+/g, '-')
-              ?.toLowerCase()}`,
-          ]);
-        })
-      ),
-    { dispatch: false }
+  navigateAfterAdd$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addTechnologySuccess, addTopicSuccess),
+      map(() => getTechnologies())
+    )
   );
 }
