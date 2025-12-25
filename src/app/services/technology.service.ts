@@ -24,7 +24,7 @@ export class TechnologyService {
   technologiesCollectionRefString = 'technologies_new';
   topicsCollectionRef = collection(this.firestore, 'topics_new');
   topicsCollectionRefString = 'topics_new';
-  Technologies_Endpoint = environment.API_URL + '/technologies';
+  Technologies_Endpoint: any = environment.API_URL + '/technologies';
   constructor(private http: HttpClient) {}
 
   getTechnologiesFromMongo() {
@@ -53,8 +53,16 @@ export class TechnologyService {
         .replace(/[^a-z0-9-]/g, ''), // optional: remove special characters
     };
 
-    return this.http.patch(this.Technologies_Endpoint+'/'+technology_payload.id, payload);
+    return this.http.patch(
+      this.Technologies_Endpoint + '/' + technology_payload.id,
+      payload
+    );
   }
+
+  deleteTechnology(technologyId: string) {
+    return this.http.delete(this.Technologies_Endpoint + '/' + technologyId);
+  }
+
   getTechnologies(): Observable<any> {
     return from(getDocs(this.technologiesCollectionRef)).pipe(
       map((querySnapshot) =>

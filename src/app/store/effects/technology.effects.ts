@@ -5,6 +5,7 @@ import {
   addTechnologySuccess,
   addTopic,
   addTopicSuccess,
+  deleteTechnology,
   editTechnology,
   getTechnologies,
   getTechnologiesFailure,
@@ -43,6 +44,19 @@ export class TechnologyEffects {
       ofType(editTechnology),
       exhaustMap(({ technology }) =>
         this.technologyService.updateTechnology(technology).pipe(
+          catchError((error) => of(addTechnologyFailure({ error }))),
+          map((technology: any) => {
+            return addTechnologySuccess(technology);
+          })
+        )
+      )
+    )
+  );
+  deleteTechnology$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteTechnology),
+      exhaustMap(({ technologyId }) =>
+        this.technologyService.deleteTechnology(technologyId).pipe(
           catchError((error) => of(addTechnologyFailure({ error }))),
           map((technology: any) => {
             return addTechnologySuccess(technology);
