@@ -5,6 +5,7 @@ export enum TechnologyActionTypes {
   addTechnology = '[Technology] addTechnology',
   addTechnologySuccess = '[Technology] addTechnologySuccess',
   addTechnologyFailure = '[Technology] addTechnologyFailure',
+  editTechnology = '[Technology] editTechnology',
   getTechnologies = '[Technology] getTechnologies',
   getTechnologiesSuccess = '[Technology] getTechnologiesSuccess',
   getTechnologiesFailure = '[Technology] getTechnologiesFailure',
@@ -38,9 +39,17 @@ export const getTechnologiesFailure = createAction(
 );
 export const addTopic = createAction(
   TechnologyActionTypes.addTopic,
-  props<{ technologyId: string; topic: { name: string; description: string } }>()
+  props<{
+    technologyId: string;
+    topic: { name: string; description: string };
+  }>()
 );
 export const addTopicSuccess = createAction(
   TechnologyActionTypes.addTechnologySuccess,
   props<{ technology: { id: string; name: string; topic: string } }>()
+);
+
+export const editTechnology = createAction(
+  TechnologyActionTypes.editTechnology,
+  props<{ technology: any }>()
 );

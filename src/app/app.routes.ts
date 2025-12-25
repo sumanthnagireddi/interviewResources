@@ -5,7 +5,7 @@ import { DraftsComponent } from './component/drafts/drafts.component';
 import { StarredComponent } from './pages/starred/starred.component';
 import { FeedComponent } from './component/feed/feed.component';
 import { RecentComponent } from './pages/recent/recent.component';
-import { AddDialogComponent } from './component/add-dialog/add-dialog.component';
+import { AddDialogComponent } from './component/dialogs/add-dialog/add-dialog.component';
 import { CreateDocComponent } from './pages/create-doc/create-doc.component';
 import { EditDocComponent } from './pages/edit-doc/edit-doc.component';
 import { BlogsComponent } from './pages/blogs/blogs.component';

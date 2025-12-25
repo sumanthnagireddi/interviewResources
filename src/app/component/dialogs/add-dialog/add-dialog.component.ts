@@ -1,14 +1,16 @@
 import { CommonModule, NgClass } from '@angular/common';
 import {
   Component,
+  EventEmitter,
   inject,
   Input,
   input,
+  Output,
   output,
   SimpleChanges,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { closeDialog } from '../../store/actions/dialog.actions';
+import { closeDialog } from '../../../store/actions/dialog.actions';
 import {
   FormBuilder,
   FormGroup,
@@ -19,8 +21,8 @@ import {
 import {
   addTechnology,
   addTopic,
-} from '../../store/actions/technology.actions';
-import { DialogComponent } from '../dialog/dialog.component';
+} from '../../../store/actions/technology.actions';
+import { DialogComponent } from '../../dialogs/dialog/dialog.component';
 @Component({
   selector: 'app-add-dialog',
   imports: [ReactiveFormsModule, FormsModule, CommonModule, DialogComponent],
@@ -30,7 +32,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 export class AddDialogComponent {
   @Input() payload!: any;
   form!: FormGroup;
-
+  @Output() onDialogOutputButton = new EventEmitter<any>();
   constructor(private store: Store, private fb: FormBuilder) {}
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -41,9 +43,15 @@ export class AddDialogComponent {
   submit() {
     this.store.dispatch(
       addTechnology({
-        technology: this.payload.technologyId,
+        technology: this.form.value,
       })
     );
+    this.store.dispatch(closeDialog());
+  }
+  onDialogOutput() {
+    this.onDialogOutputButton.emit();
+  }
+  onCloseDialog() {
     this.store.dispatch(closeDialog());
   }
 }

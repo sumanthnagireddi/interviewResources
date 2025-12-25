@@ -1,42 +1,46 @@
 import { Component, Input } from '@angular/core';
-import { DialogComponent } from '../dialog/dialog.component';
 import {
   FormGroup,
   FormBuilder,
   Validators,
-  ReactiveFormsModule,
   FormsModule,
+  ReactiveFormsModule,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { closeDialog } from '../../../store/actions/dialog.actions';
-import { addTopic } from '../../../store/actions/technology.actions';
+import {
+  addTopic,
+  editTechnology,
+} from '../../../store/actions/technology.actions';
+import { DialogComponent } from '../dialog/dialog.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-add-topic-dialog',
+  selector: 'app-edit-tech-dialog',
   imports: [ReactiveFormsModule, FormsModule, CommonModule, DialogComponent],
-  templateUrl: './add-topic-dialog.component.html',
-  styleUrl: './add-topic-dialog.component.css',
+  templateUrl: './edit-tech-dialog.component.html',
+  styleUrl: './edit-tech-dialog.component.css',
 })
-export class AddTopicDialogComponent {
+export class EditTechDialogComponent {
   @Input() payload!: any;
   form!: FormGroup;
 
   constructor(private store: Store, private fb: FormBuilder) {}
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: ['', Validators.required],
-      description: [''],
-      topic: ['', Validators.required],
+      name: [this.payload?.technologyId?.label, Validators.required],
+      description: [this.payload?.technologyId?.description],
     });
   }
   submit() {
     this.store.dispatch(
-      addTopic({
-        technologyId: this.payload.technologyId,
-        topic: this.form.value,
+      editTechnology({
+        technology: { id: this.payload?.technologyId?.id, ...this.form.value },
       })
     );
+    this.store.dispatch(closeDialog());
+  }
+  onCloseDialog() {
     this.store.dispatch(closeDialog());
   }
 }

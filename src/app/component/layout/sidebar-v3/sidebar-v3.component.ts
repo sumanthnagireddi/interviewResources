@@ -95,6 +95,7 @@ export class SidebarV3Component {
         icon: 'article',
         description: tech?.description,
         hasItems: true,
+        children: [],
       }));
     }
   }

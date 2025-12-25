@@ -43,6 +43,18 @@ export class TechnologyService {
     return this.http.post(this.Technologies_Endpoint, payload);
   }
 
+  updateTechnology(technology_payload: any) {
+    const payload = {
+      ...technology_payload,
+      slug: technology_payload?.name
+        ?.trim() // remove leading/trailing spaces
+        .toLowerCase() // convert to lowercase
+        .replace(/\s+/g, '-') // replace spaces (one or more) with hyphens
+        .replace(/[^a-z0-9-]/g, ''), // optional: remove special characters
+    };
+
+    return this.http.patch(this.Technologies_Endpoint+'/'+technology_payload.id, payload);
+  }
   getTechnologies(): Observable<any> {
     return from(getDocs(this.technologiesCollectionRef)).pipe(
       map((querySnapshot) =>

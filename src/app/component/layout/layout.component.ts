@@ -5,7 +5,6 @@ import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectShowSidebar } from '../../store/selectors/sidebar.selectors';
 import { CommonModule } from '@angular/common';
-import { AddDialogComponent } from '../add-dialog/add-dialog.component';
 import { combineLatest } from 'rxjs';
 import {
   selectDialogConfig,
@@ -15,6 +14,8 @@ import { DialogConfig, DialogType } from '../../model/dialog.model';
 import { AddTopicDialogComponent } from '../dialogs/add-topic-dialog/add-topic-dialog.component';
 import { DeleteTechDialogComponent } from '../dialogs/delete-tech-dialog/delete-tech-dialog.component';
 import { DeleteTopicDialogComponent } from '../dialogs/delete-topic-dialog/delete-topic-dialog.component';
+import { EditTechDialogComponent } from "../dialogs/edit-tech-dialog/edit-tech-dialog.component";
+import { AddDialogComponent } from "../dialogs/add-dialog/add-dialog.component";
 
 @Component({
   selector: 'app-layout',
@@ -27,7 +28,8 @@ import { DeleteTopicDialogComponent } from '../dialogs/delete-topic-dialog/delet
     AddTopicDialogComponent,
     DeleteTechDialogComponent,
     DeleteTopicDialogComponent,
-  ],
+    EditTechDialogComponent,
+],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })

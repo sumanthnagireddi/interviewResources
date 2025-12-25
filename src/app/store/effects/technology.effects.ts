@@ -5,6 +5,7 @@ import {
   addTechnologySuccess,
   addTopic,
   addTopicSuccess,
+  editTechnology,
   getTechnologies,
   getTechnologiesFailure,
   getTechnologiesSuccess,
@@ -29,6 +30,19 @@ export class TechnologyEffects {
       ofType(addTechnology),
       exhaustMap(({ technology }) =>
         this.technologyService.addTechnologyToMongo(technology).pipe(
+          catchError((error) => of(addTechnologyFailure({ error }))),
+          map((technology: any) => {
+            return addTechnologySuccess(technology);
+          })
+        )
+      )
+    )
+  );
+  updateTechnology$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(editTechnology),
+      exhaustMap(({ technology }) =>
+        this.technologyService.updateTechnology(technology).pipe(
           catchError((error) => of(addTechnologyFailure({ error }))),
           map((technology: any) => {
             return addTechnologySuccess(technology);

@@ -13,7 +13,8 @@
   </div>
   <ng-container *ngIf="isDialogOpen && dialogConfig as config">
     <ng-container [ngSwitch]="config.type">
-      <app-add-dialog *ngSwitchCase="DialogType.ADD_TECH" [payload]="config?.payload" />
+      <app-add-dialog *ngSwitchCase="DialogType.ADD_TECH" [payload]="config?.payload"></app-add-dialog>
+      <app-edit-tech-dialog *ngSwitchCase="DialogType.EDIT_TECH" [payload]="config?.payload"></app-edit-tech-dialog>
       <app-add-topic-dialog *ngSwitchCase="DialogType.ADD_TOPIC"></app-add-topic-dialog>
       <app-delete-tech-dialog *ngSwitchCase="DialogType.DELETE_TECH"></app-delete-tech-dialog>
       <app-delete-topic-dialog *ngSwitchCase="DialogType.DELETE_TOPIC"></app-delete-topic-dialog>
