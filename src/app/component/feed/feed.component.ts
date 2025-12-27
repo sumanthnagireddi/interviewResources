@@ -1,5 +1,5 @@
 import { ContentService } from './../../services/content.service';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FeedCardComponent } from "../feed-card/feed-card.component";
 import { CommonModule } from '@angular/common';
 import { RecentDocsComponent } from "../recent-docs/recent-docs.component";
@@ -26,15 +26,14 @@ export interface FeedItem {
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.css'
 })
-export class FeedComponent {
+export class FeedComponent implements OnInit {
   feed: FeedItem[] = [];
   recentContent: any
   private readonly store = inject(Store);
   private readonly router = inject(Router);
 
-  navigateTo(item: FeedItem) {
-    const contentId = item.id.toLowerCase().replace(/\s+/g, '-');
-    this.router.navigate([`/pages/${contentId}/view`]);
+  navigateTo(item: any) {
+    this.router.navigate([`/pages/${item.topicId}`]);
   }
   constructor() {
     this.store.dispatch(loadTopContents());
@@ -48,8 +47,8 @@ export class FeedComponent {
     ]).subscribe({
       next: ([topContents, recentContents]) => {
         console.log('All contents fetched successfully:', topContents, recentContents);
-        this.feed = this.transformToFeed(topContents);
-        this.recentContent = this.transformToFeed(recentContents)
+        this.feed =topContents
+        this.recentContent = topContents
       },
       error: (err) => {
         console.error('Error fetching all contents:', err);
@@ -57,24 +56,13 @@ export class FeedComponent {
     });
   }
 
-  private transformToFeed(data: any[]): FeedItem[] {
-    return data.map(item => ({
-      id: item.id,
-      title: this.getTitle(item.id),
-      owner: 'Sumanth Nagireddi',
-      date: this.formatDate(item.publishedAt || item.createdAt),
-      content: this.extractFirstWordsFromHtml(item.content, 40),
-      lastViewed: item?.lastViewed,
-      updatedOn: item?.updatedOn
-    }));
-  }
-  getTitle(content: any): string {
+ Title(content: any): string {
     const lastSegment = content?.split('-').pop() ?? '';
     return lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1);
   }
   private extractFirstWordsFromHtml(
     html: string,
-    wordLimit: number = 100
+    wordLimit = 100
   ): string {
     if (!html) return '';
 

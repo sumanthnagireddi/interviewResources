@@ -15,9 +15,12 @@
     <ng-container [ngSwitch]="config.type">
       <app-add-dialog *ngSwitchCase="DialogType.ADD_TECH" [payload]="config?.payload"></app-add-dialog>
       <app-edit-tech-dialog *ngSwitchCase="DialogType.EDIT_TECH" [payload]="config?.payload"></app-edit-tech-dialog>
-      <app-add-topic-dialog *ngSwitchCase="DialogType.ADD_TOPIC"></app-add-topic-dialog>
-      <app-delete-tech-dialog *ngSwitchCase="DialogType.DELETE_TECH" [payload]="config?.payload"></app-delete-tech-dialog>
-      <app-delete-topic-dialog *ngSwitchCase="DialogType.DELETE_TOPIC"></app-delete-topic-dialog>
+      <app-edit-topic-dialog *ngSwitchCase="DialogType.EDIT_TOPIC" [payload]="config?.payload"></app-edit-topic-dialog>
+      <app-add-topic-dialog *ngSwitchCase="DialogType.ADD_TOPIC" [payload]="config?.payload"></app-add-topic-dialog>
+      <app-delete-tech-dialog *ngSwitchCase="DialogType.DELETE_TECH"
+        [payload]="config?.payload"></app-delete-tech-dialog>
+      <app-delete-topic-dialog *ngSwitchCase="DialogType.DELETE_TOPIC"
+        [payload]="config?.payload"></app-delete-topic-dialog>
     </ng-container>
   </ng-container>
 </div>

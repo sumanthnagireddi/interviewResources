@@ -1,27 +1,50 @@
-<div class="flex  gap-4">
-  <div class="flex-1 p-4 md:w-full w-[100vw-56px]  h-screen ">
-    <div *ngIf="contentAvailable;else noContentTemplate">
-      <div class="flex justify-between items-center">
-        <app-breadcrumb [category]="currentTechnology"></app-breadcrumb>
-        <div>
+<div class="flex gap-4">
+
+  <!-- MAIN CONTENT AREA -->
+  <div class="flex-1 p-4 md:w-full w-[calc(100vw-56px)] h-screen">
+
+    <!-- LOADER -->
+    <ng-container *ngIf="contentLoader; else contentState">
+      <app-loader></app-loader>
+    </ng-container>
+
+    <!-- CONTENT / EMPTY STATE -->
+    <ng-template #contentState>
+
+      <!-- CONTENT EXISTS -->
+      <ng-container *ngIf="contentAvailable; else noContent">
+        <div class="flex justify-between items-center mb-4">
+          <app-breadcrumb [category]="currentTechnology"></app-breadcrumb>
+
           <span (click)="edit()" class="material-symbols-outlined cursor-pointer">
             edit_note
           </span>
         </div>
-      </div>
-      <app-editor [mode]="editorMode" [data]="content" (content)="handleContent($event)"
-        [contentData]="content"></app-editor>
-    </div>
-    <ng-template #noContentTemplate>
-      <div class="flex flex-col items-center justify-center h-96 text-center text-gray-500">
-        <span class="material-symbols-outlined text-6xl mb-4">description</span>
-        <h2 class="text-2xl font-semibold mb-2">No Content Available</h2>
-        <p class="text-sm cursor-pointer hover:text-blue-600" [routerLink]="'/create-new/' + currentId">Please click
-          here to add the content.</p>
-      </div>
+
+        <app-editor [mode]="'view'" [data]="content" [contentData]="content"></app-editor>
+      </ng-container>
+
+      <!-- NO CONTENT -->
+      <ng-template #noContent>
+        <div class="flex flex-col items-center justify-center h-96 text-center text-gray-500">
+          <span class="material-symbols-outlined text-6xl mb-4">
+            description
+          </span>
+          <h2 class="text-2xl font-semibold mb-2">
+            No Content Available
+          </h2>
+          <p class="text-sm cursor-pointer hover:text-blue-600" [routerLink]="'/create-new/' + currentId">
+            Please click here to add the content.
+          </p>
+        </div>
+      </ng-template>
+
     </ng-template>
   </div>
-  <!-- <div *ngIf="contentAvailable" class="flex-shrink-0">
+
+  <!-- RIGHT SIDE PANEL -->
+  <div *ngIf="!contentLoader && contentAvailable" class="flex-shrink-0">
     <app-content-tags></app-content-tags>
-  </div> -->
+  </div>
+
 </div>

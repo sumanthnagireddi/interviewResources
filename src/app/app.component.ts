@@ -3,7 +3,7 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   ElementRef,
   inject,
-  ViewChild,
+  ViewChild, OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
@@ -23,7 +23,7 @@ import { HttpClient } from '@angular/common/http';
   imports: [CommonModule, RouterOutlet],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'resources';
   store = inject(Store);
   router = inject(Router);

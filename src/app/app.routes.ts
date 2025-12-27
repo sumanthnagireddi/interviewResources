@@ -39,7 +39,7 @@ export const routes: Routes = [{
       component: DraftsComponent
     },
     {
-      path: 'pages/:pageId/:technology',
+      path: 'pages/:pageId',
       component: ContentLayoutComponent
     },
     {

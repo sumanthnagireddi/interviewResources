@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { toggleSidebar } from '../../../store/actions/sidebar.actions';
 import { HttpClient } from '@angular/common/http';
@@ -11,9 +11,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   sidebarToggleStatus = true;
-  isServerOn: boolean = false;
+  isServerOn = false;
   private readonly store = inject(Store);
   private readonly http = inject(HttpClient);
   ngOnInit(): void {

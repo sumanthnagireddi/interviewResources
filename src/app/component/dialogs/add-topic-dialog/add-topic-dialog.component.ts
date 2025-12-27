@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DialogComponent } from '../dialog/dialog.component';
 import {
   FormGroup,
@@ -18,25 +18,37 @@ import { CommonModule } from '@angular/common';
   templateUrl: './add-topic-dialog.component.html',
   styleUrl: './add-topic-dialog.component.css',
 })
-export class AddTopicDialogComponent {
+export class AddTopicDialogComponent implements OnInit {
   @Input() payload!: any;
   form!: FormGroup;
 
   constructor(private store: Store, private fb: FormBuilder) {}
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required]],
       description: [''],
       topic: ['', Validators.required],
+      topic_description: [''],
     });
+    this.form.patchValue({
+      name: this.payload?.technologyId?.label,
+      description: this.payload?.technologyId?.description,
+    });
+    this.form.get('name')?.disable();
+    this.form.get('description')?.disable();
   }
+
   submit() {
     this.store.dispatch(
       addTopic({
         technologyId: this.payload.technologyId,
-        topic: this.form.value,
+        topic: this.form.get('topic')?.value,
+        topic_description:this.form.get('topic_description')?.value
       })
     );
+    this.store.dispatch(closeDialog());
+  }
+  onCloseDialog() {
     this.store.dispatch(closeDialog());
   }
 }

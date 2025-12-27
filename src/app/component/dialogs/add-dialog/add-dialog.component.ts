@@ -7,7 +7,7 @@ import {
   input,
   Output,
   output,
-  SimpleChanges,
+  SimpleChanges, OnInit,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { closeDialog } from '../../../store/actions/dialog.actions';
@@ -29,7 +29,7 @@ import { DialogComponent } from '../../dialogs/dialog/dialog.component';
   templateUrl: './add-dialog.component.html',
   styleUrl: './add-dialog.component.css',
 })
-export class AddDialogComponent {
+export class AddDialogComponent implements OnInit {
   @Input() payload!: any;
   form!: FormGroup;
   @Output() onDialogOutputButton = new EventEmitter<any>();

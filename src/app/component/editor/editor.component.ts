@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, ElementRef, Input, input, OnInit, output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, ElementRef, Input, input, OnInit, output, SimpleChanges, ViewChild, OnChanges, AfterViewInit } from '@angular/core';
 import { set } from '@angular/fire/database';
 
 @Component({
@@ -9,9 +9,9 @@ import { set } from '@angular/fire/database';
   styleUrls: ['./editor.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class EditorComponent {
+export class EditorComponent implements OnChanges, AfterViewInit {
   @Input() data: any
-  @Input() mode: string = 'view'
+  @Input() mode = 'view'
   content = output()
   @ViewChild('editorElem') editorEl!: ElementRef;
 
@@ -33,7 +33,7 @@ export class EditorComponent {
     this.content.emit(html);
   }
 
-  setContent(html: string = '<p>Hello from Angular!</p>') {
+  setContent(html = '<p>Hello from Angular!</p>') {
     console.log('Setting HTML:', html);
     (this.editorEl.nativeElement as any).setHTML(html.trim());
   }

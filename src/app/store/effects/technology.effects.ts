@@ -101,7 +101,7 @@ export class TechnologyEffects {
       ofType(getTechnologies),
       exhaustMap(() =>
         this.technologyService.getTechnologiesFromMongo().pipe(
-          map((technologies) => {
+          map((technologies:any) => {
             console.log('technologies', technologies);
             return getTechnologiesSuccess({ technologies });
           }),
@@ -115,7 +115,7 @@ export class TechnologyEffects {
   );
   navigateAfterAdd$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(addTechnologySuccess, addTopicSuccess),
+      ofType(addTopicSuccess),
       map(() => getTechnologies())
     )
   );

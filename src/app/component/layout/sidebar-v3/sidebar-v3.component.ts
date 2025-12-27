@@ -1,10 +1,13 @@
 import { openDialog } from './../../../store/actions/dialog.actions';
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectTechnologies } from '../../../store/selectors/technology.selector';
-import { getTechnologies } from '../../../store/actions/technology.actions';
+import {
+  getTechnologies,
+  getTopics,
+} from '../../../store/actions/technology.actions';
 import { Technology } from '../../../model/content.model';
 import { ProfileCardComponent } from '../../profile-card/profile-card.component';
 import { DialogType } from '../../../model/dialog.model';
@@ -24,7 +27,7 @@ export interface MenuItem {
   templateUrl: './sidebar-v3.component.html',
   styleUrl: './sidebar-v3.component.css',
 })
-export class SidebarV3Component {
+export class SidebarV3Component implements OnInit {
   private readonly store = inject(Store);
   menuItems: MenuItem[] = [
     { id: 'for-you', label: 'For you', icon: 'account_circle', url: 'home' },
@@ -36,10 +39,16 @@ export class SidebarV3Component {
       label: 'Content',
       icon: 'bookmark_stacks',
       hasItems: true,
-      isOpen: false,
+      isOpen: true,
       children: [],
     },
     { id: 'blogs', label: 'Blogs', icon: 'post_add', url: 'blogs' },
+    {
+      id: 'sumanth',
+      label: 'Sumanth Nagireddi',
+      icon: 'profile',
+      url: 'profile',
+    },
   ];
 
   folders = [
@@ -58,11 +67,41 @@ export class SidebarV3Component {
   selectMenuItem(event: Event, item: MenuItem) {
     event.stopPropagation();
     this.selectedMenuItem = item.id;
-
+    this.store.dispatch(getTopics({ technologyId: this.selectedMenuItem }));
     if (item.hasItems) {
       item.isOpen = !item.isOpen;
     }
+    // this.toggleChildOpen(event, item);
   }
+  updateContentChildren(technologies: Technology[]) {
+    const contentNode = this.menuItems.find((i) => i.id === 'content');
+    if (contentNode) {
+      contentNode.children = technologies.map((tech) => ({
+        id: tech._id,
+        label: tech.name,
+        icon: 'article',
+        description: tech?.description,
+        hasItems: true,
+        isOpen:
+          this.updateTechnologyChildren(tech.topics)?.length > 0 ? true : false,
+        children: this.updateTechnologyChildren(tech.topics) || [],
+      }));
+    }
+  }
+  updateTechnologyChildren(topics?: any[]): MenuItem[] {
+    if (!topics || topics.length === 0) {
+      return [];
+    }
+
+    return topics.map((topic) => ({
+      id: topic._id,
+      label: topic.name,
+      icon: 'description',
+      hasItems: false,
+      topic_description: topic.topic_description,
+    }));
+  }
+
   addTechnology(event: Event) {
     event.stopPropagation();
     this.store.dispatch(
@@ -74,32 +113,17 @@ export class SidebarV3Component {
     );
   }
 
-  addChildTechnology(event: Event, techId: string) {
+  addChildTechnology(event: Event, tech: any) {
     event.stopPropagation();
     this.store.dispatch(
       openDialog({
         config: {
           type: DialogType.ADD_TOPIC,
-          payload: { technologyId: techId },
+          payload: { technologyId: tech },
         },
       })
     );
   }
-
-  updateContentChildren(technologies: Technology[]) {
-    const contentNode = this.menuItems.find((i) => i.id === 'content');
-    if (contentNode) {
-      contentNode.children = technologies.map((tech) => ({
-        id: tech._id,
-        label: tech.name,
-        icon: 'article',
-        description: tech?.description,
-        hasItems: true,
-        children: [],
-      }));
-    }
-  }
-
   editChild(event: Event, child: any) {
     event.stopPropagation();
     this.store.dispatch(
@@ -148,21 +172,6 @@ export class SidebarV3Component {
     event.stopPropagation();
     child.isOpen = !child.isOpen;
   }
-
-  // getTopicsForTechnology(technologyId: string): MenuItem[] {
-  //   let topics: Topic[] = [];
-
-  //   this.store.select(selectTopicsByTechnology(technologyId))
-  //     .subscribe(t => topics = t)
-  //     .unsubscribe(); // ⚠️ IMPORTANT: Unsubscribe immediately to avoid memory leaks
-  //   return topics.map(topic => ({
-  //     id: topic.id,
-  //     label: topic.name,
-  //     icon: 'article',
-  //     url: `/pages/${topic.id}`,
-  //     hasItems: false
-  //   }));
-  // }
 
   /** Click on row */
   onItemClick(item: MenuItem) {

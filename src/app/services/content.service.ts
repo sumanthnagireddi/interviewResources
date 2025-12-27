@@ -1,34 +1,49 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { collection, deleteDoc, doc, limit, Firestore, getDoc, getDocs, query, setDoc, where, serverTimestamp, orderBy } from '@angular/fire/firestore';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  limit,
+  Firestore,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+  serverTimestamp,
+  orderBy,
+} from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
+import { environment } from '../../environments/environment';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ContentService {
+  topics_endpoint: any = environment.API_URL + '/content';
   firestore = inject(Firestore);
   contentCollectionRef = collection(this.firestore, 'content_new');
   contentCollectionRefString = 'content_new';
 
-  constructor(private http: HttpClient) { }
-  getContent(id: string): Observable<any> {
-    const contentDocRef = doc(this.firestore, 'content_new', id);
-    return from(getDoc(contentDocRef)).pipe(
-      map(snapshot => {
-        console.log('Fetched content snapshot:', snapshot.data());
-        return {
-          id: snapshot.id,
-          ...snapshot.data()
-        };
-      })
-    );
+  constructor(private http: HttpClient) {}
+  createContent(contentPayload: any) {
+    return this.http.post(this.topics_endpoint, contentPayload);
+  }
+  fetchContent(contentId: string) {
+    return this.http.get(this.topics_endpoint + '/' + contentId);
+  }
+  updateContent(contentId: string, payload: any) {
+    return this.http.patch(this.topics_endpoint + '/' + contentId, payload);
+  }
+  getContents(){
+    return this.http.get(this.topics_endpoint);
   }
 
   getAllContents(limitCount: number): Observable<any> {
     const docRef = collection(this.firestore, this.contentCollectionRefString);
     const q = query(docRef, limit(limitCount));
     return from(getDocs(q)).pipe(
-      map(querySnapshot =>
+      map((querySnapshot) =>
         querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -41,36 +56,67 @@ export class ContentService {
 
     const q = query(
       colRef,
-      where('lastViewed', '!=', null),      // ✅ only viewed docs
-      orderBy('lastViewed', 'desc'),        // ✅ most recent first
+      where('lastViewed', '!=', null), // ✅ only viewed docs
+      orderBy('lastViewed', 'desc'), // ✅ most recent first
       limit(limitCount)
     );
 
     return from(getDocs(q)).pipe(
-      map(snapshot =>
-        snapshot.docs.map(doc => ({
+      map((snapshot) =>
+        snapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
         }))
       )
     );
   }
 
-  addContent(contentName: string, id: string, topicId: string): Observable<any> {
-    const docRef = doc(this.firestore, this.contentCollectionRefString, id)
-      return from(setDoc(docRef, { content: contentName, updatedOn: serverTimestamp(), lastViewed: serverTimestamp(), status: 'Published', topicId: topicId, isDeleted: false }, { merge: true }))
+  addContent(
+    contentName: string,
+    id: string,
+    topicId: string
+  ): Observable<any> {
+    const docRef = doc(this.firestore, this.contentCollectionRefString, id);
+    return from(
+      setDoc(
+        docRef,
+        {
+          content: contentName,
+          updatedOn: serverTimestamp(),
+          lastViewed: serverTimestamp(),
+          status: 'Published',
+          topicId: topicId,
+          isDeleted: false,
+        },
+        { merge: true }
+      )
+    );
   }
 
   updateLastViewed(id: string): Observable<any> {
-    const docRef = doc(this.firestore, this.contentCollectionRefString, id)
-    return from(setDoc(docRef, { lastViewed: serverTimestamp() }, { merge: true }))
+    const docRef = doc(this.firestore, this.contentCollectionRefString, id);
+    return from(
+      setDoc(docRef, { lastViewed: serverTimestamp() }, { merge: true })
+    );
   }
   updateStarred(id: string): Observable<any> {
-    const docRef = doc(this.firestore, this.contentCollectionRefString, id)
-    return from(setDoc(docRef, { isStarred: true, updatedOn: serverTimestamp() }, { merge: true }))
+    const docRef = doc(this.firestore, this.contentCollectionRefString, id);
+    return from(
+      setDoc(
+        docRef,
+        { isStarred: true, updatedOn: serverTimestamp() },
+        { merge: true }
+      )
+    );
   }
   updateUnStarred(id: string): Observable<any> {
-    const docRef = doc(this.firestore, this.contentCollectionRefString, id)
-    return from(setDoc(docRef, { isStarred: false, updatedOn: serverTimestamp() }, { merge: true }))
+    const docRef = doc(this.firestore, this.contentCollectionRefString, id);
+    return from(
+      setDoc(
+        docRef,
+        { isStarred: false, updatedOn: serverTimestamp() },
+        { merge: true }
+      )
+    );
   }
 }

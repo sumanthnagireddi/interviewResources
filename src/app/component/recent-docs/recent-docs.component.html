@@ -9,14 +9,14 @@
       </span>
       <div>
         <p class="text-sm font-semibold">{{ doc?.title }}</p>
-        <p class="text-xs text-gray-500">{{ doc?.owner }}</p>
+        <p class="text-xs text-gray-500">{{ doc?.description }}</p>
       </div>
       <!-- <span *ngIf="doc.draft" class="text-xs bg-gray-200 px-2 py-0.5 rounded">
         DRAFT
       </span> -->
     </div>
 
-    <div class="text-xs pt-3 text-gray-400">Visited {{ doc.lastViewed | firestoreDate | date:'medium' }}</div>
+    <div class="text-xs pt-3 text-gray-400">Visited {{ doc.lastFetchedAt | date:'medium' }}</div>
   </div>
 
 </div>

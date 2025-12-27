@@ -1,33 +1,30 @@
-<div class="bg-white card border cursor-pointer hover:shadow-sm rounded-lg px-6 py-8 my-4">
+<div class="bg-white card border cursor-pointer rounded-lg px-6 py-8 my-4 shadow">
 
   <div class="flex justify-between">
     <div class="flex gap-3 mb-2">
       <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">
-        {{ item.owner[0] }}
+        {{ 'S' }}
       </div>
 
       <div>
-        <div class="font-medium items-center gap-[4px] cursor-pointer hover:text-blue-700 flex text-blue-600 pb-[2px]">
+        <div class="font-medium items-center gap-[4px] cursor-pointer hover:text-blue-700 flex text-blue-600">
           <span class="material-symbols-outlined text-lg ">
             article
           </span>{{ item.title }}
         </div>
+        <p class="text-xs text-gray-500 mb-1">{{item.description}}</p>
         <div class="text-xs text-gray-500">
-          Owned by {{ item.owner }} • {{ item.updatedOn| firestoreDate | date:'medium' }}
+          Owned by Sumanth Nagireddi • {{ item.createdAt | date:'medium' }}
         </div>
       </div>
     </div>
-    <span
-  (click)="addToStarred(item)"
-  class="cursor-pointer material-symbols-outlined hover:fill-green-600 transition-colors"
->
-  bookmark
-</span>
+    <span (click)="addToStarred(item)"
+      class="cursor-pointer material-symbols-outlined hover:fill-green-600 transition-colors">
+      bookmark
+    </span>
   </div>
   <p class="text-sm text-gray-700">
     {{ item.content }}
   </p>
 
 </div>
-
-

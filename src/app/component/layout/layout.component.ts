@@ -16,6 +16,7 @@ import { DeleteTechDialogComponent } from '../dialogs/delete-tech-dialog/delete-
 import { DeleteTopicDialogComponent } from '../dialogs/delete-topic-dialog/delete-topic-dialog.component';
 import { EditTechDialogComponent } from "../dialogs/edit-tech-dialog/edit-tech-dialog.component";
 import { AddDialogComponent } from "../dialogs/add-dialog/add-dialog.component";
+import { EditTopicDialogComponent } from "../dialogs/edit-topic-dialog/edit-topic-dialog.component";
 
 @Component({
   selector: 'app-layout',
@@ -29,13 +30,14 @@ import { AddDialogComponent } from "../dialogs/add-dialog/add-dialog.component";
     DeleteTechDialogComponent,
     DeleteTopicDialogComponent,
     EditTechDialogComponent,
+    EditTopicDialogComponent
 ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })
 export class LayoutComponent implements OnInit {
   sidebarToggleStatus = true;
-  isDialogOpen: boolean = false;
+  isDialogOpen = false;
   dialogConfig: DialogConfig | null = null;
   DialogType=DialogType
   private readonly store = inject(Store);
@@ -51,18 +53,6 @@ export class LayoutComponent implements OnInit {
       console.log(this.isDialogOpen, this.dialogConfig);
     });
   }
-
-  // // 🔁 Listen to window resize
-  // @HostListener('window:resize')
-  // onResize() {
-  //   this.setSidebarState();
-  // }
-
-  // // 📏 Decide based on screen width
-  // private setSidebarState() {
-  //   this.sidebarToggleStatus = window.innerWidth >= 768; // Tailwind md breakpoint
-  // }
-
   handleSidebarToggle() {
     this.sidebarToggleStatus = false;
   }

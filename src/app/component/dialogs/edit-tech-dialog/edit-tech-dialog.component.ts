@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './edit-tech-dialog.component.html',
   styleUrl: './edit-tech-dialog.component.css',
 })
-export class EditTechDialogComponent {
+export class EditTechDialogComponent implements OnInit {
   @Input() payload!: any;
   form!: FormGroup;
 

@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrl: './breadcrumb.component.css'
 })
 export class BreadcrumbComponent {
-@Input() category: string = 'JavaScript';
+@Input() category = 'JavaScript';
 }

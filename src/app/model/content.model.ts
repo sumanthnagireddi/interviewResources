@@ -1,47 +1,44 @@
 export type ContentStatus = 'draft' | 'published';
 
 export interface Content {
-  id: string;                    // Firestore document ID
+  id: string; // Firestore document ID
   title: string;
-  body: string;                  // HTML / Markdown
-  technologyId: string;          // angular, react
-  topicId: string;               // ngrx, hooks
+  body: string; // HTML / Markdown
+  technologyId: string; // angular, react
+  topicId: string; // ngrx, hooks
   authorId: string;
 
-  status: ContentStatus;         // draft | published
+  status: ContentStatus; // draft | published
 
-  createdAt: any;                // Firebase Timestamp
-  updatedAt: any;                // Firebase Timestamp
-  publishedAt?: any | null;      // Only when published
+  createdAt: any; // Firebase Timestamp
+  updatedAt: any; // Firebase Timestamp
+  publishedAt?: any | null; // Only when published
 
-  isDeleted?: boolean;           // Soft delete (optional)
+  isDeleted?: boolean; // Soft delete (optional)
 }
 
 export interface Technology {
-  _id: string;                    // angular
-  name: string;                  // Angular
-  icon?: string;                 // article
+  _id: string; // angular
+  name: string; // Angular
+  icon?: string; // article
   order: number;
-  description?:string
+  description?: string;
+  topics?: any;
 }
 
 export interface Topic {
-  id: string;                    // ngrx
-  name: string;                  // NgRx
-  technologyId: string;          // angular
+  id: string; // ngrx
+  name: string; // NgRx
+  technologyId: string; // angular
   order: number;
 }
 
 export interface UserActivity {
   userId: string;
 
-  starred: {
-    [contentId: string]: boolean;
-  };
+  starred: Record<string, boolean>;
 
-  recentlyVisited: {
-    [contentId: string]: any;    // Timestamp
-  };
+  recentlyVisited: Record<string, any>;
 }
 
 export interface SidebarItem {
@@ -63,7 +60,7 @@ export interface ForYouSection {
 
 export interface RecentContent {
   items: Content[];
-  lastVisible?: any;   // Pagination cursor
+  lastVisible?: any; // Pagination cursor
 }
 
 export interface StarredContent {

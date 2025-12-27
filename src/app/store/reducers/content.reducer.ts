@@ -1,24 +1,33 @@
-import { createReducer, on } from "@ngrx/store";
-import { loadTopContents, loadTopContentsSuccess, updateRecentVisited } from "../actions/content.actions";
+import { createReducer, on } from '@ngrx/store';
+import {
+  loadCurrentContentFromData,
+  loadTopContentsSuccess,
+  updateRecentVisited,
+} from '../actions/content.actions';
 
 export interface ContentState {
   topContents: any[];
-  recentContent: any
+  recentContent: any;
+  currentContent: any;
 }
 export const initialState: ContentState = {
   topContents: [],
-  recentContent: []
+  recentContent: [],
+  currentContent: null,
 };
-
 
 export const contentReducer = createReducer(
   initialState,
   on(loadTopContentsSuccess, (state, { topContents }) => ({
     ...state,
-    topContents: topContents
+    topContents: topContents,
   })),
   on(updateRecentVisited, (state, { recentContent }) => ({
     ...state,
-    recentContent: recentContent
+    recentContent: recentContent,
+  })),
+  on(loadCurrentContentFromData, (state, { currentContent }) => ({
+    ...state,
+    currentContent: currentContent,
   }))
 );
