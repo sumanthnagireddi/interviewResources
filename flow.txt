@@ -2,7 +2,293 @@ todo
 starred
 nested child
 
+1. “For You” — Personalized Content Engine (Advanced)
+Features
 
+Personalized feed based on:
+
+Recently viewed blogs
+
+Starred content
+
+Tags/topics user reads most
+
+Ranking algorithm (simple scoring model initially)
+
+Backend (Impressive)
+
+User interaction tracking table
+
+Content scoring algorithm
+
+Redis caching for feed generation
+
+Frontend
+
+Infinite scroll
+
+Skeleton loaders
+
+“Why am I seeing this?” tooltip
+
+Tech depth shown: personalization, analytics, caching, algorithms
+
+2. “Recent” — Smart Activity Timeline
+Features
+
+Timeline of:
+
+Viewed blogs
+
+Edited drafts
+
+Published posts
+
+Grouped by date (Today, Yesterday, Last Week)
+
+Backend
+
+Event-based logging (VIEW_BLOG, EDIT_DRAFT)
+
+Aggregation APIs
+
+Frontend
+
+Virtual scroll
+
+Date grouping
+
+Filter by type
+
+Tech depth: event modeling, aggregation, UX performance
+
+3. “Starred” — Cross-Device Favorites (Not Just Local)
+Features
+
+Star blogs, drafts, topics
+
+Sync across devices
+
+Offline support (IndexedDB)
+
+Backend
+
+User-content mapping
+
+Conflict resolution logic
+
+Frontend
+
+Optimistic UI updates
+
+Offline-first behavior
+
+Tech depth: data sync, optimistic updates
+
+4. “Drafts” — Professional Editor Workflow (Very Strong Signal)
+Features
+
+Auto-save every few seconds
+
+Version history (restore previous versions)
+
+Draft status (private, scheduled, published)
+
+Backend
+
+Versioned documents
+
+Soft deletes
+
+Scheduled publishing via cron/queue
+
+Frontend
+
+Editor state recovery
+
+Change comparison (diff view)
+
+Tech depth: versioning, queues, state recovery
+
+5. “Content” — Dynamic Knowledge Graph (Advanced)
+
+Instead of static lists, make this intelligent.
+
+Features
+
+Content hierarchy:
+
+Technology → Topic → Article
+
+Dependency graph (what to learn next)
+
+Completion tracking
+
+Backend
+
+Graph-like schema (MongoDB or PostgreSQL)
+
+Recursive queries
+
+Frontend
+
+Expandable tree
+
+Progress indicators
+
+Breadcrumb sync
+
+Tech depth: graph modeling, recursion, UX hierarchy
+
+6. “Blogs” — Advanced Publishing Platform
+Features
+
+Tag-based search (faceted search)
+
+Full-text search
+
+Reading time estimation
+
+Popularity score (views + stars + recency)
+
+Backend
+
+Search index (MongoDB text / Elastic later)
+
+Aggregation pipelines
+
+Rate-limited view tracking
+
+Frontend
+
+Debounced search
+
+Sort by relevance / date / popularity
+
+Tech depth: search, indexing, analytics
+
+7. Profile — Developer Identity System
+Features
+
+Public developer profile
+
+Tech stack badges
+
+Reading stats:
+
+Articles read
+
+Topics mastered
+
+Public activity feed
+
+Backend
+
+Stats aggregation
+
+Privacy controls
+
+Frontend
+
+Data visualization (charts)
+
+Lazy loading sections
+
+Tech depth: analytics, privacy design
+
+8. Authentication & Security (Must-Have for Full Stack)
+Features
+
+Role-based access control (Admin / Author / Reader)
+
+JWT + refresh token rotation
+
+Device management
+
+Session invalidation
+
+Backend
+
+Token blacklist / rotation
+
+Middleware-based permissions
+
+Frontend
+
+Route guards
+
+Permission-based UI rendering
+
+Tech depth: real security architecture
+
+9. Notifications System (Very Impressive)
+Features
+
+In-app notifications:
+
+New related content
+
+Draft reminders
+
+Real-time updates (WebSocket)
+
+Backend
+
+Notification queue
+
+WebSocket gateway
+
+Frontend
+
+Live badge count
+
+Read/unread sync
+
+Tech depth: real-time systems
+
+10. Admin & Observability (Senior-Level Touch)
+Features
+
+Admin dashboard
+
+Error logs
+
+API latency metrics
+
+Feature flags
+
+Backend
+
+Logging (Winston)
+
+Metrics endpoints
+
+Frontend
+
+Charts
+
+Environment toggles
+
+Tech depth: production readiness
+
+11. AI-Powered Features (Optional but Powerful)
+Features
+
+Blog summary generation
+
+Tag suggestion while writing
+
+Related content recommendations
+
+Tech
+
+Background jobs
+
+AI API integration
+
+Rate limits
+
+Tech depth: modern AI integration
 
 
 COLLECTION OVERVIEW

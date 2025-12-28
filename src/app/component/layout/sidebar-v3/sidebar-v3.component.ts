@@ -46,7 +46,7 @@ export class SidebarV3Component implements OnInit {
       id: 'blogs',
       label: 'Blogs',
       icon: 'post_add',
-      hasItems: true,
+      hasItems: false,
       url: 'blogs',
     },
     {
