@@ -42,7 +42,13 @@ export class SidebarV3Component implements OnInit {
       isOpen: true,
       children: [],
     },
-    { id: 'blogs', label: 'Blogs', icon: 'post_add', url: 'blogs' },
+    {
+      id: 'blogs',
+      label: 'Blogs',
+      icon: 'post_add',
+      hasItems: true,
+      url: 'blogs',
+    },
     {
       id: 'sumanth',
       label: 'Sumanth Nagireddi',
@@ -65,6 +71,8 @@ export class SidebarV3Component implements OnInit {
     });
   }
   selectMenuItem(event: Event, item: MenuItem) {
+          item.isOpen = !item.isOpen;
+
     event.stopPropagation();
     this.selectedMenuItem = item.id;
     this.store.dispatch(getTopics({ technologyId: this.selectedMenuItem }));
@@ -102,15 +110,25 @@ export class SidebarV3Component implements OnInit {
     }));
   }
 
-  addTechnology(event: Event) {
+  addTechnology(event: Event, item: MenuItem) {
     event.stopPropagation();
-    this.store.dispatch(
-      openDialog({
-        config: {
-          type: DialogType.ADD_TECH,
-        },
-      })
-    );
+    if (item.url == 'blogs') {
+      this.store.dispatch(
+        openDialog({
+          config: {
+            type: DialogType.ADD_BLOG,
+          },
+        })
+      );
+    } else {
+      this.store.dispatch(
+        openDialog({
+          config: {
+            type: DialogType.ADD_TECH,
+          },
+        })
+      );
+    }
   }
 
   addChildTechnology(event: Event, tech: any) {

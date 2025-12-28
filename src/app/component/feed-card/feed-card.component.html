@@ -1,30 +1,31 @@
-<div class="bg-white card border cursor-pointer rounded-lg px-6 py-8 my-4 shadow">
+<div class="bg-white card border cursor-pointer rounded-lg px-6 py-8 my-4  w-full shadow">
 
-  <div class="flex justify-between">
-    <div class="flex gap-3 mb-2">
-      <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-semibold">
-        {{ 'S' }}
-      </div>
+  <div class="flex justify-between  w-full">
+    <div class="flex gap-3 mb-2  w-full">
+      <img src="https://sumanthnagireddi1.web.app/assets/imag3.jpg"
+        class="w-8 h-8 rounded-full mt-2 object-cover ring-2 ring-gray-200" />
 
       <div>
-        <div class="font-medium items-center gap-[4px] cursor-pointer hover:text-blue-700 flex text-blue-600">
+        <div class="font-medium items-center flex-1 gap-[4px] cursor-pointer hover:text-blue-700 flex text-blue-600">
           <span class="material-symbols-outlined text-lg ">
             article
           </span>{{ item.title }}
         </div>
-        <p class="text-xs text-gray-500 mb-1">{{item.description}}</p>
-        <div class="text-xs text-gray-500">
-          Owned by Sumanth Nagireddi • {{ item.createdAt | date:'medium' }}
+        <p class="text-xs line-clamp-3 text-gray-500 mb-1">{{
+          item?.description}}</p>
+        <div class="mt-4 flex justify-between w-full">
+          <p class="text-xs text-gray-500 ">Owned by Sumanth Nagireddi • {{ item.createdAt | date:'medium' }}</p>
+          <span (click)="addToStarred(item)"
+            class="cursor-pointer material-symbols-outlined hover:fill-green-600 transition-colors">
+            bookmark
+          </span>
         </div>
       </div>
     </div>
-    <span (click)="addToStarred(item)"
-      class="cursor-pointer material-symbols-outlined hover:fill-green-600 transition-colors">
-      bookmark
-    </span>
+
   </div>
-  <p class="text-sm text-gray-700">
+  <!-- <p class="text-sm  w-full text-gray-700">
     {{ item.content }}
-  </p>
+  </p> -->
 
 </div>

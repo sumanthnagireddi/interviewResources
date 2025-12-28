@@ -22,7 +22,7 @@
   </div>
   <div class="flex items-center gap-6">
 
-    <div class="flex h-6 w-6 items-center justify-center cursor-pointer" title="App status"><span
+    <div (click)="navigatoToUpTime()" class="flex h-6 w-6 items-center justify-center cursor-pointer" title="App status"><span
         class="relative flex h-3 w-3"><span [ngClass]="isServerOn?'bg-emerald-500':'bg-red-500'"
           class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span><span
           [ngClass]="isServerOn?'bg-emerald-500':'bg-red-500'"

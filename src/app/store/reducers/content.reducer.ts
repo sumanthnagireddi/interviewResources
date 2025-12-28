@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import {
-  loadCurrentContentFromData,
+  // loadCurrentContentFromData,
   loadTopContentsSuccess,
   updateRecentVisited,
 } from '../actions/content.actions';
@@ -22,12 +22,12 @@ export const contentReducer = createReducer(
     ...state,
     topContents: topContents,
   })),
-  on(updateRecentVisited, (state, { recentContent }) => ({
-    ...state,
-    recentContent: recentContent,
-  })),
-  on(loadCurrentContentFromData, (state, { currentContent }) => ({
-    ...state,
-    currentContent: currentContent,
-  }))
+  // on(updateRecentVisited, (state, { recentContent }) => ({
+  //   ...state,
+  //   recentContent: recentContent,
+  // })),
+  // on(loadCurrentContentFromData, (state, { currentContent }) => ({
+  //   ...state,
+  //   currentContent: currentContent,
+  // }))
 );

@@ -52,7 +52,7 @@ export const routes: Routes = [{
     },
     {
       path: 'blogs',
-      component: ProfileComponent
+      component: BlogsComponent
     }
   ]
 },

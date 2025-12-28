@@ -17,6 +17,7 @@ import { DeleteTopicDialogComponent } from '../dialogs/delete-topic-dialog/delet
 import { EditTechDialogComponent } from "../dialogs/edit-tech-dialog/edit-tech-dialog.component";
 import { AddDialogComponent } from "../dialogs/add-dialog/add-dialog.component";
 import { EditTopicDialogComponent } from "../dialogs/edit-topic-dialog/edit-topic-dialog.component";
+import { AddBlogComponent } from "../dialogs/add-blog/add-blog.component";
 
 @Component({
   selector: 'app-layout',
@@ -30,7 +31,8 @@ import { EditTopicDialogComponent } from "../dialogs/edit-topic-dialog/edit-topi
     DeleteTechDialogComponent,
     DeleteTopicDialogComponent,
     EditTechDialogComponent,
-    EditTopicDialogComponent
+    EditTopicDialogComponent,
+    AddBlogComponent
 ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',

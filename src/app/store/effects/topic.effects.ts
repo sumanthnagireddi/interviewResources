@@ -77,7 +77,7 @@ export class TopicEffects {
       exhaustMap(({ topic, topic_description, topicId }) =>
         this.topicService
           .updateTopic({
-            topic: topic,
+            name: topic,
             topic_description: topic_description,
             topicId: topicId,
           })

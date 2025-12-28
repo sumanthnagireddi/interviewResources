@@ -39,17 +39,17 @@ export class ContentEffects {
       )
     )
   );
-  getRecentVisited$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadRecentVisited),
-      exhaustMap(() =>
-        this.contentService.getAllRecentViewed(6).pipe(
-          map((content) => {
-            console.log(content);
-            return updateRecentVisited({ recentContent: content });
-          })
-        )
-      )
-    )
-  );
+  // getRecentVisited$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(loadRecentVisited),
+  //     exhaustMap(() =>
+  //       this.contentService.getAllRecentViewed(6).pipe(
+  //         map((content) => {
+  //           console.log(content);
+  //           return updateRecentVisited({ recentContent: content });
+  //         })
+  //       )
+  //     )
+  //   )
+  // );
 }

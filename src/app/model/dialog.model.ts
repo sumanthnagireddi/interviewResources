@@ -1,5 +1,6 @@
 // dialog.types.ts
 export enum DialogType {
+  ADD_BLOG = 'ADD_BLOG',
   ADD_TECH = 'ADD_TECH',
   ADD_TOPIC = 'ADD_TOPIC',
   EDIT_TOPIC = 'EDIT_TOPIC',

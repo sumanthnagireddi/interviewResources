@@ -1,18 +1,28 @@
 <div class=" w-full bg-gray-50/25 relative">
   <app-header></app-header>
-  <div class="flex h-[calc(100vh-56px)] relative">
-    <div *ngIf="sidebarToggleStatus" class="relative z-20 overflow-y-auto">
-      <app-sidebar-v3></app-sidebar-v3>
-    </div>
-    <div *ngIf="sidebarToggleStatus" class="fixed md:hidden inset-0 z-10" (click)="handleSidebarToggle()">
-    </div>
-    <div [ngClass]="!sidebarToggleStatus ? 'md:mx-[1vw] mx-[2vw]' : 'mx-0'"
-      class="flex-1 h-screen overflow-y-auto md:p-6 relative z-0">
-      <router-outlet></router-outlet>
-    </div>
+<div class="flex h-[calc(100vh-56px)] min-h-0 relative">
+
+  <div *ngIf="sidebarToggleStatus" class="relative z-20 overflow-y-auto">
+    <app-sidebar-v3></app-sidebar-v3>
   </div>
+
+  <div *ngIf="sidebarToggleStatus"
+       class="fixed md:hidden inset-0 z-10"
+       (click)="handleSidebarToggle()">
+  </div>
+
+  <div
+    class="flex-1 min-h-0 overflow-y-auto md:p-6 relative z-0"
+    [ngClass]="!sidebarToggleStatus ? 'md:mx-[1vw] mx-[2vw]' : 'mx-0'">
+
+    <router-outlet></router-outlet>
+
+  </div>
+</div>
+
   <ng-container *ngIf="isDialogOpen && dialogConfig as config">
     <ng-container [ngSwitch]="config.type">
+      <app-add-blog *ngSwitchCase="DialogType.ADD_BLOG" [payload]="config?.payload"></app-add-blog>
       <app-add-dialog *ngSwitchCase="DialogType.ADD_TECH" [payload]="config?.payload"></app-add-dialog>
       <app-edit-tech-dialog *ngSwitchCase="DialogType.EDIT_TECH" [payload]="config?.payload"></app-edit-tech-dialog>
       <app-edit-topic-dialog *ngSwitchCase="DialogType.EDIT_TOPIC" [payload]="config?.payload"></app-edit-topic-dialog>

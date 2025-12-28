@@ -1,7 +1,7 @@
 <div class="flex gap-4">
 
   <!-- MAIN CONTENT AREA -->
-  <div class="flex-1 p-4 md:w-full w-[calc(100vw-56px)] h-screen">
+  <div class="flex-1 p-4 ">
 
     <!-- LOADER -->
     <ng-container *ngIf="contentLoader; else contentState">
@@ -20,8 +20,19 @@
             edit_note
           </span>
         </div>
-
-        <app-editor [mode]="'view'" [data]="content" [contentData]="content"></app-editor>
+        <address class="flex items-center mb-6 not-italic">
+          <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+            <img class="mr-4 w-16 h-16 rounded-full" src="https://sumanthnagireddi1.web.app/assets/imag3.jpg"
+              alt="Jese Leos">
+            <div>
+              <a href="#" rel="author" class="text-lg font-semibold text-gray-900 dark:text-white">Sumanth Nagireddi</a>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Software Developer | MEAN</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400"><time pubdate datetime="2022-02-08"
+                  title="February 8th, 2022">{{content?.createdAt}}</time></p>
+            </div>
+          </div>
+        </address>
+        <app-editor [mode]="'view'" [data]="content" [contentData]="content.body"></app-editor>
       </ng-container>
 
       <!-- NO CONTENT -->

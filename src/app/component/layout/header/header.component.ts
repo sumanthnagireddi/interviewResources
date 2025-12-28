@@ -17,21 +17,11 @@ export class HeaderComponent implements OnInit {
   private readonly store = inject(Store);
   private readonly http = inject(HttpClient);
   ngOnInit(): void {
-    const startTime = performance.now();
     this.http
       .get<{ status: boolean }>(`${environment.API_URL}/health`)
       .subscribe({
         next: (data) => {
-          const endTime = performance.now();
-          const responseTimeMs = endTime - startTime;
-          if (data?.status) {
-            this.isServerOn = true;
-            if (responseTimeMs < 300) {
-              this.isServerOn = true;
-            } else {
-              this.isServerOn = false;
-            }
-          }
+          this.isServerOn = data ? true : false;
         },
         error: () => {
           this.isServerOn = false;
@@ -41,5 +31,8 @@ export class HeaderComponent implements OnInit {
   toggleSidebar() {
     this.sidebarToggleStatus = !this.sidebarToggleStatus;
     this.store.dispatch(toggleSidebar({ show: this.sidebarToggleStatus }));
+  }
+  navigatoToUpTime() {
+    window.open('https://stats.uptimerobot.com/Nzi1DUyGFD', '_blank');
   }
 }

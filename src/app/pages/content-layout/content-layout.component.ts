@@ -66,6 +66,7 @@ export class ContentLayoutComponent implements OnInit {
           this.content = data?.body ?? null;
           this.contentAvailable = !!this.content;
           this.contentLoader = false;
+          this.currentTechnology=data?.title
         },
         error: () => {
           setTimeout(() => {
