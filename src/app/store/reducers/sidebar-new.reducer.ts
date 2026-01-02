@@ -37,7 +37,7 @@ export const initialState: SidebarState = {
     data: null,
     loading: false
   },
-  showSidebar: true
+  showSidebar: false
 };
 
 

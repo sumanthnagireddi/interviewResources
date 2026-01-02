@@ -13,7 +13,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit {
-  sidebarToggleStatus = true;
+  sidebarToggleStatus = false;
   isServerOn = false;
   private readonly store = inject(Store);
   private readonly http = inject(HttpClient);

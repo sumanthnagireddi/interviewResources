@@ -1,7 +1,7 @@
 import { openDialog } from './../../../store/actions/dialog.actions';
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectTechnologies } from '../../../store/selectors/technology.selector';
 import {
@@ -11,6 +11,9 @@ import {
 import { Technology } from '../../../model/content.model';
 import { ProfileCardComponent } from '../../profile-card/profile-card.component';
 import { DialogType } from '../../../model/dialog.model';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+
 export interface MenuItem {
   id: string;
   label: string;
@@ -64,15 +67,48 @@ export class SidebarV3Component implements OnInit {
   ];
 
   selectedMenuItem: string | null = null;
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
   ngOnInit(): void {
     this.store.dispatch(getTechnologies());
     this.store.select(selectTechnologies).subscribe((technologies) => {
       this.updateContentChildren(technologies);
+      this.syncMenuWithRoute();
+    });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.syncMenuWithRoute();
+      });
+  }
+  private syncMenuWithRoute() {
+    const currentUrl = this.router.url;
+
+    this.menuItems.forEach((item) => {
+      // Reset
+      item.isOpen = true;
+
+      // Simple route match
+      if (item.url && currentUrl.includes(item.url)) {
+        this.selectedMenuItem = item.id;
+      }
+
+      // Handle nested content (technologies/topics)
+      if (item.children?.length) {
+        item.children.forEach((child) => {
+          if (currentUrl.includes(child.id)) {
+            item.isOpen = true; // open Content
+            this.selectedMenuItem = child.id;
+
+            // Open topic parent
+            child.isOpen = true;
+          }
+        });
+      }
     });
   }
-  selectMenuItem(event: Event, item: MenuItem) {
-          item.isOpen = !item.isOpen;
 
+  selectMenuItem(event: Event, item: MenuItem) {
     event.stopPropagation();
     this.selectedMenuItem = item.id;
     this.store.dispatch(getTopics({ technologyId: this.selectedMenuItem }));

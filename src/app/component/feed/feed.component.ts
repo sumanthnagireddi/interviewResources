@@ -9,6 +9,7 @@ import { selectRecentContents, selectTopContents } from '../../store/selectors/c
 import { combineLatest } from 'rxjs';
 import { loadRecentVisited, loadTopContents } from '../../store/actions/content.actions';
 import { Timestamp } from '@angular/fire/firestore';
+import { HeroComponent } from "../hero/hero.component";
 export interface FeedItem {
   id: string;
   title: string;
@@ -22,7 +23,7 @@ export interface FeedItem {
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [CommonModule, FeedCardComponent, RecentDocsComponent],
+  imports: [CommonModule, FeedCardComponent, RecentDocsComponent, HeroComponent],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.css'
 })
