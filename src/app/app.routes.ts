@@ -10,6 +10,10 @@ import { CreateDocComponent } from './pages/create-doc/create-doc.component';
 import { EditDocComponent } from './pages/edit-doc/edit-doc.component';
 import { BlogsComponent } from './pages/blogs/blogs.component';
 import { ProfileComponent } from './component/profile/profile.component';
+import { ViewBlogComponent } from './pages/blogs/subpages/view-blog/view-blog.component';
+import { CreateBlogComponent } from './pages/blogs/subpages/create-blog/create-blog.component';
+import { AdminComponent } from './pages/blogs/subpages/admin/admin.component';
+import { BlogsHomeComponent } from './pages/blogs/subpages/blogs-home/blogs-home.component';
 
 export const routes: Routes = [{
   path: '',
@@ -52,7 +56,25 @@ export const routes: Routes = [{
     },
     {
       path: 'blogs',
-      component: BlogsComponent
+      component: BlogsComponent,
+      children: [
+        {
+          path: '',
+          component: BlogsHomeComponent,
+        },
+        {
+          path: 'view/:blogId',
+          component: ViewBlogComponent
+        },
+        {
+          path: 'create-blog',
+          component: CreateBlogComponent
+        },
+        {
+          path: 'admin',
+          component: AdminComponent
+        }
+      ]
     }
   ]
 },

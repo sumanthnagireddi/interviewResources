@@ -38,7 +38,7 @@ import { AddBlogComponent } from "../dialogs/add-blog/add-blog.component";
   styleUrl: './layout.component.css',
 })
 export class LayoutComponent implements OnInit {
-  sidebarToggleStatus = false;
+  sidebarToggleStatus = true;
   isDialogOpen = false;
   dialogConfig: DialogConfig | null = null;
   DialogType=DialogType

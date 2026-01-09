@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, ElementRef, Input, input, OnInit, output, SimpleChanges, ViewChild, OnChanges, AfterViewInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, ElementRef, Input, input, OnInit, output, SimpleChanges, ViewChild, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { set } from '@angular/fire/database';
 
 @Component({
@@ -12,7 +12,8 @@ import { set } from '@angular/fire/database';
 export class EditorComponent implements OnChanges, AfterViewInit {
   @Input() data: any
   @Input() mode = 'view'
-  content = output()
+  @Input() ShowSaveButton = true
+@Output() content = new EventEmitter<string>();
   @ViewChild('editorElem') editorEl!: ElementRef;
 
   ngOnChanges(changes: SimpleChanges): void {
