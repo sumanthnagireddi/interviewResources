@@ -1,5 +1,4 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { DialogState } from "../reducers/dialog.reducer";
 import { ContentState } from "../reducers/content.reducer";
 
 export const selectContentState = createFeatureSelector<ContentState>('content');

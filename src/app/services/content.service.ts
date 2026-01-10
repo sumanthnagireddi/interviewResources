@@ -2,11 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import {
   collection,
-  deleteDoc,
   doc,
   limit,
   Firestore,
-  getDoc,
   getDocs,
   query,
   setDoc,

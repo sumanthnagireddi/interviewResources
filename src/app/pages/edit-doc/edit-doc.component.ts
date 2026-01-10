@@ -4,7 +4,6 @@ import { EditorComponent } from '../../component/editor/editor.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ContentService } from '../../services/content.service';
-import { loadCurrentContent } from '../../store/actions/sidebar.actions';
 
 @Component({
   selector: 'app-edit-doc',

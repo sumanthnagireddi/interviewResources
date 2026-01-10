@@ -1,15 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
-import { TopicsService } from '../../services/topics.service';
 import { TechnologyService } from '../../services/technology.service';
-import { RecentComponent } from "../recent/recent.component";
-import { AllBlogsComponent } from "./components/all-blogs/all-blogs.component";
-import { RecentBlogsComponent } from "./components/recent-blogs/recent-blogs.component";
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-blogs',
-  imports: [CommonModule, RecentComponent, AllBlogsComponent, RecentBlogsComponent, RouterOutlet],
+  imports: [CommonModule, RouterOutlet],
   templateUrl: './blogs.component.html',
   styleUrl: './blogs.component.css',
 })

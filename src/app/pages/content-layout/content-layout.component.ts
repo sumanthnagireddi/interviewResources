@@ -1,23 +1,16 @@
 import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
-  ElementRef,
-  signal,
-  ViewChild,
   OnInit,
 } from '@angular/core';
-// import { ContentTagsComponent } from "../content-tags/content-tags.component";
-// import { EditorComponent } from "../editor/editor.component";
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { ContentService } from '../../services/content.service';
-import { ContentTagsComponent } from '../../component/content-tags/content-tags.component';
 import { EditorComponent } from '../../component/editor/editor.component';
 import { BreadcrumbComponent } from '../../component/breadcrumb/breadcrumb.component';
 import { LoaderComponent } from '../../component/loader/loader.component';
-import { catchError, delay, finalize, throwError } from 'rxjs';
-// import { BreadcrumbComponent } from "../breadcrumb/breadcrumb.component";
+import { catchError, delay,  throwError } from 'rxjs';
 
 @Component({
   selector: 'app-content-layout',

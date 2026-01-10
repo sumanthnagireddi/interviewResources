@@ -3,13 +3,11 @@ import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
 import { TechnologyService } from '../../../../services/technology.service';
 import { BlogsService } from '../../../../services/blogs.service';
 import { Blog } from '../../../../model/blog.model';
-import { RouterLink } from "@angular/router";
 import { BlogCardComponent } from "../blog-card/blog-card.component";
-import { TagsComponent } from "../../subpages/tags/tags.component";
 import { TabsComponent } from "../../../../component/tabs/tabs.component";
 @Component({
   selector: 'app-all-blogs',
-  imports: [CommonModule, RouterLink, BlogCardComponent, TagsComponent, TabsComponent],
+  imports: [CommonModule, BlogCardComponent, TabsComponent],
   templateUrl: './all-blogs.component.html',
   styleUrl: './all-blogs.component.css'
 })
