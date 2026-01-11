@@ -3,3 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.yoopta-table{
+  width: fit-content !important;
+}
