@@ -19,7 +19,7 @@ import { RouterLink } from "@angular/router";
     FormsModule,
     EditorComponent,
     RouterLink
-],
+  ],
   templateUrl: './add-blog.component.html',
   styleUrl: './add-blog.component.css',
 })
@@ -36,8 +36,6 @@ export class AddBlogComponent implements OnInit {
 
   constructor(private store: Store, private fb: FormBuilder) { }
   onEditorContent(html: string) {
-    // console.log('Editor content received in AddBlogComponent:', html);
-    // Save editor content into the form
     this.form.patchValue({
       content: html,
     });
