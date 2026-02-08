@@ -14,6 +14,8 @@ import { ViewBlogComponent } from './pages/blogs/subpages/view-blog/view-blog.co
 import { CreateBlogComponent } from './pages/blogs/subpages/create-blog/create-blog.component';
 import { AdminComponent } from './pages/blogs/subpages/admin/admin.component';
 import { BlogsHomeComponent } from './pages/blogs/subpages/blogs-home/blogs-home.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 export const routes: Routes = [
   {
@@ -82,4 +84,12 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path:'login',
+    component: LoginComponent,
+  },
+  {
+    path:'register',
+    component: RegisterComponent,
+  }
 ];
