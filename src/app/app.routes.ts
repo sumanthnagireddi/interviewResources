@@ -15,72 +15,71 @@ import { CreateBlogComponent } from './pages/blogs/subpages/create-blog/create-b
 import { AdminComponent } from './pages/blogs/subpages/admin/admin.component';
 import { BlogsHomeComponent } from './pages/blogs/subpages/blogs-home/blogs-home.component';
 
-export const routes: Routes = [{
-  path: '',
-  component: LayoutComponent,
-  children: [
+export const routes: Routes = [
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
 
-    {
-      path: '',
-      redirectTo: 'home',
-      pathMatch: 'full'
-    },
-
-    {
-      path: 'home',
-      component: FeedComponent
-    },
-    {
-      path: 'recent',
-      component: RecentComponent
-    },
-    {
-      path: 'starred',
-      component: StarredComponent
-    },
-    {
-      path: 'drafts',
-      component: DraftsComponent
-    },
-    {
-      path: 'pages/:pageId',
-      component: ContentLayoutComponent
-    },
-    {
-      path: 'create-new/:pageId',
-      component: CreateDocComponent
-    },
-    {
-      path: 'edit/:pageId',
-      component: EditDocComponent
-    },
-    {
-      path: 'blogs',
-      component: BlogsComponent,
-      children: [
-        {
-          path: '',
-          component: BlogsHomeComponent,
-        },
-        {
-          path: 'view/:blogId',
-          component: ViewBlogComponent
-        },
-        {
-          path: 'create-blog',
-          component: CreateBlogComponent
-        },
-        {
-          path: 'admin',
-          component: AdminComponent
-        }
-      ]
-    },
-    
-    {
-      path:'api-docs',
-      component:SwaggerComponent
-    }
-  ]
-},
+      {
+        path: 'home',
+        component: FeedComponent,
+      },
+      {
+        path: 'recent',
+        component: RecentComponent,
+      },
+      {
+        path: 'starred',
+        component: StarredComponent,
+      },
+      {
+        path: 'drafts',
+        component: DraftsComponent,
+      },
+      {
+        path: 'pages/:pageId',
+        component: ContentLayoutComponent,
+      },
+      {
+        path: 'create-new/:pageId',
+        component: CreateDocComponent,
+      },
+      {
+        path: 'edit/:pageId',
+        component: EditDocComponent,
+      },
+      {
+        path: 'blogs',
+        component: BlogsComponent,
+        children: [
+          {
+            path: '',
+            component: BlogsHomeComponent,
+          },
+          {
+            path: 'view/:blogId',
+            component: ViewBlogComponent,
+          },
+          {
+            path: 'create-blog',
+            component: CreateBlogComponent,
+          },
+          {
+            path: 'admin',
+            component: AdminComponent,
+          },
+        ],
+      },
+      {
+        path: 'api-docs',
+        component: SwaggerComponent,
+      },
+    ],
+  },
 ];
