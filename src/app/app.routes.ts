@@ -10,6 +10,7 @@ import { CreateDocComponent } from './pages/create-doc/create-doc.component';
 import { EditDocComponent } from './pages/edit-doc/edit-doc.component';
 import { BlogsComponent } from './pages/blogs/blogs.component';
 import { ProfileComponent } from './component/profile/profile.component';
+import { SwaggerComponent } from './pages/swagger/swagger.component';
 
 export const routes: Routes = [{
   path: '',
@@ -53,6 +54,10 @@ export const routes: Routes = [{
     {
       path: 'blogs',
       component: BlogsComponent
+    },
+    {
+      path:'api-docs',
+      component:SwaggerComponent
     }
   ]
 },
