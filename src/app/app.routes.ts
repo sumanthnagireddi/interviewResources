@@ -68,7 +68,7 @@ export const routes: Routes = [
           },
           {
             path: 'create-blog',
-            component: CreateBlogComponent,
+          component: CreateBlogComponent,
           },
           {
             path: 'admin',

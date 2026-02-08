@@ -4,6 +4,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
+    "site": "sumanthnagireddi-wiki",
     "public": "dist/resources/browser",
     "ignore": [
         "firebase.json",
