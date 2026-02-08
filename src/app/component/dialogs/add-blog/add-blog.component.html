@@ -1,43 +1,128 @@
-<app-dialog>
-    <div class="sm:flex sm:items-start">
-        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-            <h3 class="text-base font-semibold text-gray-900" id="dialog-title">Add New Blog</h3>
-            <div class="mt-2">
-                <p class="text-sm text-gray-500">Please fill in the details of the new blog you want to add.</p>
-            </div>
-        </div>
+<!-- Header -->
+<div class="pb-6">
+
+  <h2 class="text-xl font-semibold flex items-center gap-2 text-slate-800">
+    <span class="material-symbols-outlined cursor-pointer" [routerLink]="'/blogs'">arrow_back</span>Add New Blog</h2>
+  <p class="text-sm text-slate-500 mt-1">
+    Please fill in the details of the new blog you want to add.
+  </p>
+
+  <!-- Steps -->
+  <div class="mt-4 flex items-center gap-4">
+    <div class="flex items-center gap-2">
+      <span class="flex h-7 w-7 items-center justify-center rounded-full text-sm font-medium"
+        [ngClass]="step === 1 ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-600'">
+        1
+      </span>
+      <span class="text-sm font-medium text-slate-700">Details</span>
     </div>
-    <div [formGroup]="form">
-        <div class="w-full my-2 mx-3 max-w-sm">
-            <label class="block mb-2 text-sm text-slate-600">
-                Blog Name
-            </label>
-            <input type="text" formControlName="name" class="w-full bg-transparent placeholder:text-slate-400 text-slate-700
-         text-sm border border-slate-200 rounded-md px-3 py-2 transition
-         duration-300 ease focus:outline-none focus:border-slate-400
-         hover:border-slate-300 shadow-sm focus:shadow" placeholder="Enter Name" />
-        </div>
-        <div class="w-full my-2 mx-3 max-w-sm">
-            <label class="block mb-2 text-sm text-slate-600">
-                Description
-            </label>
-            <input type="text" formControlName="description"
-                class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                placeholder="Enter Description" />
-        </div>
-        <!-- <div *ngIf="dialogType == 'topics'" class="w-full my-2 mx-3 max-w-sm">
-      <label class="block mb-2 text-sm text-slate-600">
-        Topic
-      </label>
-      <input type="text" formControlName="topic"
-        class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-        placeholder="Enter Name" />
-    </div> -->
+
+    <div class="h-px w-8 bg-slate-300"></div>
+
+    <div class="flex items-center gap-2">
+      <span class="flex h-7 w-7 items-center justify-center rounded-full text-sm font-medium"
+        [ngClass]="step === 2 ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-600'">
+        2
+      </span>
+      <span class="text-sm font-medium text-slate-700">Content</span>
     </div>
-    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-        <button type="button" (click)="submit()"
-            class="inline-flex w-full justify-center rounded-md  px-3 py-2 text-sm font-semibold text-white shadow-xs sm:ml-3 sm:w-auto bg-emerald-600 hover:bg-emerald-500">Proceed to Add content</button>
-        <button type="button" (click)="onCloseDialog()"
-            class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
-    </div>
-</app-dialog>
+  </div>
+</div>
+
+<!-- STEP 1 : DETAILS -->
+<div *ngIf="step === 1" class="w-full my-4 max-w-4xl space-y-4" [formGroup]="form">
+  <!-- Title -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-slate-600">Blog Title</label>
+    <input type="text" formControlName="title" placeholder="Enter blog title" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-700
+             placeholder:text-slate-400 shadow-sm
+             focus:border-emerald-500 focus:ring-emerald-500" />
+  </div>
+
+  <!-- Description -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-slate-600">Description</label>
+    <input type="text" formControlName="description" placeholder="Short summary of the blog" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-700
+             placeholder:text-slate-400 shadow-sm
+             focus:border-emerald-500 focus:ring-emerald-500" />
+  </div>
+
+  <!-- Status -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-slate-600">Status</label>
+    <select formControlName="status" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-700
+             shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+      <option value="DRAFT">Draft</option>
+      <option value="SCHEDULED">Scheduled</option>
+      <option value="PUBLISHED">Published</option>
+    </select>
+  </div>
+
+  <!-- Scheduled Date -->
+  <div *ngIf="form.get('status')?.value === 'SCHEDULED'">
+    <label class="block mb-1 text-sm font-medium text-slate-600">
+      Schedule Publish Date & Time
+    </label>
+    <input type="datetime-local" formControlName="publishedAt" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-700
+             shadow-sm focus:border-emerald-500 focus:ring-emerald-500" />
+    <p class="mt-1 text-xs text-slate-500">
+      The blog will be published automatically at the selected time.
+    </p>
+  </div>
+
+  <!-- Category -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-slate-600">Category</label>
+    <select formControlName="category" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-700
+             shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+      <option value="">Select category</option>
+      <option *ngFor="let cat of categories" [value]="cat.name">
+        {{ cat.name }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Tags -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-slate-600">Tags</label>
+    <input type="text" formControlName="tags" placeholder="e.g.. angular, ngrx, signals" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-700
+             placeholder:text-slate-400 shadow-sm
+             focus:border-emerald-500 focus:ring-emerald-500" />
+    <p class="mt-1 text-xs text-slate-500">
+      Separate tags with commas
+    </p>
+  </div>
+</div>
+
+<!-- STEP 2 : CONTENT -->
+<div *ngIf="step === 2" class="max-w-4xl mt-4">
+  <label class="block mb-2 text-sm font-medium text-slate-600">
+    Blog Content
+  </label>
+  <app-editor #editor [data]="'<p>Add your content here</p>'" [ShowSaveButton]="false" [mode]="'edit'" (content)="onEditorContent($event)"></app-editor>
+</div>
+
+<!-- Footer Actions -->
+<div class="mt-6 flex max-w-4xl justify-between">
+  <button *ngIf="step === 2" type="button" (click)="step = 1"
+    class="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+    Back
+  </button>
+
+  <div class="ml-auto flex gap-3">
+    <button *ngIf="step === 1" type="button" (click)="step = 2"
+      class="rounded-md bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-500">
+      Next
+    </button>
+
+    <button *ngIf="step === 2" type="button" (click)="submit()"
+      class="rounded-md bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-500">
+      Publish Blog
+    </button>
+
+    <button type="button" (click)="onCloseDialog()"
+      class="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+      Cancel
+    </button>
+  </div>
+</div>

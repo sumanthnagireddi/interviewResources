@@ -1,0 +1,7 @@
+<h2 class="font-medium text-lg">All blog posts</h2>
+<div class="my-4">
+  <app-tabs />
+</div>
+<div *ngFor="let blog of blogs" class="my-4">
+  <app-blog-card [blog]="blog"></app-blog-card>
+</div>

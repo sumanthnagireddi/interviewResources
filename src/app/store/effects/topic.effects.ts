@@ -1,34 +1,24 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
-  addTechnology,
   addTechnologyFailure,
-  addTechnologySuccess,
   addTopic,
   addTopicSuccess,
-  deleteTechnology,
   deleteTopic,
-  editTechnology,
   editTopic,
   getTechnologies,
-  getTechnologiesFailure,
-  getTechnologiesSuccess,
   getTopics,
   getTopicsFailure,
   getTopicsSuccess,
 } from './../actions/technology.actions';
 import { inject, Injectable } from '@angular/core';
-import { ResourcesService } from '../../services/resources.service';
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
-import { TechnologyService } from '../../services/technology.service';
-import { get } from '@angular/fire/database';
 import { Router } from '@angular/router';
-import { v4 as uuidv4 } from 'uuid';
 import { TopicsService } from '../../services/topics.service';
 @Injectable()
 export class TopicEffects {
   private actions$ = inject(Actions);
 
-  constructor(private topicService: TopicsService, private router: Router) {}
+  constructor(private topicService: TopicsService, private router: Router) { }
   addTopic$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addTopic),

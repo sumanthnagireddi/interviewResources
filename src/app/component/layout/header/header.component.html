@@ -1,12 +1,16 @@
 <header class="h-14 max-w-screen flex items-center justify-between gap-4 px-4 border-b bg-white">
 
   <div class="flex items-center gap-4 font-semibold">
-    <span (click)="toggleSidebar()" class="material-symbols-outlined cursor-pointer">
-      {{ sidebarToggleStatus ? 'left_panel_open' : 'left_panel_close' }}
-    </span>
-    <span class="material-symbols-outlined cursor-pointer">
-      apps
-    </span>
+    <button>
+      <span (click)="toggleSidebar()" class="material-symbols-outlined cursor-pointer">
+        {{ sidebarToggleStatus ? 'left_panel_open' : 'left_panel_close' }}
+      </span>
+    </button>
+    <button>
+      <span class="material-symbols-outlined cursor-pointer">
+        apps
+      </span>
+    </button>
     <span class="text-xl text-gray-900 font-medium cursor-pointer" [routerLink]="'/'">Resources</span>
   </div>
 

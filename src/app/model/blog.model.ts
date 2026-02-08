@@ -6,7 +6,7 @@ import { ContentStatus } from './content.model';
 
 export interface Blog {
   /* ---------- Identity ---------- */
-  id: string;
+  _id: string;
   slug: string;
 
   /* ---------- Core Content ---------- */
@@ -20,7 +20,7 @@ export interface Blog {
   authorAvatarUrl?: string;
 
   /* ---------- Status & Lifecycle ---------- */
-  status: ContentStatus; // DRAFT | REVIEW | PUBLISHED | ARCHIVED
+  status: string; // DRAFT | REVIEW | PUBLISHED | ARCHIVED
   isActive: boolean;
   publishedAt?: string;
 

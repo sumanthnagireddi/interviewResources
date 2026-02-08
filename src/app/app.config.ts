@@ -15,6 +15,7 @@ import { reducers, metaReducers } from './store/reducers';
 import { TechnologyEffects } from './store/effects/technology.effects';
 import { ContentEffects } from './store/effects/content.effects';
 import { TopicEffects } from './store/effects/topic.effects';
+import { BlogEffects } from './store/effects/blog.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,7 +34,7 @@ export const appConfig: ApplicationConfig = {
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
     provideStore(reducers, { metaReducers }),
-    provideEffects(SidebarEffects, TechnologyEffects, ContentEffects,TopicEffects),
+    provideEffects(SidebarEffects, TechnologyEffects, ContentEffects,TopicEffects,BlogEffects),
     provideHttpClient(),
     provideStoreDevtools({
       maxAge: 25, logOnly: !isDevMode(), autoPause: true,
