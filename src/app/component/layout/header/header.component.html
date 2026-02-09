@@ -40,6 +40,15 @@
       </span>
     </div>
 
+    <!-- API Documentation -->
+    <div [routerLink]="'/api-docs'" title="API documentation"
+         class="flex items-center justify-center w-9 h-9 rounded-lg cursor-pointer
+                hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+      <span class="material-symbols-outlined text-gray-700 dark:text-gray-200 text-xl">
+        api
+      </span>
+    </div>
+
     <!-- Theme Toggle Button -->
     <div class="relative">
       <button (click)="toggleThemePopover($event)"
