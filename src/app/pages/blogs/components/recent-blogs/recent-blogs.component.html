@@ -1,11 +1,11 @@
 <div class="pb-4">
   <div class="flex justify-between items-center">
-    <h2 class="font-medium text-lg">Recent blog posts</h2>
+    <h2 class="font-medium text-lg text-gray-900 dark:text-white">Recent blog posts</h2>
     <div class="flex items-center gap-4">
       <button [routerLink]="['create-blog']"
-        class="inline-flex items-center justify-center rounded-lg bg-emerald-600 px-4 py-1.5 font-medium text-gray-50 transition-colors duration-200 ">Create
+        class="inline-flex items-center justify-center rounded-lg btn-accent px-4 py-1.5 font-medium text-white transition-colors duration-200">Create
         Blog</button>
-      <span [routerLink]="['admin']" class="material-symbols-outlined cursor-pointer hover:text-blue-600">
+      <span [routerLink]="['admin']" class="material-symbols-outlined cursor-pointer text-gray-600 dark:text-gray-400 hover:text-accent">
         settings
       </span>
     </div>

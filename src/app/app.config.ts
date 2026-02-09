@@ -16,6 +16,7 @@ import { TechnologyEffects } from './store/effects/technology.effects';
 import { ContentEffects } from './store/effects/content.effects';
 import { TopicEffects } from './store/effects/topic.effects';
 import { BlogEffects } from './store/effects/blog.effects';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,6 +42,9 @@ export const appConfig: ApplicationConfig = {
       trace: false,
       traceLimit: 75,
       connectInZone: true
-    })
+    }), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          })
   ],
 };

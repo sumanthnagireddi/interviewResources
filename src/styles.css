@@ -1,8 +1,509 @@
-/* You can add global styles to this file, and also import other style files */
+/* Interview Resources - Global Styles */
+/* PWA & Mobile-First Design with Theme Support */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.yoopta-table{
+/* ========================================
+   CSS Custom Properties / Design Tokens
+   ======================================== */
+:root {
+  /* Accent Colors (set dynamically by ThemeService) */
+  --color-accent: #6366f1;
+  --color-accent-hover: #4f46e5;
+  --color-accent-light: #e0e7ff;
+  --color-accent-rgb: 99, 102, 241;
+
+  /* Light Theme Colors */
+  --color-background: #ffffff;
+  --color-surface: #f8fafc;
+  --color-surface-elevated: #ffffff;
+  --color-border: #e2e8f0;
+  --color-border-light: #f1f5f9;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #64748b;
+  --color-text-muted: #94a3b8;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Safe Area Insets for PWA */
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-right: env(safe-area-inset-right, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-left: env(safe-area-inset-left, 0px);
+
+  /* Mobile Touch Target Size */
+  --touch-target-size: 44px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+}
+
+/* Dark Theme Colors */
+.dark {
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-surface-elevated: #334155;
+  --color-border: #334155;
+  --color-border-light: #1e293b;
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+}
+
+/* ========================================
+   Base & Reset Styles for PWA
+   ======================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  /* Prevent font scaling on orientation change */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+
+  /* Better font rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  /* Safe area padding for notched devices */
+  padding-top: var(--safe-area-inset-top);
+  padding-bottom: var(--safe-area-inset-bottom);
+  padding-left: var(--safe-area-inset-left);
+  padding-right: var(--safe-area-inset-right);
+}
+
+/* ========================================
+   Theme-Aware Utility Classes
+   ======================================== */
+/* Accent Color Buttons */
+.btn-accent {
+  background-color: var(--color-accent);
+  color: white;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-accent:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.btn-accent:active {
+  transform: scale(0.98);
+}
+
+/* Accent Text */
+.text-accent {
+  color: var(--color-accent);
+}
+
+/* Accent Background */
+.bg-accent {
+  background-color: var(--color-accent);
+}
+
+.bg-accent-light {
+  background-color: var(--color-accent-light);
+}
+
+/* Accent Border */
+.border-accent {
+  border-color: var(--color-accent);
+}
+
+/* Accent Ring/Focus */
+.ring-accent {
+  --tw-ring-color: var(--color-accent);
+}
+
+.focus-accent:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--color-accent-rgb), 0.3);
+  border-color: var(--color-accent);
+}
+
+/* Accent Gradient */
+.gradient-accent {
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+}
+
+/* ========================================
+   Theme-Aware Component Styles
+   ======================================== */
+/* Cards */
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.card-elevated {
+  background-color: var(--color-surface-elevated);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.dark .card-elevated {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+/* Input Fields */
+.input-themed {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  transition: all 0.2s ease;
+}
+
+.input-themed:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.15);
+  outline: none;
+}
+
+.input-themed::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* Links */
+.link-accent {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link-accent:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+}
+
+/* Badge/Tag */
+.badge-accent {
+  background-color: rgba(var(--color-accent-rgb), 0.1);
+  color: var(--color-accent);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Selected/Active State */
+.selected-accent {
+  background-color: rgba(var(--color-accent-rgb), 0.1);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Standalone PWA Mode Adjustments */
+@media all and (display-mode: standalone) {
+  body {
+    /* Extra padding when running as installed PWA */
+    padding-top: max(var(--safe-area-inset-top), 20px);
+  }
+
+  /* Hide browser-specific UI elements */
+  .browser-only {
+    display: none !important;
+  }
+}
+
+/* ========================================
+   Mobile Touch & Interaction Improvements
+   ======================================== */
+/* Ensure minimum touch target size (44x44px as per Apple HIG) */
+button,
+a,
+input,
+select,
+textarea,
+[role="button"],
+.clickable {
+  min-height: var(--touch-target-size);
+  min-width: var(--touch-target-size);
+}
+
+/* Prevent pull-to-refresh on mobile when not needed */
+body.no-overscroll {
+  overscroll-behavior-y: contain;
+}
+
+/* Prevent text selection on interactive elements */
+button,
+[role="button"] {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Active state for touch feedback */
+button:active,
+a:active,
+[role="button"]:active {
+  opacity: 0.85;
+  transform: scale(0.98);
+  transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+/* ========================================
+   Scrollbar Customization
+   ======================================== */
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-light);
+}
+
+/* Hide scrollbar on mobile but keep scrolling */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+}
+
+/* ========================================
+   PWA Install Banner Styles
+   ======================================== */
+.pwa-install-prompt {
+  position: fixed;
+  bottom: calc(20px + var(--safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 400px;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  z-index: 10000;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pwa-install-prompt.hidden {
+  display: none;
+}
+
+.pwa-install-prompt-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.pwa-install-prompt-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pwa-install-prompt-text h3 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.pwa-install-prompt-text p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.pwa-install-prompt-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+.pwa-install-btn {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.pwa-install-btn-primary {
+  background: var(--color-primary);
+  color: white;
+}
+
+.pwa-install-btn-primary:hover {
+  background: var(--color-primary-dark);
+}
+
+.pwa-install-btn-secondary {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.pwa-install-btn-secondary:hover {
+  background: rgba(148, 163, 184, 0.1);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ========================================
+   Offline Indicator
+   ======================================== */
+.offline-indicator {
+  position: fixed;
+  top: var(--safe-area-inset-top);
+  left: 0;
+  right: 0;
+  background: #ef4444;
+  color: white;
+  text-align: center;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 9999;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.offline-indicator.visible {
+  transform: translateY(0);
+}
+
+/* ========================================
+   Loading States
+   ======================================== */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 25%,
+    rgba(99, 102, 241, 0.1) 50%,
+    var(--color-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Modern Spinner */
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(99, 102, 241, 0.2);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   Mobile Navigation Bottom Safe Area
+   ======================================== */
+.bottom-nav {
+  padding-bottom: calc(var(--spacing-md) + var(--safe-area-inset-bottom));
+}
+
+.floating-action-btn {
+  bottom: calc(80px + var(--safe-area-inset-bottom));
+}
+
+/* ========================================
+   Responsive Typography
+   ======================================== */
+h1, .h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); }
+h2, .h2 { font-size: clamp(1.5rem, 4vw, 2rem); }
+h3, .h3 { font-size: clamp(1.25rem, 3vw, 1.5rem); }
+h4, .h4 { font-size: clamp(1.125rem, 2.5vw, 1.25rem); }
+
+/* ========================================
+   Component-Specific Overrides
+   ======================================== */
+.yoopta-table {
   width: fit-content !important;
+}
+
+/* ========================================
+   Reduced Motion Accessibility
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ========================================
+   Dark Mode Support (Already dark by default)
+   ======================================== */
+@media (prefers-color-scheme: light) {
+  /* Optional: Add light mode styles if needed in future */
 }

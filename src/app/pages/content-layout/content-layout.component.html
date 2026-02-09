@@ -1,7 +1,7 @@
-<div class="flex gap-4">
+<div class="flex gap-4 h-screen overflow-hidden">
 
   <!-- MAIN CONTENT AREA -->
-  <div class="flex-1 p-4 ">
+  <div #contentContainer (scroll)="onScroll()" class="flex-1 p-4 hide-scrollbar overflow-y-auto">
 
     <!-- LOADER -->
     <ng-container *ngIf="contentLoader; else contentState">
@@ -16,7 +16,7 @@
         <div class="flex justify-between items-center mb-4">
           <app-breadcrumb [category]="currentTechnology"></app-breadcrumb>
 
-          <span (click)="edit()" class="material-symbols-outlined cursor-pointer">
+          <span (click)="edit()" class="material-symbols-outlined cursor-pointer text-gray-600 dark:text-gray-400 hover:text-accent transition-colors">
             edit_note
           </span>
         </div>
@@ -37,14 +37,14 @@
 
       <!-- NO CONTENT -->
       <ng-template #noContent>
-        <div class="flex flex-col items-center justify-center h-96 text-center text-gray-500">
-          <span class="material-symbols-outlined text-6xl mb-4">
+        <div class="flex flex-col items-center justify-center h-96 text-center text-gray-500 dark:text-gray-400">
+          <span class="material-symbols-outlined text-6xl mb-4 text-gray-300 dark:text-slate-600">
             description
           </span>
-          <h2 class="text-2xl font-semibold mb-2">
+          <h2 class="text-2xl font-semibold mb-2 text-gray-700 dark:text-gray-300">
             No Content Available
           </h2>
-          <p class="text-sm cursor-pointer hover:text-blue-600" [routerLink]="'/create-new/' + currentId">
+          <p class="text-sm cursor-pointer hover:text-accent transition-colors" [routerLink]="'/create-new/' + currentId">
             Please click here to add the content.
           </p>
         </div>
@@ -54,8 +54,25 @@
   </div>
 
   <!-- RIGHT SIDE PANEL -->
-  <div *ngIf="!contentLoader && contentAvailable" class="flex-shrink-0">
-    <app-content-tags></app-content-tags>
+  <div *ngIf="contentAvailable">
+    <div #tocContainer
+      class="w-[15vw] sm:block hide-scrollbar hidden overflow-y-auto border-e border-gray-100 dark:border-slate-700
+             bg-white dark:bg-slate-900 sticky top-0 h-screen">
+      <div class="px-4 py-4 border-b border-gray-100 dark:border-slate-700">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">On this page</h3>
+      </div>
+      <ul class="mt-2 space-y-0.5 px-2">
+        <li *ngFor="let item of headings">
+          <a (click)="scrollToHeading(item)"
+             class="block cursor-pointer rounded-lg px-3 py-2 text-sm transition-all duration-200"
+             [ngClass]="activeHeading === item
+               ? 'bg-accent-light text-accent font-semibold border-l-2 border-[var(--color-accent)]'
+               : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white'">
+            {{ item }}
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 
 </div>

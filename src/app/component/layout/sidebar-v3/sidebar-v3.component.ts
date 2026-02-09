@@ -13,6 +13,7 @@ import { ProfileCardComponent } from '../../profile-card/profile-card.component'
 import { DialogType } from '../../../model/dialog.model';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { ThemeService } from '../../../services/theme.service';
 
 export interface MenuItem {
   id: string;
@@ -32,6 +33,7 @@ export interface MenuItem {
 })
 export class SidebarV3Component implements OnInit {
   private readonly store = inject(Store);
+  readonly themeService = inject(ThemeService);
   menuItems: MenuItem[] = [
     { id: 'for-you', label: 'For you', icon: 'account_circle', url: 'home' },
     { id: 'recent', label: 'Recent', icon: 'history', url: 'recent' },

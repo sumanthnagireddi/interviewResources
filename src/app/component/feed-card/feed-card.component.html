@@ -1,23 +1,26 @@
 
-<div class="bg-white card border cursor-pointer rounded-lg px-6 py-8 my-4  w-full shadow">
+<div class="bg-white dark:bg-slate-800 card border dark:border-slate-700 cursor-pointer rounded-lg
+            px-6 py-8 my-4 w-full shadow dark:shadow-slate-900/50
+            hover:shadow-lg dark:hover:shadow-slate-900/70 transition-all duration-200">
 
-  <div class="flex justify-between  w-full">
-    <div class="flex gap-3 mb-2  w-full">
+  <div class="flex justify-between w-full">
+    <div class="flex gap-3 mb-2 w-full">
       <img src="https://sumanthnagireddi1.web.app/assets/imag3.jpg"
-        class="w-8 h-8 rounded-full mt-2 object-cover ring-2 ring-gray-200" />
+        class="w-8 h-8 rounded-full mt-2 object-cover ring-2 ring-gray-200 dark:ring-slate-600" />
 
-      <div>
-        <div class="font-medium items-center flex-1 gap-[4px] cursor-pointer hover:text-blue-700 flex text-blue-600">
-          <span class="material-symbols-outlined text-lg ">
+      <div class="flex-1">
+        <div class="font-medium items-center flex-1 gap-[4px] cursor-pointer
+                    hover:text-[var(--color-accent-hover)] flex text-[var(--color-accent)] transition-colors">
+          <span class="material-symbols-outlined text-lg">
             article
           </span>{{ item.title }}
         </div>
-        <p class="text-xs line-clamp-3 text-gray-500 mb-1">{{
-          item?.description}}</p>
+        <p class="text-xs line-clamp-3 text-gray-500 dark:text-gray-400 mb-1">{{ item?.description }}</p>
         <div class="mt-4 flex justify-between w-full">
-          <p class="text-xs text-gray-500 ">Owned by Sumanth Nagireddi • {{ item.createdAt | date:'medium' }}</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">Owned by Sumanth Nagireddi • {{ item.createdAt | date:'medium' }}</p>
           <span (click)="addToStarred(item)"
-            class="cursor-pointer material-symbols-outlined hover:fill-green-600 transition-colors">
+            class="cursor-pointer material-symbols-outlined text-gray-500 dark:text-gray-400
+                   hover:text-[var(--color-accent)] transition-colors">
             bookmark
           </span>
         </div>
