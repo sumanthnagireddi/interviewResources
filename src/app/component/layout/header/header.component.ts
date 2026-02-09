@@ -7,6 +7,16 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ThemeService, AccentColor, ACCENT_COLORS, ThemeMode } from '../../../services/theme.service';
 
+export interface Notification {
+  id: string;
+  title: string;
+  message: string;
+  time: string;
+  read: boolean;
+  type: 'info' | 'success' | 'warning' | 'error';
+  icon: string;
+}
+
 @Component({
   selector: 'app-header',
   imports: [CommonModule, RouterLink],
@@ -17,11 +27,47 @@ export class HeaderComponent implements OnInit {
   sidebarToggleStatus = false;
   isServerOn = false;
   showThemePopover = false;
+  showNotificationsPopover = false;
 
   private readonly store = inject(Store);
   private readonly http = inject(HttpClient);
   readonly themeService = inject(ThemeService);
   private readonly elementRef = inject(ElementRef);
+
+  // Sample notifications - replace with actual service data
+  notifications: Notification[] = [
+    {
+      id: '1',
+      title: 'New content added',
+      message: 'Angular 19 features documentation has been published',
+      time: '5 min ago',
+      read: false,
+      type: 'info',
+      icon: 'article'
+    },
+    {
+      id: '2',
+      title: 'Build successful',
+      message: 'Your latest deployment completed successfully',
+      time: '1 hour ago',
+      read: false,
+      type: 'success',
+      icon: 'check_circle'
+    },
+    {
+      id: '3',
+      title: 'New comment',
+      message: 'Someone commented on your blog post',
+      time: '2 hours ago',
+      read: true,
+      type: 'info',
+      icon: 'chat_bubble'
+    }
+  ];
+
+  get unreadCount(): number {
+    return this.notifications.filter(n => !n.read).length;
+  }
 
   // Theme options
   readonly accentColors = ACCENT_COLORS;
@@ -48,6 +94,7 @@ export class HeaderComponent implements OnInit {
   onDocumentClick(event: MouseEvent): void {
     if (!this.elementRef.nativeElement.contains(event.target)) {
       this.showThemePopover = false;
+      this.showNotificationsPopover = false;
     }
   }
 
@@ -59,6 +106,30 @@ export class HeaderComponent implements OnInit {
   toggleThemePopover(event: MouseEvent): void {
     event.stopPropagation();
     this.showThemePopover = !this.showThemePopover;
+    this.showNotificationsPopover = false;
+  }
+
+  toggleNotificationsPopover(event: MouseEvent): void {
+    event.stopPropagation();
+    this.showNotificationsPopover = !this.showNotificationsPopover;
+    this.showThemePopover = false;
+  }
+
+  markAsRead(notification: Notification): void {
+    notification.read = true;
+  }
+
+  markAllAsRead(): void {
+    this.notifications.forEach(n => n.read = true);
+  }
+
+  removeNotification(id: string, event: MouseEvent): void {
+    event.stopPropagation();
+    this.notifications = this.notifications.filter(n => n.id !== id);
+  }
+
+  clearAllNotifications(): void {
+    this.notifications = [];
   }
 
   setThemeMode(mode: ThemeMode): void {

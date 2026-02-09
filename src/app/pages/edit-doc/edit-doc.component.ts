@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { BreadcrumbComponent } from '../../component/breadcrumb/breadcrumb.component';
 import { EditorComponent } from '../../component/editor/editor.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ContentService } from '../../services/content.service';
+import { CommonModule } from '@angular/common';
+import { SkeletonComponent } from '../../component/skeleton/skeleton.component';
 
 @Component({
   selector: 'app-edit-doc',
-  imports: [BreadcrumbComponent, EditorComponent],
+  imports: [BreadcrumbComponent, EditorComponent, CommonModule, SkeletonComponent],
   templateUrl: './edit-doc.component.html',
   styleUrl: './edit-doc.component.css',
 })
@@ -18,27 +20,38 @@ export class EditDocComponent implements OnInit {
   contentAvailable = true;
   currentContentTopic = 'JavaScript';
   currentId = '';
-  currentTopic!:string
+  currentTopic!: string;
+  isLoading = signal(true);
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store,
     private service: ContentService,
     private route: Router
   ) {}
+
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       this.currentId = params['pageId'];
       this.prepareContent(this.currentId);
     });
   }
-  prepareContent(id: string) {
-    this.service.fetchContent(id).subscribe((data: any) => {
-      this.contentAvailable = true;
-      this.content = data?.body;
-      this.currentTopic=data?.title
 
+  prepareContent(id: string) {
+    this.isLoading.set(true);
+    this.service.fetchContent(id).subscribe({
+      next: (data: any) => {
+        this.contentAvailable = true;
+        this.content = data?.body;
+        this.currentTopic = data?.title;
+        this.isLoading.set(false);
+      },
+      error: () => {
+        this.isLoading.set(false);
+      }
     });
   }
+
   handleContent(updatedContent: any) {
     const contentPayload = {
       body: updatedContent,

@@ -1,6 +1,6 @@
 import { openDialog } from './../../../store/actions/dialog.actions';
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectTechnologies } from '../../../store/selectors/technology.selector';
@@ -34,6 +34,7 @@ export interface MenuItem {
 export class SidebarV3Component implements OnInit {
   private readonly store = inject(Store);
   readonly themeService = inject(ThemeService);
+  isContentLoading = signal(true);
   menuItems: MenuItem[] = [
     { id: 'for-you', label: 'For you', icon: 'account_circle', url: 'home' },
     { id: 'recent', label: 'Recent', icon: 'history', url: 'recent' },
@@ -76,6 +77,9 @@ export class SidebarV3Component implements OnInit {
     this.store.select(selectTechnologies).subscribe((technologies) => {
       this.updateContentChildren(technologies);
       this.syncMenuWithRoute();
+      if (technologies && technologies.length > 0) {
+        this.isContentLoading.set(false);
+      }
     });
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))

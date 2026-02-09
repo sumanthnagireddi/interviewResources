@@ -1,7 +1,20 @@
 <h2 class="font-medium text-lg text-gray-900 dark:text-white">All blog posts</h2>
-<div class="my-4">
-  <app-tabs />
-</div>
-<div *ngFor="let blog of blogs" class="my-4">
-  <app-blog-card [blog]="blog"></app-blog-card>
-</div>
+
+@if (isLoading()) {
+  <!-- Skeleton for tabs -->
+  <div class="my-4 flex gap-2">
+    <div class="w-16 h-8 bg-gray-200 dark:bg-slate-700 rounded-full animate-pulse"></div>
+    <div class="w-20 h-8 bg-gray-200 dark:bg-slate-700 rounded-full animate-pulse"></div>
+    <div class="w-24 h-8 bg-gray-200 dark:bg-slate-700 rounded-full animate-pulse"></div>
+    <div class="w-20 h-8 bg-gray-200 dark:bg-slate-700 rounded-full animate-pulse"></div>
+  </div>
+  <!-- Skeleton for blog cards -->
+  <app-skeleton type="card" [count]="4" containerClass="space-y-4 my-4"></app-skeleton>
+} @else {
+  <div class="my-4">
+    <app-tabs />
+  </div>
+  <div *ngFor="let blog of blogs" class="my-4">
+    <app-blog-card [blog]="blog"></app-blog-card>
+  </div>
+}

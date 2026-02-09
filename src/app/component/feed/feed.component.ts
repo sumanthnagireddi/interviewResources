@@ -1,5 +1,5 @@
 import { ContentService } from './../../services/content.service';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FeedCardComponent } from "../feed-card/feed-card.component";
 import { CommonModule } from '@angular/common';
 import { RecentDocsComponent } from "../recent-docs/recent-docs.component";
@@ -10,6 +10,7 @@ import { combineLatest } from 'rxjs';
 import { loadRecentVisited, loadTopContents } from '../../store/actions/content.actions';
 import { Timestamp } from '@angular/fire/firestore';
 import { HeroComponent } from "../hero/hero.component";
+import { SkeletonComponent } from "../skeleton/skeleton.component";
 export interface FeedItem {
   id: string;
   title: string;
@@ -23,13 +24,14 @@ export interface FeedItem {
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [CommonModule, FeedCardComponent, RecentDocsComponent, HeroComponent],
+  imports: [CommonModule, FeedCardComponent, RecentDocsComponent, HeroComponent, SkeletonComponent],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.css'
 })
 export class FeedComponent implements OnInit {
   feed: FeedItem[] = [];
   recentContent: any
+  isLoading = signal(true);
   private readonly store = inject(Store);
   private readonly router = inject(Router);
 
@@ -48,11 +50,13 @@ export class FeedComponent implements OnInit {
     ]).subscribe({
       next: ([topContents, recentContents]) => {
         console.log('All contents fetched successfully:', topContents, recentContents);
-        this.feed =topContents
-        this.recentContent = topContents
+        this.feed = topContents;
+        this.recentContent = topContents;
+        this.isLoading.set(false);
       },
       error: (err) => {
         console.error('Error fetching all contents:', err);
+        this.isLoading.set(false);
       }
     });
   }

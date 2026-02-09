@@ -8,7 +8,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { SidebarEffects } from './store/effects/sidebar.effects';
 import { reducers, metaReducers } from './store/reducers';
@@ -17,6 +17,7 @@ import { ContentEffects } from './store/effects/content.effects';
 import { TopicEffects } from './store/effects/topic.effects';
 import { BlogEffects } from './store/effects/blog.effects';
 import { provideServiceWorker } from '@angular/service-worker';
+import { loadingInterceptor } from './interceptors/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -36,7 +37,7 @@ export const appConfig: ApplicationConfig = {
     provideDatabase(() => getDatabase()),
     provideStore(reducers, { metaReducers }),
     provideEffects(SidebarEffects, TechnologyEffects, ContentEffects,TopicEffects,BlogEffects),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([loadingInterceptor])),
     provideStoreDevtools({
       maxAge: 25, logOnly: !isDevMode(), autoPause: true,
       trace: false,

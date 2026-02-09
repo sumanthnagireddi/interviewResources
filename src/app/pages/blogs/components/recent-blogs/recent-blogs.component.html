@@ -10,9 +10,14 @@
       </span>
     </div>
   </div>
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 my-4">
-    <ng-container *ngFor="let blog of blogs; let i = index">
-     <app-blog-card [blog]="blog"></app-blog-card>
-    </ng-container>
-  </div>
+
+  @if (isLoading()) {
+    <app-skeleton type="card" [count]="6" containerClass="grid grid-cols-1 lg:grid-cols-3 gap-6 my-4"></app-skeleton>
+  } @else {
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 my-4">
+      <ng-container *ngFor="let blog of blogs; let i = index">
+        <app-blog-card [blog]="blog"></app-blog-card>
+      </ng-container>
+    </div>
+  }
 </div>

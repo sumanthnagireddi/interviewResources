@@ -5,7 +5,28 @@
 
     <!-- LOADER -->
     <ng-container *ngIf="contentLoader; else contentState">
-      <app-loader></app-loader>
+      <!-- Article Skeleton Loader -->
+      <div class="animate-pulse">
+        <!-- Breadcrumb skeleton -->
+        <div class="flex items-center gap-2 mb-4">
+          <div class="h-4 w-16 bg-gray-200 dark:bg-slate-700 rounded"></div>
+          <div class="h-4 w-4 bg-gray-200 dark:bg-slate-700 rounded"></div>
+          <div class="h-4 w-24 bg-gray-200 dark:bg-slate-700 rounded"></div>
+        </div>
+
+        <!-- Author info skeleton -->
+        <div class="flex items-center mb-6">
+          <div class="w-16 h-16 bg-gray-200 dark:bg-slate-700 rounded-full mr-4"></div>
+          <div class="space-y-2">
+            <div class="h-5 w-40 bg-gray-200 dark:bg-slate-700 rounded"></div>
+            <div class="h-4 w-32 bg-gray-200 dark:bg-slate-700 rounded"></div>
+            <div class="h-3 w-24 bg-gray-200 dark:bg-slate-700 rounded"></div>
+          </div>
+        </div>
+
+        <!-- Content skeleton -->
+        <app-skeleton type="article" [count]="1"></app-skeleton>
+      </div>
     </ng-container>
 
     <!-- CONTENT / EMPTY STATE -->

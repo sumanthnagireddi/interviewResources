@@ -11,9 +11,8 @@ import { Store } from '@ngrx/store';
 import { ContentService } from '../../services/content.service';
 import { EditorComponent } from '../../component/editor/editor.component';
 import { BreadcrumbComponent } from '../../component/breadcrumb/breadcrumb.component';
-import { LoaderComponent } from '../../component/loader/loader.component';
+import { SkeletonComponent } from '../../component/skeleton/skeleton.component';
 import { catchError, delay, throwError } from 'rxjs';
-import { ContentTagsComponent } from '../../component/content-tags/content-tags.component';
 
 @Component({
   selector: 'app-content-layout',
@@ -22,8 +21,7 @@ import { ContentTagsComponent } from '../../component/content-tags/content-tags.
     CommonModule,
     BreadcrumbComponent,
     RouterLink,
-    LoaderComponent,
-    ContentTagsComponent,
+    SkeletonComponent,
   ],
   templateUrl: './content-layout.component.html',
   styleUrl: './content-layout.component.css',
