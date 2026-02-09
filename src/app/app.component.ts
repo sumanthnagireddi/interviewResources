@@ -18,7 +18,7 @@ import { PwaService } from './services/pwa.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppComponent implements OnInit {
-  title = 'Interview Resources';
+  title = ' Resources';
   store = inject(Store);
   router = inject(Router);
   pwaService = inject(PwaService); // Initialize PWA service

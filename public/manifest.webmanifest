@@ -1,13 +1,13 @@
 {
-  "name": "Interview Resources",
+  "name": " Resources",
   "short_name": "Resources",
-  "description": "Your comprehensive interview preparation resource hub",
+  "description": "Your comprehensive  preparation resource hub",
   "display": "standalone",
   "orientation": "portrait-primary",
   "scope": "/",
   "start_url": "/",
-  "background_color": "#0f172a",
-  "theme_color": "#6366f1",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "categories": ["education", "productivity"],
   "lang": "en-US",
   "dir": "ltr",
@@ -80,14 +80,14 @@
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Interview Resources Mobile App"
+      "label": " Resources Mobile App"
     },
     {
       "src": "icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Interview Resources Desktop App"
+      "label": " Resources Desktop App"
     }
   ],
   "shortcuts": [

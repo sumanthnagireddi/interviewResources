@@ -65,7 +65,7 @@ export class SidebarV3Component implements OnInit {
 
   folders = [
     { name: 'Technical', open: false },
-    { name: 'Interview Resources', open: false },
+    { name: ' Resources', open: false },
     { name: 'AWS JS Developer training', open: false },
   ];
 

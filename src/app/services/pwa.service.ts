@@ -142,7 +142,7 @@ export class PwaService {
           </svg>
         </div>
         <div class="pwa-install-prompt-text">
-          <h3>Install Interview Resources</h3>
+          <h3>Install Resources</h3>
           <p>Get quick access from your home screen</p>
         </div>
       </div>

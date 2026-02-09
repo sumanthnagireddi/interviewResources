@@ -1,44 +1,44 @@
-<div class="min-h-screen flex fle-col items-center justify-center p-6">
+<div class="min-h-screen flex fle-col items-center justify-center p-6 bg-gray-50 dark:bg-slate-950 transition-colors">
     <div class="grid lg:grid-cols-2 items-center gap-8 max-w-6xl max-lg:max-w-lg w-full">
         <div
-            class="border border-slate-300 rounded-lg p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] max-lg:mx-auto lg:order-2">
+            class="border border-slate-300 dark:border-slate-700 rounded-lg p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] dark:shadow-black/40 max-lg:mx-auto lg:order-2 bg-white dark:bg-slate-900">
 
             <form class="lg:max-w-md w-full">
                 <div class="mb-8">
-                    <h1 class="text-slate-900 text-3xl font-semibold">Create an account</h1>
-                    <p class="text-slate-600 text-[15px] mt-1 leading-relaxed">Register for a new account to get started
+                    <h1 class="text-slate-900 dark:text-white text-3xl font-semibold">Create an account</h1>
+                    <p class="text-slate-600 dark:text-gray-400 text-[15px] mt-1 leading-relaxed">Register for a new account to get started
                         and explore a world of possibilities. Join us today.</p>
                 </div>
                 <div class="space-y-6">
                     <div>
-                        <label class="text-slate-900 text-sm mb-2 block">Name</label>
+                        <label class="text-slate-900 dark:text-gray-200 text-sm mb-2 block">Name</label>
                         <input name="name" type="text"
-                            class="bg-gray-100 w-full text-slate-900 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
+                            class="bg-gray-100 dark:bg-slate-800 w-full text-slate-900 dark:text-white text-sm px-4 py-3 focus:bg-transparent dark:focus:bg-slate-800 border border-gray-100 dark:border-slate-600 focus:border-black dark:focus:border-accent outline-none transition-all rounded-lg"
                             placeholder="Enter name" />
                     </div>
                     <div>
-                        <label class="text-slate-900 text-sm mb-2 block">Email</label>
+                        <label class="text-slate-900 dark:text-gray-200 text-sm mb-2 block">Email</label>
                         <input name="email" type="text"
-                            class="bg-gray-100 w-full text-slate-900 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
+                            class="bg-gray-100 dark:bg-slate-800 w-full text-slate-900 dark:text-white text-sm px-4 py-3 focus:bg-transparent dark:focus:bg-slate-800 border border-gray-100 dark:border-slate-600 focus:border-black dark:focus:border-accent outline-none transition-all rounded-lg"
                             placeholder="Enter email" />
                     </div>
                     <div>
-                        <label class="text-slate-900 text-sm mb-2 block">Password</label>
+                        <label class="text-slate-900 dark:text-gray-200 text-sm mb-2 block">Password</label>
                         <input name="password" type="password"
-                            class="bg-gray-100 w-full text-slate-900 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
+                            class="bg-gray-100 dark:bg-slate-800 w-full text-slate-900 dark:text-white text-sm px-4 py-3 focus:bg-transparent dark:focus:bg-slate-800 border border-gray-100 dark:border-slate-600 focus:border-black dark:focus:border-accent outline-none transition-all rounded-lg"
                             placeholder="Enter password" />
                     </div>
 
                 </div>
 
                 <div class="!mt-9">
-                <button type="button" class="w-full shadow-xl py-2.5 px-4 text-[15px] font-medium tracking-wide rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none cursor-pointer">
+                <button type="button" class="w-full shadow-xl py-2.5 px-4 text-[15px] font-medium tracking-wide rounded-lg text-white btn-accent">
                     Register
                 </button>
-                <!-- <p class="text-sm !mt-6 text-center text-slate-600">Don't have an account <a href="javascript:void(0);" class="text-blue-600 font-medium hover:underline ml-1 whitespace-nowrap">Register here</a></p> -->
+                <!-- <p class="text-sm !mt-6 text-center text-slate-600 dark:text-gray-400">Don't have an account <a href="javascript:void(0);" class="text-accent font-medium hover:underline ml-1 whitespace-nowrap">Register here</a></p> -->
               </div>
-                <p class="text-sm text-slate-600 mt-6">Already have an account? <a href="javascript:void(0);"
-                        class="text-emerald-600 font-semibold hover:underline ml-1">Login here</a></p>
+                <p class="text-sm text-slate-600 dark:text-gray-400 mt-6">Already have an account? <a href="javascript:void(0);"
+                        class="text-accent font-semibold hover:underline ml-1">Login here</a></p>
             </form>
         </div>
         <div class="max-lg:mt-8 lg:order-1">
