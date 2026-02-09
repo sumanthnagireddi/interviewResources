@@ -63,11 +63,24 @@ jobs:
           node-version: 20
           cache: "npm"
 
+      - name: Display Node and npm versions
+        run: |
+          echo "Node version: $(node -v)"
+          echo "npm version: $(npm -v)"
+
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: |
+          echo "📦 Installing dependencies..."
+          npm install --legacy-peer-deps
+          echo "✅ Dependencies installed successfully"
 
       - name: Build project
-        run: npm run build
+        run: |
+          echo "🏗️ Building Angular application..."
+          npm run build
+          echo "✅ Build completed successfully"
+          echo "📁 Build output:"
+          ls -la dist/
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -92,6 +105,13 @@ jobs:
         with:
           name: dist
           path: dist/
+
+      - name: Display downloaded artifacts
+        run: |
+          echo "📁 Downloaded build artifacts:"
+          ls -la dist/
+          echo "📂 Contents of dist/resources:"
+          ls -la dist/resources/ || echo "No resources folder found"
 
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
