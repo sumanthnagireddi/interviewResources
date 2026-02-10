@@ -14,6 +14,7 @@ import { DialogType } from '../../../model/dialog.model';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { ThemeService } from '../../../services/theme.service';
+import { toggleSidebar } from '../../../store/actions/sidebar.actions';
 
 export interface MenuItem {
   id: string;
@@ -247,5 +248,10 @@ export class SidebarV3Component implements OnInit {
   toggleOpen(event: Event, item: MenuItem) {
     event.stopPropagation();
     item.isOpen = !item.isOpen;
+  }
+
+  /** Close sidebar on mobile */
+  closeSidebar() {
+    this.store.dispatch(toggleSidebar({ show: false }));
   }
 }
