@@ -32,6 +32,8 @@ export class ContentLayoutComponent implements OnInit {
   @ViewChild('tocContainer') tocContainer!: ElementRef<HTMLDivElement>;
 
   activeHeading: string | null = null;
+  isBookmarked = true;
+  showMobileToc = false;
 
   // Cache headings for performance
   private cachedHeadings: HTMLElement[] = [];
@@ -204,6 +206,12 @@ export class ContentLayoutComponent implements OnInit {
         block: 'nearest', // 👈 key for good UX
       });
     }
+  }
+
+  toggleMobileToc(): void {
+    this.showMobileToc = !this.showMobileToc;
+    // Prevent body scroll when drawer is open
+    document.body.style.overflow = this.showMobileToc ? 'hidden' : '';
   }
 
 }
