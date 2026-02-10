@@ -28,6 +28,17 @@ export class HeaderComponent implements OnInit {
   isServerOn = false;
   showThemePopover = false;
   showNotificationsPopover = false;
+  showAppsPopover = false;
+
+  // Personal projects/apps - Add more apps here in the future
+  readonly personalApps = [
+    {
+      name: 'Portfolio',
+      url: 'https://sumanthnagireddi1.web.app',
+      image: 'https://sumanthnagireddi1.web.app/assets/imag3.jpg',
+      description: 'My personal portfolio website',
+    }
+  ];
 
   private readonly store = inject(Store);
   private readonly http = inject(HttpClient);
@@ -95,7 +106,15 @@ export class HeaderComponent implements OnInit {
     if (!this.elementRef.nativeElement.contains(event.target)) {
       this.showThemePopover = false;
       this.showNotificationsPopover = false;
+      this.showAppsPopover = false;
     }
+  }
+
+  toggleAppsPopover(event: MouseEvent): void {
+    event.stopPropagation();
+    this.showAppsPopover = !this.showAppsPopover;
+    this.showThemePopover = false;
+    this.showNotificationsPopover = false;
   }
 
   toggleSidebar(): void {
@@ -107,12 +126,14 @@ export class HeaderComponent implements OnInit {
     event.stopPropagation();
     this.showThemePopover = !this.showThemePopover;
     this.showNotificationsPopover = false;
+    this.showAppsPopover = false;
   }
 
   toggleNotificationsPopover(event: MouseEvent): void {
     event.stopPropagation();
     this.showNotificationsPopover = !this.showNotificationsPopover;
     this.showThemePopover = false;
+    this.showAppsPopover = false;
   }
 
   markAsRead(notification: Notification): void {
