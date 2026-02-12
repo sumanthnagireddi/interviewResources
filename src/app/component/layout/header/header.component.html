@@ -51,6 +51,8 @@
     <span class="text-lg sm:text-xl text-gray-900 dark:text-white font-medium cursor-pointer truncate max-w-[100px] sm:max-w-none leading-none" [routerLink]="'/'">Resources</span>
   </div>
 
+ 
+  <!-- Desktop Search Bar -->
   <div class="hidden md:flex items-center justify-center gap-4 flex-1 mx-4 min-w-0 h-full">
     <button (click)="openGlobalSearch()"
             class="flex-1 max-w-2xl flex items-center gap-3 px-4 py-2 rounded-lg border text-sm text-left
@@ -99,6 +101,16 @@
         api
       </span>
     </div>
+    <div class="flex md:hidden items-center justify-center flex-1 min-w-0 h-full">
+    <button (click)="openGlobalSearch()"
+            class="flex items-center justify-center w-9 h-9 rounded-lg
+                   hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+            title="Search (Ctrl+K)">
+      <span class="material-symbols-outlined text-gray-700 dark:text-gray-200">
+        search
+      </span>
+    </button>
+  </div>
 
     <!-- Theme Toggle Button -->
     <div class="relative">
