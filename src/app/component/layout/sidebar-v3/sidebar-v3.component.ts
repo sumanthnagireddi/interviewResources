@@ -4,10 +4,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectTechnologies } from '../../../store/selectors/technology.selector';
-import {
-  getTechnologies,
-  getTopics,
-} from '../../../store/actions/technology.actions';
+import { getTechnologies } from '../../../store/actions/technology.actions';
 import { Technology } from '../../../model/content.model';
 import { ProfileCardComponent } from '../../profile-card/profile-card.component';
 import { DialogType } from '../../../model/dialog.model';
@@ -15,6 +12,8 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { ThemeService } from '../../../services/theme.service';
 import { toggleSidebar } from '../../../store/actions/sidebar.actions';
+import { selectStarredCount } from '../../../store/selectors/starred.selector';
+import { Observable } from 'rxjs';
 
 export interface MenuItem {
   id: string;
@@ -36,6 +35,8 @@ export class SidebarV3Component implements OnInit {
   private readonly store = inject(Store);
   readonly themeService = inject(ThemeService);
   isContentLoading = signal(true);
+  isSidebarExpanded = signal(false);
+  starredCount$: Observable<number>;
   menuItems: MenuItem[] = [
     { id: 'for-you', label: 'For you', icon: 'account_circle', url: 'home' },
     { id: 'recent', label: 'Recent', icon: 'history', url: 'recent' },
@@ -71,7 +72,9 @@ export class SidebarV3Component implements OnInit {
   ];
 
   selectedMenuItem: string | null = null;
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute) {
+    this.starredCount$ = this.store.select(selectStarredCount);
+  }
 
   ngOnInit(): void {
     this.store.dispatch(getTechnologies());
@@ -93,7 +96,7 @@ export class SidebarV3Component implements OnInit {
 
     this.menuItems.forEach((item) => {
       // Reset
-      item.isOpen = true;
+      // item.isOpen = true;
 
       // Simple route match
       if (item.url && currentUrl.includes(item.url)) {
@@ -104,11 +107,11 @@ export class SidebarV3Component implements OnInit {
       if (item.children?.length) {
         item.children.forEach((child) => {
           if (currentUrl.includes(child.id)) {
-            item.isOpen = true; // open Content
+            // item.isOpen = true; // open Content
             this.selectedMenuItem = child.id;
 
             // Open topic parent
-            child.isOpen = true;
+            // child.isOpen = true;
           }
         });
       }
@@ -118,11 +121,10 @@ export class SidebarV3Component implements OnInit {
   selectMenuItem(event: Event, item: MenuItem) {
     event.stopPropagation();
     this.selectedMenuItem = item.id;
-    this.store.dispatch(getTopics({ technologyId: this.selectedMenuItem }));
+    // No need to dispatch getTopics anymore - topics are already loaded with technologies
     if (item.hasItems) {
       item.isOpen = !item.isOpen;
     }
-    // this.toggleChildOpen(event, item);
   }
   updateContentChildren(technologies: Technology[]) {
     const contentNode = this.menuItems.find((i) => i.id === 'content');
@@ -133,8 +135,7 @@ export class SidebarV3Component implements OnInit {
         icon: 'article',
         description: tech?.description,
         hasItems: true,
-        isOpen:
-          this.updateTechnologyChildren(tech.topics)?.length > 0 ? true : false,
+        isOpen:false,
         children: this.updateTechnologyChildren(tech.topics) || [],
       }));
     }

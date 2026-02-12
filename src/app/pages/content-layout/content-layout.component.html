@@ -107,14 +107,18 @@
             <div class="w-px h-6 bg-gray-200 dark:bg-slate-700"></div>
 
             <!-- Bookmark Button -->
-            <button class="flex items-center gap-1.5 px-3  rounded-lg text-sm font-medium
+            <button (click)="toggleBookmark($event)"
+              class="flex items-center gap-1.5 px-3  rounded-lg text-sm font-medium
                          transition-all duration-200"
-              [ngClass]="isBookmarked
+              [ngClass]="(isBookmarked$ | async)
                 ? 'bg-accent/10 text-accent'
                 : 'text-gray-600 dark:text-gray-300 hover:bg-accent/10 hover:text-accent'"
               title="Bookmark this article">
-              <span class="material-symbols-outlined text-2xl">{{isBookmarked ? 'bookmark' : 'bookmark_border'}}</span>
-              <span class="inline text-sm font-medium">{{isBookmarked ? 'Saved' : 'Save'}}</span>
+              <span class="material-symbols-outlined text-2xl"
+                    [class.filled-icon]="(isBookmarked$ | async)">
+                bookmark
+              </span>
+              <span class="inline text-sm font-medium">{{ (isBookmarked$ | async) ? 'Saved' : 'Save' }}</span>
             </button>
           </div>
         </address>

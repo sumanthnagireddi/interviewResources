@@ -8,7 +8,7 @@
       </span>
     </button>
     <div class="relative">
-      <button (click)="toggleAppsPopover($event)" 
+      <button (click)="toggleAppsPopover($event)"
               class="flex flex-shrink-0 min-h-0 min-w-0 w-8 h-8 items-center justify-center rounded-lg
                      hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
               title="My Apps">
@@ -35,7 +35,7 @@
               <a [href]="app.url" target="_blank" rel="noopener noreferrer"
                  class="flex items-center gap-3 p-3 rounded-xl transition-all duration-200
                         hover:bg-gray-100 dark:hover:bg-slate-800">
-                <img [src]="app.image" [alt]="app.name" 
+                <img [src]="app.image" [alt]="app.name"
                      class="w-10 h-10 rounded-xl object-cover shadow-sm ring-2 ring-gray-100 dark:ring-slate-700">
                 <div class="flex-1 min-w-0">
                   <p class="text-sm font-medium text-gray-900 dark:text-white">{{app.name}}</p>
@@ -52,13 +52,28 @@
   </div>
 
   <div class="hidden md:flex items-center justify-center gap-4 flex-1 mx-4 min-w-0 h-full">
-    <div class="flex-1 max-w-2xl">
-      <input type="text" placeholder="Search"
-             class="w-full px-3 py-1.5 rounded-md border text-sm
-                    bg-white dark:bg-slate-800 dark:border-slate-600 dark:text-white
-                    dark:placeholder-gray-400 focus:outline-none focus:ring-2
-                    focus:ring-[var(--color-accent)] transition-colors" />
-    </div>
+    <button (click)="openGlobalSearch()"
+            class="flex-1 max-w-2xl flex items-center gap-3 px-4 py-2 rounded-lg border text-sm text-left
+                   bg-white dark:bg-slate-800 dark:border-slate-600
+                   hover:border-accent dark:hover:border-accent transition-all group">
+      <span class="material-symbols-outlined text-gray-400 group-hover:text-accent transition-colors">
+        search
+      </span>
+      <span class="text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300">
+        Search resources, topics, blogs...
+      </span>
+      <div class="ml-auto flex items-center gap-1">
+        <kbd class="px-2 py-1 text-xs font-medium text-gray-500 dark:text-gray-400
+                   bg-gray-100 dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600">
+          Ctrl
+        </kbd>
+        <span class="text-gray-400">+</span>
+        <kbd class="px-2 py-1 text-xs font-medium text-gray-500 dark:text-gray-400
+                   bg-gray-100 dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600">
+          K
+        </kbd>
+      </div>
+    </button>
     <button class="btn-accent font-medium text-white text-base px-6 py-1.5 rounded-md flex-shrink-0 min-h-0">
       Create
     </button>
@@ -324,3 +339,6 @@
   </div>
 
 </header>
+
+<!-- Global Search Component -->
+<app-global-search></app-global-search>

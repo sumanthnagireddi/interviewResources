@@ -16,6 +16,7 @@ import { TechnologyEffects } from './store/effects/technology.effects';
 import { ContentEffects } from './store/effects/content.effects';
 import { TopicEffects } from './store/effects/topic.effects';
 import { BlogEffects } from './store/effects/blog.effects';
+import { StarredEffects } from './store/effects/starred.effects';
 import { provideServiceWorker } from '@angular/service-worker';
 import { loadingInterceptor } from './interceptors/loading.interceptor';
 
@@ -36,7 +37,7 @@ export const appConfig: ApplicationConfig = {
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
     provideStore(reducers, { metaReducers }),
-    provideEffects(SidebarEffects, TechnologyEffects, ContentEffects,TopicEffects,BlogEffects),
+    provideEffects(SidebarEffects, TechnologyEffects, ContentEffects,TopicEffects,BlogEffects,StarredEffects),
     provideHttpClient(withInterceptors([loadingInterceptor])),
     provideStoreDevtools({
       maxAge: 25, logOnly: !isDevMode(), autoPause: true,

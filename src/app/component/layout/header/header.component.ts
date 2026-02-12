@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Component, inject, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { toggleSidebar } from '../../../store/actions/sidebar.actions';
 import { HttpClient } from '@angular/common/http';
@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ThemeService, AccentColor, ACCENT_COLORS, ThemeMode } from '../../../services/theme.service';
+import { GlobalSearchComponent } from '../../global-search/global-search.component';
 
 export interface Notification {
   id: string;
@@ -19,11 +20,13 @@ export interface Notification {
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, GlobalSearchComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit {
+  @ViewChild(GlobalSearchComponent) globalSearch!: GlobalSearchComponent;
+
   sidebarToggleStatus = false;
   isServerOn = false;
   showThemePopover = false;
@@ -122,6 +125,8 @@ export class HeaderComponent implements OnInit {
     this.store.dispatch(toggleSidebar({ show: this.sidebarToggleStatus }));
   }
 
+
+
   toggleThemePopover(event: MouseEvent): void {
     event.stopPropagation();
     this.showThemePopover = !this.showThemePopover;
@@ -163,5 +168,9 @@ export class HeaderComponent implements OnInit {
 
   navigatoToUpTime(): void {
     window.open('https://stats.uptimerobot.com/Nzi1DUyGFD', '_blank');
+  }
+
+  openGlobalSearch(): void {
+    this.globalSearch?.openSearch();
   }
 }

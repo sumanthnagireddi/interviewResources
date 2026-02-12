@@ -12,7 +12,9 @@ import { ContentService } from '../../services/content.service';
 import { EditorComponent } from '../../component/editor/editor.component';
 import { BreadcrumbComponent } from '../../component/breadcrumb/breadcrumb.component';
 import { SkeletonComponent } from '../../component/skeleton/skeleton.component';
-import { catchError, delay, throwError } from 'rxjs';
+import { catchError, delay, throwError, Observable } from 'rxjs';
+import { toggleStarred } from '../../store/actions/starred.actions';
+import { selectIsStarred } from '../../store/selectors/starred.selector';
 
 @Component({
   selector: 'app-content-layout',
@@ -32,7 +34,7 @@ export class ContentLayoutComponent implements OnInit {
   @ViewChild('tocContainer') tocContainer!: ElementRef<HTMLDivElement>;
 
   activeHeading: string | null = null;
-  isBookmarked = true;
+  isBookmarked$!: Observable<boolean>;
   showMobileToc = false;
 
   // Cache headings for performance
@@ -53,6 +55,8 @@ export class ContentLayoutComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.currentId = params['pageId'];
       this.getContent(this.currentId);
+      // Initialize starred status observable
+      this.isBookmarked$ = this.store.select(selectIsStarred(this.currentId));
       // this.service.updateLastViewed(this.currentId);
     });
   }
@@ -212,6 +216,13 @@ export class ContentLayoutComponent implements OnInit {
     this.showMobileToc = !this.showMobileToc;
     // Prevent body scroll when drawer is open
     document.body.style.overflow = this.showMobileToc ? 'hidden' : '';
+  }
+
+  toggleBookmark(event: Event): void {
+    event.stopPropagation();
+    if (this.currentId) {
+      this.store.dispatch(toggleStarred({ contentId: this.currentId }));
+    }
   }
 
 }

@@ -97,9 +97,9 @@ export class TechnologyEffects {
     this.actions$.pipe(
       ofType(getTechnologies),
       exhaustMap(() =>
-        this.technologyService.getTechnologiesFromMongo().pipe(
+        this.technologyService.getTechnologiesWithTopics().pipe(
           map((technologies:any) => {
-            console.log('technologies', technologies);
+            console.log('technologies with nested topics', technologies);
             return getTechnologiesSuccess({ technologies });
           }),
           catchError((error) => {

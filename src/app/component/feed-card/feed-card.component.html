@@ -18,9 +18,11 @@
         <p class="text-xs line-clamp-3 text-gray-500 dark:text-gray-400 mb-1">{{ item?.description }}</p>
         <div class="mt-4 flex justify-between w-full">
           <p class="text-xs text-gray-500 dark:text-gray-400">Owned by Sumanth Nagireddi • {{ item.createdAt | date:'medium' }}</p>
-          <span (click)="addToStarred(item)"
+          <span (click)="addToStarred($event, item)"
             class="cursor-pointer material-symbols-outlined text-gray-500 dark:text-gray-400
-                   hover:text-[var(--color-accent)] transition-colors">
+                   hover:text-[var(--color-accent)] transition-colors"
+            [ngClass]="(isStarred$ | async) ? 'text-[var(--color-accent)]' : ''"
+            [style.fontVariationSettings]="(isStarred$ | async) ? '\'FILL\' 1' : '\'FILL\' 0'">
             bookmark
           </span>
         </div>

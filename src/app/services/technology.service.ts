@@ -12,7 +12,7 @@ import {
   setDoc,
   where,
 } from '@angular/fire/firestore';
-import { Observable, from, map } from 'rxjs';
+import { Observable, from, map, forkJoin } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import { environment } from '../../environments/environment';
 @Injectable({
@@ -25,10 +25,43 @@ export class TechnologyService {
   topicsCollectionRef = collection(this.firestore, 'topics_new');
   topicsCollectionRefString = 'topics_new';
   Technologies_Endpoint: any = environment.API_URL + '/technologies';
+  Topics_Endpoint: any = environment.API_URL + '/topics';
   constructor(private http: HttpClient) {}
 
   getTechnologiesFromMongo() {
     return this.http.get(this.Technologies_Endpoint);
+  }
+
+  /**
+   * Fetches all technologies with their nested topics in one call
+   * This avoids multiple API calls when navigating the sidebar
+   */
+  getTechnologiesWithTopics(): Observable<any> {
+    return forkJoin({
+      technologies: this.http.get(this.Technologies_Endpoint),
+      topics: this.http.get(this.Topics_Endpoint)
+    }).pipe(
+      map(({ technologies, topics }: any) => {
+        // Create a map of topics by technologyId for quick lookup
+        const topicsByTechId: { [key: string]: any[] } = {};
+
+        if (Array.isArray(topics)) {
+          topics.forEach((topic: any) => {
+            const techId = topic.technologyId;
+            if (!topicsByTechId[techId]) {
+              topicsByTechId[techId] = [];
+            }
+            topicsByTechId[techId].push(topic);
+          });
+        }
+
+        // Merge topics into technologies
+        return technologies.map((tech: any) => ({
+          ...tech,
+          topics: topicsByTechId[tech._id] || []
+        }));
+      })
+    );
   }
   addTechnologyToMongo(technology_payload: any) {
     const payload = {
