@@ -17,11 +17,13 @@ import { BlogsHomeComponent } from './pages/blogs/subpages/blogs-home/blogs-home
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { FinanceComponent } from './pages/finance/finance.component';
+import { authGuard, guestGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -92,9 +94,15 @@ export const routes: Routes = [
   {
     path:'login',
     component: LoginComponent,
+    canActivate: [guestGuard],
   },
   {
     path:'register',
     component: RegisterComponent,
+    canActivate: [guestGuard],
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
   }
 ];

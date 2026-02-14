@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ThemeService, AccentColor, ACCENT_COLORS, ThemeMode } from '../../../services/theme.service';
 import { GlobalSearchComponent } from '../../global-search/global-search.component';
+import { AuthService } from '../../../services/auth.service';
 
 export interface Notification {
   id: string;
@@ -14,7 +15,7 @@ export interface Notification {
   message: string;
   time: string;
   read: boolean;
-  type: 'info' | 'success' | 'warning' | 'error';
+type: 'info' | 'success' | 'warning' | 'error';
   icon: string;
 }
 
@@ -32,6 +33,7 @@ export class HeaderComponent implements OnInit {
   showThemePopover = false;
   showNotificationsPopover = false;
   showAppsPopover = false;
+  showProfilePopover = false;
 
   // Personal projects/apps - Add more apps here in the future
   readonly personalApps = [
@@ -47,6 +49,7 @@ export class HeaderComponent implements OnInit {
   private readonly http = inject(HttpClient);
   readonly themeService = inject(ThemeService);
   private readonly elementRef = inject(ElementRef);
+  readonly authService = inject(AuthService);
 
   // Sample notifications - replace with actual service data
   notifications: Notification[] = [
@@ -110,6 +113,7 @@ export class HeaderComponent implements OnInit {
       this.showThemePopover = false;
       this.showNotificationsPopover = false;
       this.showAppsPopover = false;
+      this.showProfilePopover = false;
     }
   }
 
@@ -118,6 +122,7 @@ export class HeaderComponent implements OnInit {
     this.showAppsPopover = !this.showAppsPopover;
     this.showThemePopover = false;
     this.showNotificationsPopover = false;
+    this.showProfilePopover = false;
   }
 
   toggleSidebar(): void {
@@ -132,6 +137,7 @@ export class HeaderComponent implements OnInit {
     this.showThemePopover = !this.showThemePopover;
     this.showNotificationsPopover = false;
     this.showAppsPopover = false;
+    this.showProfilePopover = false;
   }
 
   toggleNotificationsPopover(event: MouseEvent): void {
@@ -139,6 +145,7 @@ export class HeaderComponent implements OnInit {
     this.showNotificationsPopover = !this.showNotificationsPopover;
     this.showThemePopover = false;
     this.showAppsPopover = false;
+    this.showProfilePopover = false;
   }
 
   markAsRead(notification: Notification): void {
@@ -172,5 +179,18 @@ export class HeaderComponent implements OnInit {
 
   openGlobalSearch(): void {
     this.globalSearch?.openSearch();
+  }
+
+  toggleProfilePopover(event: MouseEvent): void {
+    event.stopPropagation();
+    this.showProfilePopover = !this.showProfilePopover;
+    this.showThemePopover = false;
+    this.showNotificationsPopover = false;
+    this.showAppsPopover = false;
+  }
+
+  logout(): void {
+    this.showProfilePopover = false;
+    this.authService.logout();
   }
 }

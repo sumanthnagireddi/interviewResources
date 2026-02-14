@@ -32,6 +32,17 @@ export class FinanceComponent implements OnInit {
   selectedMonth = signal(new Date());
   activeTab = signal<'overview' | 'transactions' | 'categories' | 'sms'>('overview');
   deleteConfirmId = signal<string | null>(null);
+  showEditForm = signal(false);
+  editingExpenseId = signal<string | null>(null);
+
+  // Edit form model
+  editExpense = {
+    title: '',
+    amount: 0,
+    category: 'food' as ExpenseCategory,
+    date: '',
+    notes: '',
+  };
 
   // SMS Analyzer state
   smsRawText = signal('');
@@ -148,6 +159,34 @@ export class FinanceComponent implements OnInit {
   deleteExpense(id: string): void {
     this.financeService.deleteExpense(id);
     this.deleteConfirmId.set(null);
+    this.reload();
+  }
+
+  // ───── Edit Expense ─────
+  openEditForm(expense: Expense): void {
+    this.editingExpenseId.set(expense.id);
+    this.editExpense = {
+      title: expense.title,
+      amount: expense.amount,
+      category: expense.category,
+      date: expense.date,
+      notes: expense.notes || '',
+    };
+    this.showEditForm.set(true);
+  }
+
+  submitEdit(): void {
+    const id = this.editingExpenseId();
+    if (!id || !this.editExpense.title.trim() || this.editExpense.amount <= 0) return;
+    this.financeService.updateExpense(id, {
+      title: this.editExpense.title.trim(),
+      amount: this.editExpense.amount,
+      category: this.editExpense.category,
+      date: this.editExpense.date,
+      notes: this.editExpense.notes?.trim() || '',
+    });
+    this.showEditForm.set(false);
+    this.editingExpenseId.set(null);
     this.reload();
   }
 

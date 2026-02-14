@@ -46,6 +46,15 @@ export class FinanceService {
     return newExpenses;
   }
 
+  updateExpense(id: string, updates: Partial<Omit<Expense, 'id' | 'createdAt'>>): Expense | null {
+    const expenses = this.getExpenses();
+    const index = expenses.findIndex(e => e.id === id);
+    if (index === -1) return null;
+    expenses[index] = { ...expenses[index], ...updates };
+    this.saveExpenses(expenses);
+    return expenses[index];
+  }
+
   deleteExpense(id: string): void {
     const expenses = this.getExpenses().filter(e => e.id !== id);
     this.saveExpenses(expenses);
