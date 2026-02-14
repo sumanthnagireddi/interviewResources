@@ -45,3 +45,7 @@ Thumbs.db
 .firebase
 *-debug.log
 .runtimeconfig.json
+
+# Environment files (secrets injected via GitHub Actions)
+src/environments/environment.ts
+src/environments/environment.development.ts

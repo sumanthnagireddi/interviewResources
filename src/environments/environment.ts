@@ -1,3 +1,4 @@
-export const environment: { API_URL: string } = {
+export const environment = {
+  production: true,
   API_URL: 'https://webservices-rqvr.onrender.com',
 };

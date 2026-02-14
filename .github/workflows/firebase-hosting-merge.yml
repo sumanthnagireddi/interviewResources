@@ -74,6 +74,11 @@ jobs:
           npm install --legacy-peer-deps
           echo "✅ Dependencies installed successfully"
 
+      - name: Generate environment file from Firebase config
+        run: node server.js
+        env:
+          FIREBASE_CONFIG: '${{ secrets.FIREBASE_CONFIG }}'
+
       - name: Build project
         run: |
           echo "🏗️ Building Angular application..."

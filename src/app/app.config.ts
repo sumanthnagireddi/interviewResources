@@ -19,20 +19,13 @@ import { BlogEffects } from './store/effects/blog.effects';
 import { StarredEffects } from './store/effects/starred.effects';
 import { provideServiceWorker } from '@angular/service-worker';
 import { loadingInterceptor } from './interceptors/loading.interceptor';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding(), withInMemoryScrolling({ scrollPositionRestoration: 'top' })),
-    provideFirebaseApp(() => initializeApp({
-      projectId: 'sumanthnagireddi-interview',
-      appId: '1:690782833147:web:85e61606f3f76fe1b7a35e',
-      storageBucket: 'sumanthnagireddi-interview.appspot.com',
-      apiKey: 'AIzaSyC_y_0iJAjkfcgsSIawGrcIOIPvF19sxi4',
-      authDomain: 'sumanthnagireddi-interview.firebaseapp.com',
-      messagingSenderId: '690782833147',
-      measurementId: 'G-S8V59ELZD2',
-    })),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
