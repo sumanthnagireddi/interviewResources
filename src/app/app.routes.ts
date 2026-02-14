@@ -16,6 +16,7 @@ import { AdminComponent } from './pages/blogs/subpages/admin/admin.component';
 import { BlogsHomeComponent } from './pages/blogs/subpages/blogs-home/blogs-home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { FinanceComponent } from './pages/finance/finance.component';
 
 export const routes: Routes = [
   {
@@ -77,6 +78,10 @@ export const routes: Routes = [
             component: AdminComponent,
           },
         ],
+      },
+      {
+        path: 'finance',
+        component: FinanceComponent,
       },
       {
         path: 'api-docs',

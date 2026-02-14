@@ -42,6 +42,7 @@ export class SidebarV3Component implements OnInit {
     { id: 'recent', label: 'Recent', icon: 'history', url: 'recent' },
     { id: 'starred', label: 'Starred', icon: 'star', url: 'starred' },
     { id: 'drafts', label: 'Drafts', icon: 'draft', url: 'drafts' },
+    { id: 'finance', label: 'Finance', icon: 'account_balance_wallet', url: 'finance' },
     {
       id: 'content',
       label: 'Content',
