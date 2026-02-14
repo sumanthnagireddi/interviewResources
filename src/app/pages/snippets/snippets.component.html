@@ -1,0 +1,499 @@
+<div class="max-w-6xl mx-auto px-2 sm:px-4 py-4 sm:py-6 space-y-5">
+
+  <!-- =================== HEADER =================== -->
+  <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+    <div>
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2.5">
+        <span class="material-symbols-outlined text-accent text-3xl" style="font-variation-settings: 'FILL' 1;">
+          data_object
+        </span>
+        Code Snippets
+      </h1>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        {{ totalCount() }} snippets · {{ favoriteCount() }} favorites
+      </p>
+    </div>
+    <div class="flex items-center gap-2">
+      <!-- View toggle -->
+      <div class="flex items-center bg-gray-100 dark:bg-slate-700 rounded-xl p-0.5">
+        <button (click)="viewMode.set('grid')"
+                class="p-2 rounded-lg transition-colors"
+                [ngClass]="viewMode() === 'grid' ? 'bg-white dark:bg-slate-600 shadow-sm text-accent' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700'">
+          <span class="material-symbols-outlined text-lg">grid_view</span>
+        </button>
+        <button (click)="viewMode.set('list')"
+                class="p-2 rounded-lg transition-colors"
+                [ngClass]="viewMode() === 'list' ? 'bg-white dark:bg-slate-600 shadow-sm text-accent' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700'">
+          <span class="material-symbols-outlined text-lg">view_list</span>
+        </button>
+      </div>
+      <button (click)="openAddForm()"
+              class="px-4 py-2 rounded-xl text-sm font-medium text-white bg-accent hover:bg-accent-hover
+                     shadow-lg hover:shadow-xl transition-all flex items-center gap-2">
+        <span class="material-symbols-outlined text-lg">add</span>
+        New Snippet
+      </button>
+    </div>
+  </div>
+
+  <!-- =================== SEARCH & FILTERS =================== -->
+  <div class="space-y-3">
+    <!-- Search bar -->
+    <div class="relative">
+      <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-xl">
+        search
+      </span>
+      <input type="text"
+             [value]="searchQuery()"
+             (input)="onSearchInput($event)"
+             placeholder="Search snippets by title, description, code, or tags..."
+             class="w-full pl-11 pr-4 py-3 rounded-2xl bg-white dark:bg-slate-800
+                    border border-gray-200 dark:border-slate-700 text-sm text-gray-900 dark:text-white
+                    placeholder:text-gray-400 dark:placeholder:text-gray-500
+                    focus:ring-2 focus:ring-accent/30 focus:border-accent outline-none transition-all">
+      @if (searchQuery()) {
+        <button (click)="searchQuery.set('')"
+                class="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+          <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+      }
+    </div>
+
+    <!-- Filter pills -->
+    <div class="flex flex-wrap items-center gap-2">
+      <!-- Fav filter -->
+      <button (click)="toggleFavFilter()"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium border transition-all"
+              [ngClass]="filterFavOnly()
+                ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700 text-amber-600 dark:text-amber-400'
+                : 'bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-600 dark:text-gray-400 hover:border-amber-300'">
+        <span class="material-symbols-outlined text-sm" [class.icon-filled]="filterFavOnly()">
+          star
+        </span>
+        Favorites
+      </button>
+
+      <!-- Language pills -->
+      <div class="flex items-center gap-1 overflow-x-auto pb-1 scrollbar-hide">
+        <button (click)="setLanguageFilter('')"
+                class="shrink-0 px-3 py-1.5 rounded-xl text-xs font-medium border transition-all whitespace-nowrap"
+                [ngClass]="!filterLanguage()
+                  ? 'bg-accent/10 border-accent/30 text-accent'
+                  : 'bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-600 dark:text-gray-400 hover:border-accent/30'">
+          All
+        </button>
+        @for (lang of languages.slice(0, 8); track lang.key) {
+          <button (click)="setLanguageFilter(lang.key)"
+                  class="shrink-0 px-3 py-1.5 rounded-xl text-xs font-medium border transition-all whitespace-nowrap"
+                  [ngClass]="filterLanguage() === lang.key
+                    ? 'bg-accent/10 border-accent/30 text-accent'
+                    : 'bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-600 dark:text-gray-400 hover:border-accent/30'">
+            {{ lang.label }}
+          </button>
+        }
+      </div>
+
+      <!-- Tag pills -->
+      @if (allTags().length > 0) {
+        <div class="w-full flex items-center gap-1 overflow-x-auto pb-1 scrollbar-hide">
+          <span class="text-xs text-gray-400 dark:text-gray-500 shrink-0 mr-1">Tags:</span>
+          @for (tag of allTags().slice(0, 10); track tag) {
+            <button (click)="setTagFilter(tag)"
+                    class="shrink-0 px-2.5 py-1 rounded-lg text-xs font-medium transition-all whitespace-nowrap"
+                    [ngClass]="filterTag() === tag
+                      ? 'bg-accent/10 text-accent'
+                      : 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-400 hover:bg-accent/10 hover:text-accent'">
+              #{{ tag }}
+            </button>
+          }
+        </div>
+      }
+
+      <!-- Active filters & clear -->
+      @if (searchQuery() || filterLanguage() || filterTag() || filterFavOnly()) {
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-gray-500 dark:text-gray-400">{{ filteredCount() }} results</span>
+          <button (click)="clearFilters()"
+                  class="text-xs text-red-500 hover:text-red-600 font-medium flex items-center gap-1 transition-colors">
+            <span class="material-symbols-outlined text-sm">filter_alt_off</span>
+            Clear
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- =================== SNIPPETS GRID =================== -->
+  @if (filteredSnippets().length === 0) {
+    <div class="flex flex-col items-center justify-center py-16 text-gray-400 dark:text-gray-500">
+      <span class="material-symbols-outlined text-6xl mb-3">code_off</span>
+      @if (totalCount() === 0) {
+        <p class="text-base font-medium">No snippets yet</p>
+        <p class="text-sm mt-1 mb-5">Start building your personal code library</p>
+        <button (click)="openAddForm()"
+                class="px-5 py-2.5 rounded-xl text-sm font-medium text-white bg-accent hover:bg-accent-hover transition-all flex items-center gap-2">
+          <span class="material-symbols-outlined text-lg">add</span>
+          Create Your First Snippet
+        </button>
+      } @else {
+        <p class="text-base font-medium">No matching snippets</p>
+        <p class="text-sm mt-1 mb-4">Try adjusting your search or filters</p>
+        <button (click)="clearFilters()"
+                class="px-4 py-2 rounded-xl text-sm font-medium border border-gray-300 dark:border-slate-600
+                       text-gray-600 dark:text-gray-400 hover:border-accent hover:text-accent transition-all">
+          Clear Filters
+        </button>
+      }
+    </div>
+  } @else {
+    <!-- GRID VIEW -->
+    @if (viewMode() === 'grid') {
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        @for (snippet of filteredSnippets(); track snippet.id) {
+          <div class="group relative flex flex-col rounded-2xl bg-white dark:bg-slate-800 border border-gray-200
+                      dark:border-slate-700 shadow-sm hover:shadow-lg hover:border-accent/30 transition-all cursor-pointer overflow-hidden"
+               (click)="openDetail(snippet)">
+
+            <!-- Code preview -->
+            <div class="relative bg-gray-50 dark:bg-slate-900 p-4 border-b border-gray-100 dark:border-slate-700">
+              <pre class="text-xs text-gray-600 dark:text-gray-400 font-mono leading-relaxed overflow-hidden max-h-24"><code>{{ getCodePreview(snippet.code) }}</code></pre>
+              <div class="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-gray-50 dark:from-slate-900 to-transparent"></div>
+
+              <!-- Actions overlay -->
+              <div class="absolute top-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button (click)="copyCode($event, snippet)"
+                        class="w-7 h-7 rounded-lg bg-white/90 dark:bg-slate-800/90 border border-gray-200 dark:border-slate-600
+                               flex items-center justify-center hover:bg-accent/10 hover:border-accent/30 transition-all"
+                        [title]="copiedId() === snippet.id ? 'Copied!' : 'Copy code'">
+                  <span class="material-symbols-outlined text-sm"
+                        [ngClass]="copiedId() === snippet.id ? 'text-green-500' : 'text-gray-500 dark:text-gray-400'">
+                    {{ copiedId() === snippet.id ? 'check' : 'content_copy' }}
+                  </span>
+                </button>
+                <button (click)="toggleFavorite($event, snippet)"
+                        class="w-7 h-7 rounded-lg bg-white/90 dark:bg-slate-800/90 border border-gray-200 dark:border-slate-600
+                               flex items-center justify-center hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-all">
+                  <span class="material-symbols-outlined text-sm"
+                        [ngClass]="snippet.isFavorite ? 'text-amber-400' : 'text-gray-400'"
+                        [class.icon-filled]="snippet.isFavorite">
+                    star
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Info -->
+            <div class="flex-1 p-4">
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <h3 class="text-sm font-semibold text-gray-900 dark:text-white line-clamp-1 group-hover:text-accent transition-colors">
+                  {{ snippet.title }}
+                </h3>
+              </div>
+              @if (snippet.description) {
+                <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-3">{{ snippet.description }}</p>
+              }
+              <div class="flex items-center justify-between mt-auto">
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider"
+                        [ngClass]="[getLanguageConfig(snippet.language).bgColor, getLanguageConfig(snippet.language).darkBgColor, getLanguageConfig(snippet.language).color]">
+                    {{ snippet.language }}
+                  </span>
+                </div>
+                <span class="text-[10px] text-gray-400 dark:text-gray-500">{{ getTimeAgo(snippet.updatedAt) }}</span>
+              </div>
+              @if (snippet.tags.length > 0) {
+                <div class="flex flex-wrap gap-1 mt-2">
+                  @for (tag of snippet.tags.slice(0, 3); track tag) {
+                    <span class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-gray-400">
+                      #{{ tag }}
+                    </span>
+                  }
+                  @if (snippet.tags.length > 3) {
+                    <span class="text-[10px] text-gray-400 dark:text-gray-500">+{{ snippet.tags.length - 3 }}</span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- LIST VIEW -->
+    @if (viewMode() === 'list') {
+      <div class="space-y-2">
+        @for (snippet of filteredSnippets(); track snippet.id) {
+          <div class="group flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-800 border border-gray-200
+                      dark:border-slate-700 shadow-sm hover:shadow-md hover:border-accent/30 transition-all cursor-pointer"
+               (click)="openDetail(snippet)">
+            <!-- Language icon -->
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                 [ngClass]="[getLanguageConfig(snippet.language).bgColor, getLanguageConfig(snippet.language).darkBgColor]">
+              <span class="material-symbols-outlined text-lg" [ngClass]="getLanguageConfig(snippet.language).color">
+                {{ getLanguageConfig(snippet.language).icon }}
+              </span>
+            </div>
+
+            <!-- Info -->
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-semibold text-gray-900 dark:text-white truncate group-hover:text-accent transition-colors">
+                {{ snippet.title }}
+              </p>
+              <p class="text-xs text-gray-500 dark:text-gray-400 truncate mt-0.5">{{ snippet.description }}</p>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider"
+                      [ngClass]="[getLanguageConfig(snippet.language).bgColor, getLanguageConfig(snippet.language).darkBgColor, getLanguageConfig(snippet.language).color]">
+                  {{ snippet.language }}
+                </span>
+                @for (tag of snippet.tags.slice(0, 2); track tag) {
+                  <span class="text-[10px] text-gray-400 dark:text-gray-500">#{{ tag }}</span>
+                }
+              </div>
+            </div>
+
+            <!-- Meta + Actions -->
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-xs text-gray-400 dark:text-gray-500 hidden sm:inline">{{ getTimeAgo(snippet.updatedAt) }}</span>
+              <button (click)="copyCode($event, snippet)"
+                      class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+                      title="Copy code">
+                <span class="material-symbols-outlined text-sm"
+                      [ngClass]="copiedId() === snippet.id ? 'text-green-500' : 'text-gray-400'">
+                  {{ copiedId() === snippet.id ? 'check' : 'content_copy' }}
+                </span>
+              </button>
+              <button (click)="toggleFavorite($event, snippet)"
+                      class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+                <span class="material-symbols-outlined text-sm"
+                      [ngClass]="snippet.isFavorite ? 'text-amber-400' : 'text-gray-400'"
+                      [class.icon-filled]="snippet.isFavorite">
+                  star
+                </span>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+
+  <!-- =================== DETAIL MODAL =================== -->
+  @if (showDetail() && selectedSnippet(); as snippet) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+         (click)="closeDetail()">
+      <div class="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white dark:bg-slate-800
+                  border border-gray-200 dark:border-slate-700 shadow-2xl"
+           (click)="$event.stopPropagation()">
+
+        <!-- Detail header -->
+        <div class="sticky top-0 z-10 flex items-center justify-between p-5 border-b border-gray-200 dark:border-slate-700
+                    bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-t-2xl">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                 [ngClass]="[getLanguageConfig(snippet.language).bgColor, getLanguageConfig(snippet.language).darkBgColor]">
+              <span class="material-symbols-outlined text-lg" [ngClass]="getLanguageConfig(snippet.language).color">
+                {{ getLanguageConfig(snippet.language).icon }}
+              </span>
+            </div>
+            <div class="min-w-0">
+              <h2 class="text-lg font-bold text-gray-900 dark:text-white truncate">{{ snippet.title }}</h2>
+              <div class="flex items-center gap-2 mt-0.5">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider"
+                      [ngClass]="[getLanguageConfig(snippet.language).bgColor, getLanguageConfig(snippet.language).darkBgColor, getLanguageConfig(snippet.language).color]">
+                  {{ getLanguageConfig(snippet.language).label }}
+                </span>
+                <span class="text-xs text-gray-400 dark:text-gray-500">{{ getTimeAgo(snippet.updatedAt) }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button (click)="toggleFavorite($event, snippet)"
+                    class="w-9 h-9 rounded-xl flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+              <span class="material-symbols-outlined"
+                    [ngClass]="snippet.isFavorite ? 'text-amber-400' : 'text-gray-400'"
+                    [class.icon-filled]="snippet.isFavorite">
+                star
+              </span>
+            </button>
+            <button (click)="openEditForm(snippet)"
+                    class="w-9 h-9 rounded-xl flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+              <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">edit</span>
+            </button>
+            <button (click)="confirmDelete($event, snippet.id)"
+                    class="w-9 h-9 rounded-xl flex items-center justify-center hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+              <span class="material-symbols-outlined text-red-500">delete</span>
+            </button>
+            <button (click)="closeDetail()"
+                    class="w-9 h-9 rounded-xl flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+              <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">close</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Description -->
+        @if (snippet.description) {
+          <div class="px-5 pt-4">
+            <p class="text-sm text-gray-600 dark:text-gray-400">{{ snippet.description }}</p>
+          </div>
+        }
+
+        <!-- Tags -->
+        @if (snippet.tags.length > 0) {
+          <div class="px-5 pt-3 flex flex-wrap gap-1.5">
+            @for (tag of snippet.tags; track tag) {
+              <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium
+                           bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300">
+                #{{ tag }}
+              </span>
+            }
+          </div>
+        }
+
+        <!-- Code block -->
+        <div class="p-5">
+          <div class="relative rounded-xl overflow-hidden border border-gray-200 dark:border-slate-600">
+            <div class="flex items-center justify-between px-4 py-2.5 bg-gray-100 dark:bg-slate-700 border-b border-gray-200 dark:border-slate-600">
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                {{ getLanguageConfig(snippet.language).label }}
+              </span>
+              <button (click)="copyCode($event, snippet)"
+                      class="flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium
+                             hover:bg-white dark:hover:bg-slate-600 transition-colors"
+                      [ngClass]="copiedId() === snippet.id ? 'text-green-500' : 'text-gray-500 dark:text-gray-400'">
+                <span class="material-symbols-outlined text-sm">{{ copiedId() === snippet.id ? 'check' : 'content_copy' }}</span>
+                {{ copiedId() === snippet.id ? 'Copied!' : 'Copy' }}
+              </button>
+            </div>
+            <pre class="p-4 overflow-x-auto bg-gray-50 dark:bg-slate-900 text-sm text-gray-800 dark:text-gray-200 font-mono leading-relaxed"><code>{{ snippet.code }}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- =================== ADD / EDIT FORM MODAL =================== -->
+  @if (showForm()) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+         (click)="cancelForm()">
+      <div class="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white dark:bg-slate-800
+                  border border-gray-200 dark:border-slate-700 shadow-2xl"
+           (click)="$event.stopPropagation()">
+
+        <!-- Form header -->
+        <div class="flex items-center justify-between p-5 border-b border-gray-200 dark:border-slate-700">
+          <h2 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <span class="material-symbols-outlined text-accent">{{ isEditing() ? 'edit' : 'add' }}</span>
+            {{ isEditing() ? 'Edit Snippet' : 'New Snippet' }}
+          </h2>
+          <button (click)="cancelForm()"
+                  class="w-9 h-9 rounded-xl flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+            <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">close</span>
+          </button>
+        </div>
+
+        <!-- Form body -->
+        <div class="p-5 space-y-4">
+          <!-- Title -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Title *</label>
+            <input type="text" [value]="formData().title" (input)="updateFormField('title', $any($event.target).value)"
+                   placeholder="e.g., React useEffect cleanup"
+                   class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-600
+                          text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500
+                          focus:ring-2 focus:ring-accent/30 focus:border-accent outline-none transition-all">
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Description</label>
+            <input type="text" [value]="formData().description" (input)="updateFormField('description', $any($event.target).value)"
+                   placeholder="Brief description of what this snippet does..."
+                   class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-600
+                          text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500
+                          focus:ring-2 focus:ring-accent/30 focus:border-accent outline-none transition-all">
+          </div>
+
+          <!-- Language -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Language</label>
+            <select [value]="formData().language" (change)="updateFormLanguage($any($event.target).value)"
+                    class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-600
+                           text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/30 focus:border-accent outline-none transition-all">
+              @for (lang of languages; track lang.key) {
+                <option [value]="lang.key">{{ lang.label }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- Code -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Code *</label>
+            <textarea [value]="formData().code" (input)="updateFormField('code', $any($event.target).value)"
+                      rows="10"
+                      placeholder="Paste your code here..."
+                      class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-600
+                             text-sm text-gray-900 dark:text-white font-mono leading-relaxed
+                             placeholder:text-gray-400 dark:placeholder:text-gray-500
+                             focus:ring-2 focus:ring-accent/30 focus:border-accent outline-none transition-all resize-y"></textarea>
+          </div>
+
+          <!-- Tags -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Tags</label>
+            <input type="text" [value]="formData().tags" (input)="updateFormField('tags', $any($event.target).value)"
+                   placeholder="Comma-separated: react, hooks, cleanup"
+                   class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-600
+                          text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500
+                          focus:ring-2 focus:ring-accent/30 focus:border-accent outline-none transition-all">
+            <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Separate tags with commas</p>
+          </div>
+        </div>
+
+        <!-- Form footer -->
+        <div class="flex items-center justify-end gap-3 p-5 border-t border-gray-200 dark:border-slate-700">
+          <button (click)="cancelForm()"
+                  class="px-4 py-2 rounded-xl text-sm font-medium border border-gray-200 dark:border-slate-600
+                         text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition-all">
+            Cancel
+          </button>
+          <button (click)="submitForm()"
+                  [disabled]="!formData().title.trim() || !formData().code.trim()"
+                  class="px-5 py-2 rounded-xl text-sm font-medium text-white bg-accent hover:bg-accent-hover
+                         shadow-lg transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+            <span class="material-symbols-outlined text-lg">{{ isEditing() ? 'save' : 'add' }}</span>
+            {{ isEditing() ? 'Save Changes' : 'Create Snippet' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- =================== DELETE CONFIRM =================== -->
+  @if (deleteConfirmId()) {
+    <div class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+         (click)="cancelDelete()">
+      <div class="w-full max-w-sm rounded-2xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-2xl p-6"
+           (click)="$event.stopPropagation()">
+        <div class="flex flex-col items-center text-center">
+          <div class="w-14 h-14 rounded-2xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-red-500 text-2xl">delete</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Delete Snippet?</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">This action cannot be undone.</p>
+          <div class="flex items-center gap-3 w-full">
+            <button (click)="cancelDelete()"
+                    class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium border border-gray-200 dark:border-slate-600
+                           text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition-all">
+              Cancel
+            </button>
+            <button (click)="deleteSnippet(deleteConfirmId()!)"
+                    class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600
+                           shadow-lg transition-all">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

@@ -38,10 +38,12 @@ export class SidebarV3Component implements OnInit {
   isSidebarExpanded = signal(false);
   starredCount$: Observable<number>;
   menuItems: MenuItem[] = [
-    { id: 'for-you', label: 'For you', icon: 'account_circle', url: 'home' },
+        { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', url: 'dashboard' },
+    { id: 'for-you', label: 'For you', icon: 'account_circle', url: 'for-you' },
     { id: 'recent', label: 'Recent', icon: 'history', url: 'recent' },
     { id: 'starred', label: 'Starred', icon: 'star', url: 'starred' },
     { id: 'drafts', label: 'Drafts', icon: 'draft', url: 'drafts' },
+    { id: 'snippets', label: 'Snippets', icon: 'data_object', url: 'snippets' },
     { id: 'finance', label: 'Finance', icon: 'account_balance_wallet', url: 'finance' },
     {
       id: 'content',

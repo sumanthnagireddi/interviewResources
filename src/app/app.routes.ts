@@ -17,6 +17,8 @@ import { BlogsHomeComponent } from './pages/blogs/subpages/blogs-home/blogs-home
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { FinanceComponent } from './pages/finance/finance.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { SnippetsComponent } from './pages/snippets/snippets.component';
 import { authGuard, guestGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -27,12 +29,12 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'dashboard',
         pathMatch: 'full',
       },
 
       {
-        path: 'home',
+        path: 'for-you',
         component: FeedComponent,
       },
       {
@@ -80,6 +82,14 @@ export const routes: Routes = [
             component: AdminComponent,
           },
         ],
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+      },
+      {
+        path: 'snippets',
+        component: SnippetsComponent,
       },
       {
         path: 'finance',
