@@ -25,15 +25,18 @@
 
     <!-- Subtitle -->
     <p class="mt-6 text-lg sm:text-xl text-center text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-      A personal website by Sumanth Nagireddi, sharing practical insights and experiences in web development using JavaScript, Angular, React, Node.js, and cloud technologies.
+      A personal website by Sumanth Nagireddi, sharing practical insights and experiences in web development using
+      JavaScript, Angular, React, Node.js, and cloud technologies.
     </p>
 
     <!-- CTA Buttons -->
     <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-      <button class="btn-accent px-8 py-3 rounded-lg text-white font-medium text-base shadow-lg hover:shadow-xl transition-all">
+      <button
+        class="btn-accent px-8 py-3 rounded-lg text-white font-medium text-base shadow-lg hover:shadow-xl transition-all">
         Get Started
       </button>
-      <button [routerLink]="'/blogs'" class="px-8 py-3 rounded-lg border-2 border-gray-300 dark:border-slate-600 text-gray-700 dark:text-gray-200 font-medium text-base hover:border-accent hover:text-accent dark:hover:text-accent transition-all">
+      <button [routerLink]="'/blogs'"
+        class="px-8 py-3 rounded-lg border-2 border-gray-300 dark:border-slate-600 text-gray-700 dark:text-gray-200 font-medium text-base hover:border-accent hover:text-accent dark:hover:text-accent transition-all">
         Browse Resources
       </button>
     </div>
@@ -42,15 +45,18 @@
     <div class="mt-16 grid grid-cols-3 gap-4 sm:gap-8 max-w-4xl mx-auto">
 
       <div class="text-center">
-        <div class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">{{ (topicsCount$ | async) || 0 }}+</div>
+        <div class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">{{ (topicsCount$ | async) || 0 }}+
+        </div>
         <div class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1">Topics</div>
       </div>
       <div class="text-center">
-        <div class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">{{ (technologiesCount$ | async) || 0 }}+</div>
+        <div class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">{{ (technologiesCount$ | async) || 0
+          }}+</div>
         <div class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1">Technologies</div>
       </div>
       <div class="text-center">
-        <div class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">{{ (blogsCount$ | async) || 0 }}+</div>
+        <div class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">{{ (blogsCount$ | async) || 0 }}+
+        </div>
         <div class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1">Blogs</div>
       </div>
     </div>

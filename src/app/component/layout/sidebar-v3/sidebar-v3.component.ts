@@ -38,7 +38,7 @@ export class SidebarV3Component implements OnInit {
   isSidebarExpanded = signal(false);
   starredCount$: Observable<number>;
   menuItems: MenuItem[] = [
-        { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', url: 'dashboard' },
+    { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', url: 'dashboard' },
     { id: 'for-you', label: 'For you', icon: 'account_circle', url: 'for-you' },
     { id: 'recent', label: 'Recent', icon: 'history', url: 'recent' },
     { id: 'starred', label: 'Starred', icon: 'star', url: 'starred' },
@@ -50,9 +50,15 @@ export class SidebarV3Component implements OnInit {
       label: 'Content',
       icon: 'bookmark_stacks',
       hasItems: true,
-      isOpen: true,
+      isOpen: false,
       children: [],
     },
+    { id: 'jobs', label: 'Job Applications', icon: 'campaign', url: 'jobs' },
+    { id: 'roadmap', label: 'Roadmap', icon: 'map', url: 'roadmap' },
+    { id: 'projects', label: 'Projects', icon: 'work', url: 'projects' },
+    { id: 'bookmarks', label: 'Bookmarks', icon: 'bookmarks', url: 'bookmarks' },
+    { id: 'ideas', label: 'Idea Board', icon: 'lightbulb', url: 'ideas' },
+    { id: 'interview-bank', label: 'Interview Bank', icon: 'school', url: 'interview-bank' },
     {
       id: 'blogs',
       label: 'Blogs',
@@ -138,7 +144,7 @@ export class SidebarV3Component implements OnInit {
         icon: 'article',
         description: tech?.description,
         hasItems: true,
-        isOpen:false,
+        isOpen: false,
         children: this.updateTechnologyChildren(tech.topics) || [],
       }));
     }
