@@ -1,0 +1,69 @@
+<!-- finance-summarycards.component.html -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
+
+  <!-- Total Spent -->
+  <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-800 border border-gray-200
+              dark:border-slate-700 shadow-sm">
+    <div class="flex items-center gap-2 mb-2">
+      <div class="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+        <span class="material-symbols-outlined text-red-500 text-lg">trending_up</span>
+      </div>
+      <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Spent</span>
+    </div>
+    <p class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+      {{ formatCurrency(totalSpent()) }}
+    </p>
+  </div>
+
+  <!-- Budget -->
+  <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-800 border border-gray-200
+              dark:border-slate-700 shadow-sm">
+    <div class="flex items-center gap-2 mb-2">
+      <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+        <span class="material-symbols-outlined text-blue-500 text-lg">account_balance</span>
+      </div>
+      <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Budget</span>
+    </div>
+    <p class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+      @if (budget() > 0) {
+        {{ formatCurrency(budget()) }}
+      } @else {
+        <span class="text-gray-400 dark:text-gray-500 text-base font-medium">Not set</span>
+      }
+    </p>
+  </div>
+
+  <!-- Remaining -->
+  <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-800 border border-gray-200
+              dark:border-slate-700 shadow-sm">
+    <div class="flex items-center gap-2 mb-2">
+      <div class="w-8 h-8 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+        <span class="material-symbols-outlined text-green-500 text-lg">savings</span>
+      </div>
+      <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Remaining</span>
+    </div>
+    <p class="text-xl sm:text-2xl font-bold"
+       [ngClass]="remaining() < 0 ? 'text-red-500' : 'text-green-600 dark:text-green-400'">
+      @if (budget() > 0) {
+        {{ formatCurrency(remaining()) }}
+      } @else {
+        <span class="text-gray-400 dark:text-gray-500 text-base font-medium">—</span>
+      }
+    </p>
+  </div>
+
+  <!-- Transactions Count -->
+  <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-800 border border-gray-200
+              dark:border-slate-700 shadow-sm">
+    <div class="flex items-center gap-2 mb-2">
+      <div class="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
+        <span class="material-symbols-outlined text-purple-500 text-lg">receipt</span>
+      </div>
+      <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Transactions</span>
+    </div>
+    <p class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+      {{ expenses().length }}
+    </p>
+  </div>
+
+</div>

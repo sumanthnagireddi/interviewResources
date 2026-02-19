@@ -1,0 +1,23 @@
+@if (((monthlyBudget$ | async) ?? 0) > 0) {
+  <div class="mb-6 p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-sm">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Monthly Progress</span>
+      <span class="text-sm font-bold"
+            [ngClass]="((percentUsed$ | async) ?? 0) > 100 ? 'text-red-500' : 'text-gray-900 dark:text-white'">
+        {{ percentUsed$ | async }}%
+      </span>
+    </div>
+
+    <div class="w-full h-3 bg-gray-100 dark:bg-slate-700 rounded-full overflow-hidden">
+      <div class="h-full rounded-full transition-all duration-500"
+           [ngClass]="progressColor$ | async"
+           [style.width.%]="((percentUsed$ | async) ?? 0) > 100 ? 100 : ((percentUsed$ | async) ?? 0)">
+      </div>
+    </div>
+
+    <div class="flex justify-between mt-2 text-xs text-gray-500 dark:text-gray-400">
+      <span>{{ formatCurrency((totalSpent$ | async) ?? 0) }} spent</span>
+      <span>{{ formatCurrency((monthlyBudget$ | async) ?? 0) }} budget</span>
+    </div>
+  </div>
+}

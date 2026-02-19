@@ -11,6 +11,7 @@ export interface Expense {
 
 export type ExpenseCategory =
   | 'food'
+  | 'groceries'
   | 'transport'
   | 'entertainment'
   | 'shopping'
@@ -60,6 +61,7 @@ export interface ParsedSmsTransaction {
 
 export const EXPENSE_CATEGORIES: CategoryConfig[] = [
   { key: 'food',            label: 'Food & Dining',    icon: 'restaurant',       color: 'bg-orange-100 dark:bg-orange-900/30',    textColor: 'text-orange-600 dark:text-orange-400' },
+  { key: 'groceries',       label: 'Groceries',        icon: 'local_grocery_store', color: 'bg-yellow-100 dark:bg-yellow-900/30', textColor: 'text-yellow-600 dark:text-yellow-400' },
   { key: 'transport',       label: 'Transport',        icon: 'directions_car',   color: 'bg-blue-100 dark:bg-blue-900/30',        textColor: 'text-blue-600 dark:text-blue-400' },
   { key: 'entertainment',   label: 'Entertainment',    icon: 'movie',            color: 'bg-purple-100 dark:bg-purple-900/30',    textColor: 'text-purple-600 dark:text-purple-400' },
   { key: 'shopping',        label: 'Shopping',         icon: 'shopping_bag',     color: 'bg-pink-100 dark:bg-pink-900/30',        textColor: 'text-pink-600 dark:text-pink-400' },

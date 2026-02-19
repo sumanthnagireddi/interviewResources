@@ -1,0 +1,23 @@
+ <ng-container *ngIf="isOverBudget$ | async">
+      <div class="mb-6 p-4 rounded-2xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 flex items-center gap-3">
+        <span class="material-symbols-outlined text-red-500 text-2xl" style="font-variation-settings: 'FILL' 1;">warning</span>
+        <div>
+          <p class="text-sm font-semibold text-red-700 dark:text-red-400">Over Budget!</p>
+          <p class="text-xs text-red-600 dark:text-red-400/80">
+            You've exceeded your monthly budget by {{ overBy$ | async | currency:'INR':'symbol':'1.0-2' }}
+          </p>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="isNearAlert$ | async">
+      <div class="mb-6 p-4 rounded-2xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 flex items-center gap-3">
+        <span class="material-symbols-outlined text-amber-500 text-2xl" style="font-variation-settings: 'FILL' 1;">info</span>
+        <div>
+          <p class="text-sm font-semibold text-amber-700 dark:text-amber-400">Budget Alert</p>
+          <p class="text-xs text-amber-600 dark:text-amber-400/80">
+            You've used {{ percentUsed$ | async }}% of your monthly budget
+          </p>
+        </div>
+      </div>
+    </ng-container>

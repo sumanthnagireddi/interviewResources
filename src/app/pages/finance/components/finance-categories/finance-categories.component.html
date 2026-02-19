@@ -1,0 +1,18 @@
+ <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+      @for (cat of categories; track cat.key) {
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-gray-200
+                    dark:border-slate-700 shadow-sm hover:shadow-md hover:border-accent/30
+                    transition-all text-center">
+          <div class="w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center"
+               [ngClass]="cat.color">
+            <span class="material-symbols-outlined text-2xl" [ngClass]="cat.textColor">
+              {{ cat.icon }}
+            </span>
+          </div>
+          <p class="text-sm font-medium text-gray-900 dark:text-white mb-1">{{ cat.label }}</p>
+          <p class="text-lg font-bold text-gray-900 dark:text-white">
+            {{ formatCurrency((getCategoryTotal(cat.key) | async) ?? 0) }}
+          </p>
+        </div>
+      }
+    </div>

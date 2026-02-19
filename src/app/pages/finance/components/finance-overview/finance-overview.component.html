@@ -1,0 +1,75 @@
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+
+      <!-- Category Breakdown -->
+      <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-sm">
+        <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Spending by Category</h3>
+        <ng-container *ngIf="categoryBreakdown$ | async as breakdown">
+          <div *ngIf="breakdown.length > 0; else noCategoryData" class="space-y-3">
+            <div *ngFor="let item of breakdown" class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                   [ngClass]="item.config.color">
+                <span class="material-symbols-outlined text-lg" [ngClass]="item.config.textColor">
+                  {{ item.config.icon }}
+                </span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ item.config.label }}</span>
+                  <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ formatCurrency(item.total) }}</span>
+                </div>
+                <div class="w-full h-1.5 bg-gray-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                  <div class="h-full rounded-full bg-accent transition-all duration-300"
+                       [style.width.%]="(totalSpent$ | async) ?? 0 > 0
+                         ? (item.total / ((totalSpent$ | async) ?? 1)) * 100 : 0">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-template #noCategoryData>
+            <div class="text-center py-8">
+              <span class="material-symbols-outlined text-4xl text-gray-300 dark:text-gray-600">pie_chart</span>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">No spending data this month</p>
+            </div>
+          </ng-template>
+        </ng-container>
+      </div>
+
+      <!-- Recent Transactions -->
+      <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-sm">
+        <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Recent Transactions</h3>
+        <ng-container *ngIf="expenses$ | async as expenses">
+          <div *ngIf="expenses.length > 0; else noTransactions" class="space-y-2">
+            <div *ngFor="let expense of expenses.slice(0, 5)"
+                 class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+              <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                   [ngClass]="getCategoryConfig(expense.category).color">
+                <span class="material-symbols-outlined text-lg"
+                      [ngClass]="getCategoryConfig(expense.category).textColor">
+                  {{ getCategoryConfig(expense.category).icon }}
+                </span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-900 dark:text-white truncate">{{ expense.title }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">{{ expense.date | date:'mediumDate' }}</p>
+              </div>
+              <span class="text-sm font-semibold text-gray-900 dark:text-white flex-shrink-0">
+                -{{ formatCurrency(expense.amount) }}
+              </span>
+            </div>
+
+            <button *ngIf="expenses.length > 5"
+                    (click)="goToTransactions()"
+                    class="w-full mt-3 py-2 text-sm font-medium text-accent hover:underline">
+              View all {{ expenses.length }} transactions →
+            </button>
+          </div>
+          <ng-template #noTransactions>
+            <div class="text-center py-8">
+              <span class="material-symbols-outlined text-4xl text-gray-300 dark:text-gray-600">receipt_long</span>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">No transactions this month</p>
+            </div>
+          </ng-template>
+        </ng-container>
+      </div>
+    </div>

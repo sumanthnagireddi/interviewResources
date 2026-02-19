@@ -1,0 +1,18 @@
+<!-- finance-month-nav.component.html -->
+<div class="flex items-center justify-center gap-4 mb-6">
+  <button (click)="navigatePrev()"
+          class="w-9 h-9 rounded-xl flex items-center justify-center border border-gray-200
+                 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+    <span class="material-symbols-outlined text-gray-600 dark:text-gray-400">chevron_left</span>
+  </button>
+
+  <span class="text-lg font-semibold text-gray-900 dark:text-white min-w-[180px] text-center">
+    {{ selectedMonth$ | async | date: 'MMMM y' }}
+  </span>
+
+  <button (click)="navigateNext()"
+          class="w-9 h-9 rounded-xl flex items-center justify-center border border-gray-200
+                 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+    <span class="material-symbols-outlined text-gray-600 dark:text-gray-400">chevron_right</span>
+  </button>
+</div>

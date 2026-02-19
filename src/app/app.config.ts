@@ -20,6 +20,7 @@ import { StarredEffects } from './store/effects/starred.effects';
 import { provideServiceWorker } from '@angular/service-worker';
 import { loadingInterceptor } from './interceptors/loading.interceptor';
 import { environment } from '../environments/environment';
+import { FinanceEffects } from './store/effects/finance.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,7 +31,7 @@ export const appConfig: ApplicationConfig = {
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
     provideStore(reducers, { metaReducers }),
-    provideEffects(SidebarEffects, TechnologyEffects, ContentEffects,TopicEffects,BlogEffects,StarredEffects),
+    provideEffects(SidebarEffects, TechnologyEffects, ContentEffects,TopicEffects,BlogEffects,StarredEffects,FinanceEffects),
     provideHttpClient(withInterceptors([loadingInterceptor])),
     provideStoreDevtools({
       maxAge: 25, logOnly: !isDevMode(), autoPause: true,

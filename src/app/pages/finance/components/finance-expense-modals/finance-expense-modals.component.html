@@ -1,0 +1,133 @@
+ <!-- ADD -->
+    @if (showAddForm$ | async) {
+      <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-end sm:items-center
+                  justify-center p-0 sm:p-4"
+           (click)="closeAdd()">
+        <div class="w-full sm:max-w-lg bg-white dark:bg-slate-900 sm:rounded-2xl rounded-t-2xl
+                    shadow-2xl border border-gray-200 dark:border-slate-700 overflow-hidden"
+             (click)="$event.stopPropagation()">
+          <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-slate-700">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+              <span class="material-symbols-outlined text-accent">add_card</span>
+              Add Expense
+            </h2>
+            <button (click)="closeAdd()"
+                    class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-800">
+              <span class="material-symbols-outlined text-gray-500">close</span>
+            </button>
+          </div>
+
+          <div class="p-5 space-y-4 max-h-[70vh] overflow-y-auto">
+            <ng-container *ngTemplateOutlet="formFields; context: { form: newExpense }"></ng-container>
+          </div>
+
+          <div class="flex items-center gap-3 px-5 py-4 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/50">
+            <button (click)="closeAdd()"
+                    class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300
+                           border border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-700">
+              Cancel
+            </button>
+            <button (click)="submitAdd()"
+                    [disabled]="!newExpense.title.trim() || newExpense.amount <= 0 || (saving$ | async)"
+                    class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white btn-accent
+                           disabled:opacity-50 disabled:cursor-not-allowed">
+              {{ (saving$ | async) ? 'Saving...' : 'Add Expense' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- EDIT -->
+    @if (showEditForm$ | async) {
+      <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-end sm:items-center
+                  justify-center p-0 sm:p-4"
+           (click)="closeEdit()">
+        <div class="w-full sm:max-w-lg bg-white dark:bg-slate-900 sm:rounded-2xl rounded-t-2xl
+                    shadow-2xl border border-gray-200 dark:border-slate-700 overflow-hidden"
+             (click)="$event.stopPropagation()">
+          <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-slate-700">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+              <span class="material-symbols-outlined text-accent">edit_note</span>
+              Edit Transaction
+            </h2>
+            <button (click)="closeEdit()"
+                    class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-800">
+              <span class="material-symbols-outlined text-gray-500">close</span>
+            </button>
+          </div>
+
+          <div class="p-5 space-y-4 max-h-[70vh] overflow-y-auto">
+            <ng-container *ngTemplateOutlet="formFields; context: { form: editExpense }"></ng-container>
+          </div>
+
+          <div class="flex items-center gap-3 px-5 py-4 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/50">
+            <button (click)="closeEdit()"
+                    class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300
+                           border border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-700">
+              Cancel
+            </button>
+            <button (click)="submitEdit()"
+                    [disabled]="!editExpense.title.trim() || editExpense.amount <= 0 || (saving$ | async)"
+                    class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white btn-accent
+                           disabled:opacity-50 disabled:cursor-not-allowed">
+              {{ (saving$ | async) ? 'Saving...' : 'Update Transaction' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Shared form fields template -->
+    <ng-template #formFields let-form="form">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Title</label>
+        <input type="text" [(ngModel)]="form.title" placeholder="e.g. Grocery shopping" autofocus
+               class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-slate-700
+                      bg-white dark:bg-slate-800 text-gray-900 dark:text-white text-sm
+                      focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Amount (₹)</label>
+        <input type="number" [(ngModel)]="form.amount" placeholder="0.00" min="0"
+               class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-slate-700
+                      bg-white dark:bg-slate-800 text-gray-900 dark:text-white text-sm
+                      focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Category</label>
+        <div class="grid grid-cols-5 gap-2">
+          @for (cat of categories; track cat.key) {
+            <button (click)="form.category = cat.key"
+                    class="flex flex-col items-center gap-1 p-2 rounded-xl border transition-all text-center"
+                    [ngClass]="form.category === cat.key
+                      ? 'border-accent bg-accent/10 ring-2 ring-accent/30'
+                      : 'border-gray-200 dark:border-slate-700 hover:border-gray-300 dark:hover:border-slate-600'">
+              <span class="material-symbols-outlined text-lg" [ngClass]="cat.textColor">{{ cat.icon }}</span>
+              <span class="text-[10px] font-medium text-gray-600 dark:text-gray-400 leading-tight line-clamp-1">
+                {{ cat.label }}
+              </span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Date</label>
+        <input type="date" [(ngModel)]="form.date"
+               class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-slate-700
+                      bg-white dark:bg-slate-800 text-gray-900 dark:text-white text-sm
+                      focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Notes (optional)</label>
+        <textarea [(ngModel)]="form.notes" rows="2" placeholder="Add any details..."
+                  class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-slate-700
+                         bg-white dark:bg-slate-800 text-gray-900 dark:text-white text-sm resize-none
+                         focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all">
+        </textarea>
+      </div>
+    </ng-template>

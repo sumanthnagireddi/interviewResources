@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit {
 
     // Finance
     const summary = this.dashboardService.getCurrentMonthSummary();
-    this.financeSummary.set(summary);
+    // this.financeSummary.set(summary);
 
     // Blogs
     this.blogsService.getBlogsFromMongo().pipe(

@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import {
   Expense,
   ExpenseCategory,
@@ -14,88 +17,52 @@ const BUDGET_KEY = 'finance_budgets'; // now stores MonthlyBudgetMap
 
 @Injectable({ providedIn: 'root' })
 export class FinanceService {
+  private api = 'http://localhost:3000/finance'; // Adjust base URL as needed
+
+  constructor(private http: HttpClient) {}
 
   // ───── Expenses CRUD ─────
 
-  getExpenses(): Expense[] {
-    const raw = localStorage.getItem(EXPENSES_KEY);
-    return raw ? JSON.parse(raw) : [];
+  getExpenses(): Observable<Expense[]> {
+    return this.http.get<Expense[]>(`${this.api}/get-expenses`);
   }
 
-  addExpense(expense: Omit<Expense, 'id' | 'createdAt'>): Expense {
-    const expenses = this.getExpenses();
-    const newExpense: Expense = {
-      ...expense,
-      id: crypto.randomUUID(),
-      createdAt: new Date().toISOString(),
-    };
-    expenses.unshift(newExpense);
-    this.saveExpenses(expenses);
-    return newExpense;
+  addExpense(expense: Omit<Expense, 'id' | 'createdAt'>): Observable<Expense> {
+    return this.http.post<Expense>(`${this.api}/add-expense`, expense);
   }
 
-  addExpenses(items: Omit<Expense, 'id' | 'createdAt'>[]): Expense[] {
-    const expenses = this.getExpenses();
-    const newExpenses = items.map(e => ({
-      ...e,
-      id: crypto.randomUUID(),
-      createdAt: new Date().toISOString(),
-    }));
-    expenses.unshift(...newExpenses);
-    this.saveExpenses(expenses);
-    return newExpenses;
+  addExpenses(items: Omit<Expense, 'id' | 'createdAt'>[]): Observable<Expense[]> {
+    return this.http.post<Expense[]>(`${this.api}/add-expenses`, items);
   }
 
-  updateExpense(id: string, updates: Partial<Omit<Expense, 'id' | 'createdAt'>>): Expense | null {
-    const expenses = this.getExpenses();
-    const index = expenses.findIndex(e => e.id === id);
-    if (index === -1) return null;
-    expenses[index] = { ...expenses[index], ...updates };
-    this.saveExpenses(expenses);
-    return expenses[index];
+ updateExpense(id: string, changes: Partial<Expense>): Observable<Expense> {
+  console.log('service updateExpense - id:', id); // debug
+  return this.http.patch<Expense>(
+    `${this.api}/update-expense/${id}`,
+    changes
+  );
+}
+
+  deleteExpense(id: string): Observable<any> {
+    return this.http.delete(`${this.api}/delete-expense/${id}`);
   }
 
-  deleteExpense(id: string): void {
-    const expenses = this.getExpenses().filter(e => e.id !== id);
-    this.saveExpenses(expenses);
-  }
-
-  private saveExpenses(expenses: Expense[]): void {
-    localStorage.setItem(EXPENSES_KEY, JSON.stringify(expenses));
-  }
+  // saveExpenses removed (no longer needed)
 
   // ───── Month-Specific Budget ─────
 
-  private getAllBudgets(): MonthlyBudgetMap {
-    const raw = localStorage.getItem(BUDGET_KEY);
-    if (!raw) return {};
-    // Migrate from old single-budget format
-    try {
-      const parsed = JSON.parse(raw);
-      if (parsed.monthlyBudget !== undefined) {
-        // Old format – return empty map (user will re-set)
-        return {};
-      }
-      return parsed;
-    } catch {
-      return {};
-    }
+  // getAllBudgets removed (no longer needed)
+
+  getBudgetForMonth(monthKey: string): Observable<BudgetSettings> {
+    return this.http.get<BudgetSettings>(`${this.api}/budget/${monthKey}`);
   }
 
-  getBudgetForMonth(monthKey: string): BudgetSettings {
-    const all = this.getAllBudgets();
-    return all[monthKey] || { monthlyBudget: 0, alertThreshold: 80 };
+  saveBudgetForMonth(monthKey: string, settings: BudgetSettings): Observable<any> {
+    return this.http.put(`${this.api}/budget/${monthKey}`, settings);
   }
 
-  saveBudgetForMonth(monthKey: string, settings: BudgetSettings): void {
-    const all = this.getAllBudgets();
-    all[monthKey] = settings;
-    localStorage.setItem(BUDGET_KEY, JSON.stringify(all));
-  }
-
-  copyBudgetToMonth(fromKey: string, toKey: string): void {
-    const from = this.getBudgetForMonth(fromKey);
-    this.saveBudgetForMonth(toKey, { ...from });
+  copyBudgetToMonth(fromKey: string, toKey: string): Observable<any> {
+    return this.http.post(`${this.api}/budget/copy`, { fromKey, toKey });
   }
 
   // ───── Calculations ─────
@@ -104,37 +71,42 @@ export class FinanceService {
     return `${year}-${String(month).padStart(2, '0')}`;
   }
 
-  getExpensesForMonth(year: number, month: number): Expense[] {
-    const prefix = this.getMonthKey(year, month);
-    return this.getExpenses().filter(e => e.date.startsWith(prefix));
-  }
+  getExpensesForMonth(year: number, month: number): Observable<Expense[]> {
+  return this.http.get<Expense[]>(
+    `${this.api}/expenses?year=${year}&month=${month}`
+  );
+}
 
-  getMonthSummary(year: number, month: number): MonthSummary {
+  getMonthSummary(year: number, month: number): Observable<MonthSummary> {
     const monthKey = this.getMonthKey(year, month);
-    const expenses = this.getExpensesForMonth(year, month);
-    const budget = this.getBudgetForMonth(monthKey);
-    const totalSpent = expenses.reduce((sum, e) => sum + e.amount, 0);
-    const remaining = budget.monthlyBudget - totalSpent;
-    const percentUsed = budget.monthlyBudget > 0
-      ? Math.round((totalSpent / budget.monthlyBudget) * 100)
-      : 0;
-
-    const categoryMap = new Map<ExpenseCategory, number>();
-    expenses.forEach(e => {
-      categoryMap.set(e.category, (categoryMap.get(e.category) || 0) + e.amount);
-    });
-    const categoryBreakdown = Array.from(categoryMap.entries())
-      .map(([category, total]) => ({ category, total }))
-      .sort((a, b) => b.total - a.total);
-
-    return {
-      month: monthKey,
-      totalSpent,
-      budget: budget.monthlyBudget,
-      remaining,
-      percentUsed,
-      categoryBreakdown,
-    };
+    return this.getExpensesForMonth(year, month).pipe(
+      switchMap(expenses =>
+        this.getBudgetForMonth(monthKey).pipe(
+          map(budget => {
+            const totalSpent = expenses.reduce((sum, e) => sum + e.amount, 0);
+            const remaining = budget.monthlyBudget - totalSpent;
+            const percentUsed = budget.monthlyBudget > 0
+              ? Math.round((totalSpent / budget.monthlyBudget) * 100)
+              : 0;
+            const categoryMap = new Map<ExpenseCategory, number>();
+            expenses.forEach(e => {
+              categoryMap.set(e.category, (categoryMap.get(e.category) || 0) + e.amount);
+            });
+            const categoryBreakdown = Array.from(categoryMap.entries())
+              .map(([category, total]) => ({ category, total }))
+              .sort((a, b) => b.total - a.total);
+            return {
+              month: monthKey,
+              totalSpent,
+              budget: budget.monthlyBudget,
+              remaining,
+              percentUsed,
+              categoryBreakdown,
+            };
+          })
+        )
+      )
+    );
   }
 
   getTotalByCategory(expenses: Expense[]): { category: ExpenseCategory; total: number; config: typeof EXPENSE_CATEGORIES[0] }[] {
@@ -254,6 +226,7 @@ export class FinanceService {
 
     const categoryKeywords: Record<ExpenseCategory, string[]> = {
       food: ['swiggy', 'zomato', 'restaurant', 'food', 'pizza', 'burger', 'cafe', 'dining', 'eat', 'kitchen', 'bakery', 'dominos', 'mcdonalds', 'kfc'],
+      groceries: ['grocery', 'groceries', 'bigbasket', 'nature\'s basket', 'dmart', 'supermarket', 'foodhall', 'spencer\'s'],
       transport: ['uber', 'ola', 'rapido', 'petrol', 'fuel', 'metro', 'irctc', 'railway', 'flight', 'makemytrip', 'redbus', 'cab', 'parking'],
       entertainment: ['netflix', 'spotify', 'prime video', 'hotstar', 'movie', 'cinema', 'pvr', 'inox', 'game', 'bookmyshow'],
       shopping: ['amazon', 'flipkart', 'myntra', 'ajio', 'shopping', 'mall', 'store', 'mart', 'retail', 'meesho', 'nykaa'],

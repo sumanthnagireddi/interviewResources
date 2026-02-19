@@ -1,0 +1,81 @@
+ <div class="rounded-2xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-sm overflow-hidden">
+      <ng-container *ngIf="expenses$ | async as expenses">
+        <ng-container *ngIf="expenses.length > 0; else empty">
+          <div class="divide-y divide-gray-100 dark:divide-slate-700">
+            <div *ngFor="let expense of expenses"
+                 class="flex items-center gap-3 px-4 sm:px-5 py-3.5 hover:bg-gray-50
+                        dark:hover:bg-slate-700/30 transition-colors group">
+
+              <!-- Icon -->
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                   [ngClass]="getCategoryConfig(expense.category).color">
+                <span class="material-symbols-outlined text-xl"
+                      [ngClass]="getCategoryConfig(expense.category).textColor">
+                  {{ getCategoryConfig(expense.category).icon }}
+                </span>
+              </div>
+
+              <!-- Info -->
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-900 dark:text-white">{{ expense.title }}</p>
+                <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                  <span>{{ expense.date | date:'mediumDate' }}</span>
+                  <span class="text-gray-300 dark:text-gray-600">•</span>
+                  <span>{{ getCategoryConfig(expense.category).label }}</span>
+                </div>
+                @if (expense.notes) {
+                  <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5 truncate">{{ expense.notes }}</p>
+                }
+              </div>
+
+              <!-- Amount -->
+              <span class="text-sm font-bold text-gray-900 dark:text-white flex-shrink-0 mr-2">
+                -{{ formatCurrency(expense.amount) }}
+              </span>
+
+              <!-- Delete confirm -->
+              @if ((deleteConfirmId$ | async) === expense.id) {
+                <div class="flex items-center gap-1 flex-shrink-0">
+                  <button (click)="deleteExpense(expense.id)"
+                          class="px-2 py-1 text-xs font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors">
+                    Delete
+                  </button>
+                  <button (click)="cancelDelete()"
+                          class="px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-400
+                                 border border-gray-200 dark:border-slate-700 rounded-lg
+                                 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+                    Cancel
+                  </button>
+                </div>
+              } @else {
+                <div class="flex items-center gap-0.5 flex-shrink-0">
+                  <button (click)="openEdit(expense)"
+                          class="w-8 h-8 rounded-lg flex items-center justify-center
+                                 opacity-0 group-hover:opacity-100 hover:bg-accent/10 transition-all">
+                    <span class="material-symbols-outlined text-accent text-lg">edit</span>
+                  </button>
+                  <button (click)="confirmDelete(expense.id)"
+                          class="w-8 h-8 rounded-lg flex items-center justify-center
+                                 opacity-0 group-hover:opacity-100 hover:bg-red-100
+                                 dark:hover:bg-red-900/30 transition-all">
+                    <span class="material-symbols-outlined text-red-500 text-lg">delete</span>
+                  </button>
+                </div>
+              }
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #empty>
+          <div class="text-center py-16 px-4">
+            <span class="material-symbols-outlined text-6xl text-gray-300 dark:text-gray-600 mb-3">receipt_long</span>
+            <h3 class="text-base font-medium text-gray-600 dark:text-gray-400 mb-1">No transactions yet</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-500 mb-4">Start tracking your expenses</p>
+            <button (click)="openAdd()"
+                    class="px-4 py-2 rounded-xl text-sm font-medium text-white btn-accent">
+              Add your first expense
+            </button>
+          </div>
+        </ng-template>
+      </ng-container>
+    </div>
