@@ -38,7 +38,8 @@ export const appConfig: ApplicationConfig = {
       trace: false,
       traceLimit: 75,
       connectInZone: true
-    }), provideServiceWorker('ngsw-worker.js', {
+    }),
+     provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),
             registrationStrategy: 'registerWhenStable:30000'
           })
