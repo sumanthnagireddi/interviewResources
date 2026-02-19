@@ -89,19 +89,5 @@
       "form_factor": "wide",
       "label": " Resources Desktop App"
     }
-  ],
-  "shortcuts": [
-    {
-      "name": "Recent Documents",
-      "short_name": "Recent",
-      "url": "/recent",
-      "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
-    },
-    {
-      "name": "Starred Items",
-      "short_name": "Starred",
-      "url": "/starred",
-      "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
-    }
   ]
 }
