@@ -11,13 +11,14 @@ import {
   ParsedSmsTransaction,
   EXPENSE_CATEGORIES,
 } from '../model/finance.model';
+import { environment } from '../../environments/environment';
 
 const EXPENSES_KEY = 'finance_expenses';
 const BUDGET_KEY = 'finance_budgets'; // now stores MonthlyBudgetMap
 
 @Injectable({ providedIn: 'root' })
 export class FinanceService {
-  private api = 'http://localhost:3000/finance'; // Adjust base URL as needed
+  private api =  `${environment.API_URL}/finance`; // Adjust base URL as needed
 
   constructor(private http: HttpClient) {}
 
