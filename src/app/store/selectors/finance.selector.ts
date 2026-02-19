@@ -107,7 +107,9 @@ export const selectCategoryBreakdown = createSelector(
       total: expenses
         .filter((e) => e.category === cat.key)
         .reduce((sum, e) => sum + e.amount, 0),
-    })).filter((item) => item.total > 0)
+    }))
+    .filter((item) => item.total > 0)
+    .sort((a, b) => b.total - a.total) // ← highest spend first
 );
 
 export const selectCategoryTotal = (key: string) =>
