@@ -1,0 +1,248 @@
+<!-- Mobile overlay -->
+<div
+  class="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 transition-opacity duration-300 md:hidden"
+  [class.opacity-100]="sidebarOpen"
+  [class.opacity-0]="!sidebarOpen"
+  [class.pointer-events-none]="!sidebarOpen"
+  (click)="toggleSidebar()"
+></div>
+
+<div class="flex font-sans contain">
+
+  <!-- SIDEBAR -->
+  <aside
+    class="sidebar fixed md:relative z-50 h-full flex flex-col border-r border-[#e0dbd2] bg-[#faf8f5] transition-all duration-300 ease-in-out"
+    [class.-translate-x-full]="!sidebarOpen"
+    [class.translate-x-0]="sidebarOpen"
+    style="width: 260px; min-width: 260px;"
+    [ngClass]="{'md:translate-x-0': true}"
+  >
+    <!-- Logo + New Chat -->
+    <div class="px-4 pt-5 pb-4 border-b border-[#e0dbd2]">
+  
+      <button
+        class="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm text-[#2d2621] border border-[#e0dbd2] bg-white hover:bg-[#faf8f5] hover:border-[#c97b4b] transition-all duration-150 font-medium shadow-sm"
+        (click)="newChat()"
+      >
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="#c97b4b" stroke-width="1.5" stroke-linecap="round"/></svg>
+        New conversation
+      </button>
+    </div>
+
+    <!-- Search -->
+    <div class="px-3 pt-3 pb-2">
+      <div class="relative">
+        <svg class="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#a89e94]" width="13" height="13" viewBox="0 0 14 14" fill="none">
+          <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M9.5 9.5L12.5 12.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        <input
+          type="text"
+          placeholder="Search conversations..."
+          class="w-full bg-white border border-[#e0dbd2] rounded-lg py-2 pl-8 pr-3 text-sm text-[#2d2621] placeholder-[#b0a89e] focus:outline-none focus:border-[#c97b4b] focus:ring-1 focus:ring-[#c97b4b]/20 transition-all"
+          (input)="searchChats($event)"
+        />
+      </div>
+    </div>
+
+    <!-- Chat History -->
+    <div class="flex-1 overflow-y-auto px-2 py-1 scrollbar-thin">
+      <ng-container *ngIf="filteredChats.length; else noChats">
+        <div
+          *ngFor="let chat of filteredChats"
+          class="group relative flex items-start gap-2 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-150 mb-0.5"
+          [ngClass]="{
+            'bg-white border border-[#e0dbd2] shadow-sm': chat.id === activeChatId,
+            'hover:bg-white/60': chat.id !== activeChatId
+          }"
+          (click)="loadChat(chat.id)"
+        >
+          <svg class="mt-0.5 shrink-0" [style.color]="chat.id === activeChatId ? '#c97b4b' : '#b0a89e'" width="13" height="13" viewBox="0 0 14 14" fill="none">
+            <path d="M2 2.5C2 1.95 2.45 1.5 3 1.5h8c.55 0 1 .45 1 1v7c0 .55-.45 1-1 1H4.5L2 12V2.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+          </svg>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm text-[#2d2621] truncate leading-snug" [class.font-medium]="chat.id === activeChatId">{{ chat.title }}</p>
+            <p class="text-[11px] text-[#a89e94] mt-0.5">{{ chat.messages.length }} message{{ chat.messages.length !== 1 ? 's' : '' }}</p>
+          </div>
+          <button
+            class="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-[#f0ebe4] text-[#a89e94] hover:text-[#c97b4b] shrink-0"
+            (click)="deleteChat($event, chat.id)"
+          >
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2l8 8M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </ng-container>
+      <ng-template #noChats>
+        <div class="text-center py-10 px-4">
+          <svg class="mx-auto mb-3 text-[#c8c0b6]" width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path d="M4 5C4 3.9 4.9 3 6 3h16c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H9L4 24V5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+          </svg>
+          <p class="text-xs text-[#b0a89e]">No conversations yet</p>
+          <p class="text-xs text-[#c8c0b6] mt-1">Start a new one above</p>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Footer -->
+    <div class="px-4 py-3 border-t border-[#e0dbd2]">
+      <p class="text-[10px] text-[#c8c0b6] text-center tracking-wide uppercase">Aria · AI Assistant</p>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="flex-1 flex flex-col min-w-0" >
+
+    <!-- Header -->
+    <header class="flex items-center justify-between px-5 py-3.5 bg-[#f9f7f4] border-b border-[#e0dbd2] flex-shrink-0">
+      <div class="flex items-center gap-3">
+        <button
+          class="md:hidden p-1.5 rounded-lg hover:bg-[#f0ebe4] text-[#7a7068] transition-colors"
+          (click)="toggleSidebar()"
+        >
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M2 4.5h14M2 9h14M2 13.5h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <span class="text-[#2d2621] text-[15px] font-medium truncate max-w-[200px] md:max-w-none">{{ chatTitle }}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div *ngIf="isGenerating" class="flex items-center gap-2 text-[11px] text-[#c97b4b] font-medium">
+          <span class="flex gap-0.5">
+            <span class="w-1 h-1 bg-[#c97b4b] rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+            <span class="w-1 h-1 bg-[#c97b4b] rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+            <span class="w-1 h-1 bg-[#c97b4b] rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+          </span>
+          Thinking
+        </div>
+      </div>
+    </header>
+
+    <!-- Messages Area — scrollable, takes all remaining space -->
+    <div class="flex-1 overflow-y-auto scrollbar-thin bg-[#f9f7f4]" #messageContainer>
+
+      <!-- Welcome Screen -->
+      <div *ngIf="!activeChatId" class="flex flex-col items-center justify-center h-full px-6 text-center">
+        <div class="mb-8">
+          <svg class="mx-auto mb-5" width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="22" stroke="#e0dbd2" stroke-width="1.5"/>
+            <circle cx="24" cy="24" r="10" fill="#c97b4b" opacity="0.12"/>
+            <circle cx="24" cy="24" r="4" fill="#c97b4b" opacity="0.4"/>
+            <circle cx="24" cy="24" r="2" fill="#c97b4b"/>
+          </svg>
+          <h1 class="text-4xl text-[#2d2621] mb-3 leading-tight" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 500;">
+            Good day<span class="text-[#c97b4b]">.</span>
+          </h1>
+          <p class="text-[#9e9188] text-base max-w-xs mx-auto leading-relaxed">How can I help you today? Start a conversation below.</p>
+        </div>
+        <div class="flex flex-wrap gap-2 justify-center max-w-lg">
+          <button
+            *ngFor="let s of suggestions"
+            class="px-4 py-2 text-sm text-[#5c5450] bg-white border border-[#e0dbd2] rounded-full hover:border-[#c97b4b] hover:text-[#c97b4b] transition-all duration-150 shadow-sm"
+            (click)="useSuggestion(s)"
+          >{{ s }}</button>
+        </div>
+      </div>
+
+      <!-- Chat Messages -->
+      <div *ngIf="activeChatId" class="max-w-3xl mx-auto px-4 md:px-6 py-8 space-y-6">
+        <div
+          *ngFor="let msg of currentMessages"
+          class="flex gap-4"
+          [ngClass]="{'justify-end': msg.role === 'user'}"
+        >
+          <div *ngIf="msg.role === 'assistant'" class="shrink-0 mt-1">
+            <div class="w-7 h-7 rounded-full bg-[#f2efe9] border border-[#e0dbd2] flex items-center justify-center">
+              <svg width="13" height="13" viewBox="0 0 22 22" fill="none">
+                <circle cx="11" cy="11" r="10" stroke="#c97b4b" stroke-width="1.5"/>
+                <circle cx="11" cy="11" r="3" fill="#c97b4b" opacity="0.4"/>
+                <circle cx="11" cy="11" r="1.2" fill="#c97b4b"/>
+              </svg>
+            </div>
+          </div>
+          <div *ngIf="msg.role === 'assistant'"
+            class="flex-1 min-w-0 prose-aria text-[#2d2621] leading-relaxed text-[15px]"
+            [innerHTML]="renderMarkdown(msg.content)"
+          ></div>
+          <div *ngIf="msg.role === 'user'"
+            class="max-w-[75%] bg-[#c97b4b] text-white px-4 py-3 rounded-2xl rounded-tr-sm text-[14px] leading-relaxed shadow-sm"
+          >{{ msg.content }}</div>
+        </div>
+
+        <!-- Typing indicator -->
+        <div *ngIf="isGenerating" class="flex gap-4">
+          <div class="shrink-0 mt-1">
+            <div class="w-7 h-7 rounded-full bg-[#f2efe9] border border-[#e0dbd2] flex items-center justify-center">
+              <svg width="13" height="13" viewBox="0 0 22 22" fill="none">
+                <circle cx="11" cy="11" r="10" stroke="#c97b4b" stroke-width="1.5"/>
+                <circle cx="11" cy="11" r="3" fill="#c97b4b" opacity="0.4"/>
+                <circle cx="11" cy="11" r="1.2" fill="#c97b4b"/>
+              </svg>
+            </div>
+          </div>
+          <div class="flex items-center gap-1 py-3">
+            <span class="w-1.5 h-1.5 bg-[#c97b4b] rounded-full animate-bounce opacity-60" style="animation-delay: 0ms"></span>
+            <span class="w-1.5 h-1.5 bg-[#c97b4b] rounded-full animate-bounce opacity-60" style="animation-delay: 150ms"></span>
+            <span class="w-1.5 h-1.5 bg-[#c97b4b] rounded-full animate-bounce opacity-60" style="animation-delay: 300ms"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ Input Area — always stuck to bottom -->
+    <div class="flex-shrink-0 px-4 md:px-6 py-4 bg-[#f9f7f4]">
+      <div class="max-w-3xl mx-auto">
+        <div class="bg-white border border-[#e0dbd2] rounded-2xl shadow-sm overflow-hidden transition-all duration-200"
+             style="box-shadow: 0 1px 4px rgba(0,0,0,0.06);">
+
+          <!-- Textarea -->
+          <div class="px-4 pt-3.5 pb-1">
+            <textarea
+  [(ngModel)]="userInput"
+  rows="1"
+  class="w-full resize-none bg-transparent text-[#2d2621] text-[14px] leading-relaxed placeholder-[#b0a89e] focus:outline-none focus:ring-0 focus:border-0 border-0 min-h-[24px] max-h-[160px]"
+  placeholder="Reply..."
+  (keydown.enter)="handleEnter($event)"
+  (input)="autoResize($event)"
+></textarea>
+          </div>
+
+          <!-- Toolbar -->
+          <div class="flex items-center justify-between px-3 pb-3 pt-1">
+            <button class="w-7 h-7 flex items-center justify-center rounded-lg text-[#9e9188] hover:text-[#c97b4b] hover:bg-[#faf8f5] transition-all duration-150">
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                <path d="M7.5 1v13M1 7.5h13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </button>
+
+            <div class="flex items-center gap-1.5">
+              <button class="flex items-center gap-1 px-2 py-1 rounded-lg text-[#7a7068] hover:bg-[#f5f0ea] transition-all duration-150 text-[12px] font-medium">
+                <span>Sonnet 4.6</span>
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+
+              <!-- Send button -->
+              <button
+                class="w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-150"
+                [ngClass]="{
+                  'bg-[#c97b4b] hover:bg-[#b56d3f] shadow-sm': userInput.trim() && !isGenerating,
+                  'bg-[#ede9e3] cursor-not-allowed': !userInput.trim() || isGenerating
+                }"
+                [disabled]="!userInput.trim() || isGenerating"
+                (click)="sendMessage()"
+              >
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                  <path d="M7 12V2M2.5 6.5L7 2l4.5 4.5"
+                    [attr.stroke]="userInput.trim() && !isGenerating ? 'white' : '#b0a89e'"
+                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

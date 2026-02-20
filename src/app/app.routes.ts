@@ -20,19 +20,23 @@ import { FinanceComponent } from './pages/finance/finance.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SnippetsComponent } from './pages/snippets/snippets.component';
 import { authGuard, guestGuard } from './guards/auth.guard';
+import { AiComponent } from './pages/ai/ai.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
     children: [
       {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
       },
-
+      {
+        path:'ai',
+        component:AiComponent
+      },
       {
         path: 'for-you',
         component: FeedComponent,
