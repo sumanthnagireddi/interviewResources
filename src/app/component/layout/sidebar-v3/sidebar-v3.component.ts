@@ -39,6 +39,7 @@ export class SidebarV3Component implements OnInit {
   starredCount$: Observable<number>;
   menuItems: MenuItem[] = [
     { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', url: 'dashboard' },
+    { id: 'ai_copilot', label: 'AI Copilot', icon: 'auto_awesome_motion', url: 'ai' },
     { id: 'for-you', label: 'For you', icon: 'account_circle', url: 'for-you' },
     { id: 'recent', label: 'Recent', icon: 'history', url: 'recent' },
     { id: 'starred', label: 'Starred', icon: 'star', url: 'starred' },

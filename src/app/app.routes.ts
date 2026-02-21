@@ -21,6 +21,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SnippetsComponent } from './pages/snippets/snippets.component';
 import { authGuard, guestGuard } from './guards/auth.guard';
 import { AiComponent } from './pages/ai/ai.component';
+import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
+import { IpWhitelistGuard } from './guards/ip-whitelist.guard';
 
 export const routes: Routes = [
   {
@@ -34,8 +36,9 @@ export const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path:'ai',
-        component:AiComponent
+        path: 'ai',
+        component: AiComponent,
+        canActivate: [IpWhitelistGuard],
       },
       {
         path: 'for-you',
@@ -79,7 +82,7 @@ export const routes: Routes = [
           },
           {
             path: 'create-blog',
-          component: CreateBlogComponent,
+            component: CreateBlogComponent,
           },
           {
             path: 'admin',
@@ -98,6 +101,7 @@ export const routes: Routes = [
       {
         path: 'finance',
         component: FinanceComponent,
+        canActivate: [IpWhitelistGuard],
       },
       {
         path: 'api-docs',
@@ -106,17 +110,21 @@ export const routes: Routes = [
     ],
   },
   {
-    path:'login',
+    path: 'login',
     component: LoginComponent,
     canActivate: [guestGuard],
   },
   {
-    path:'register',
+    path: 'register',
     component: RegisterComponent,
     canActivate: [guestGuard],
   },
   {
+    path: 'access-denied',
+    component: AccessDeniedComponent,
+  },
+  {
     path: '**',
     redirectTo: 'home',
-  }
+  },
 ];
