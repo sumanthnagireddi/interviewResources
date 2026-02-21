@@ -12,7 +12,8 @@ export const IP_WHITELIST_CONFIG = {
     '127.0.0.1',           // localhost
     '::1',                 // localhost (IPv6)
     '192.168.1.100',  
-    '122.177.244.193'     // Example: Replace with your IP
+    '122.177.244.193',
+    '106.221.182.109'     // Example: Replace with your IP
     // Add more IPs as needed
   ],
 
