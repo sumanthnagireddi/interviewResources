@@ -38,14 +38,31 @@ export class SidebarV3Component implements OnInit {
   isSidebarExpanded = signal(false);
   starredCount$: Observable<number>;
   menuItems: MenuItem[] = [
-    { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', url: 'dashboard' },
-    { id: 'ai_copilot', label: 'AI Copilot', icon: 'auto_awesome_motion', url: 'ai' },
+    {
+      id: 'dashboard',
+      label: 'Dashboard',
+      icon: 'dashboard',
+      url: 'dashboard',
+    },
+    {
+      id: 'ai_copilot',
+      label: 'AI Copilot',
+      icon: 'auto_awesome_motion',
+      url: 'ai',
+      hasItems: true,
+      isOpen: false,
+    },
     { id: 'for-you', label: 'For you', icon: 'account_circle', url: 'for-you' },
     { id: 'recent', label: 'Recent', icon: 'history', url: 'recent' },
     { id: 'starred', label: 'Starred', icon: 'star', url: 'starred' },
     { id: 'drafts', label: 'Drafts', icon: 'draft', url: 'drafts' },
     { id: 'snippets', label: 'Snippets', icon: 'data_object', url: 'snippets' },
-    { id: 'finance', label: 'Finance', icon: 'account_balance_wallet', url: 'finance' },
+    {
+      id: 'finance',
+      label: 'Finance',
+      icon: 'account_balance_wallet',
+      url: 'finance',
+    },
     {
       id: 'content',
       label: 'Content',
@@ -57,9 +74,19 @@ export class SidebarV3Component implements OnInit {
     { id: 'jobs', label: 'Job Applications', icon: 'campaign', url: 'jobs' },
     { id: 'roadmap', label: 'Roadmap', icon: 'map', url: 'roadmap' },
     { id: 'projects', label: 'Projects', icon: 'work', url: 'projects' },
-    { id: 'bookmarks', label: 'Bookmarks', icon: 'bookmarks', url: 'bookmarks' },
+    {
+      id: 'bookmarks',
+      label: 'Bookmarks',
+      icon: 'bookmarks',
+      url: 'bookmarks',
+    },
     { id: 'ideas', label: 'Idea Board', icon: 'lightbulb', url: 'ideas' },
-    { id: 'interview-bank', label: 'Interview Bank', icon: 'school', url: 'interview-bank' },
+    {
+      id: 'interview-bank',
+      label: 'Interview Bank',
+      icon: 'school',
+      url: 'interview-bank',
+    },
     {
       id: 'blogs',
       label: 'Blogs',
@@ -77,12 +104,15 @@ export class SidebarV3Component implements OnInit {
 
   folders = [
     { name: 'Technical', open: false },
-    { name: ' Resources', open: false },
+    { name: 'Resources', open: false },
     { name: 'AWS JS Developer training', open: false },
   ];
 
   selectedMenuItem: string | null = null;
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {
     this.starredCount$ = this.store.select(selectStarredCount);
   }
 
@@ -172,7 +202,7 @@ export class SidebarV3Component implements OnInit {
           config: {
             type: DialogType.ADD_BLOG,
           },
-        })
+        }),
       );
     } else {
       this.store.dispatch(
@@ -180,7 +210,7 @@ export class SidebarV3Component implements OnInit {
           config: {
             type: DialogType.ADD_TECH,
           },
-        })
+        }),
       );
     }
   }
@@ -193,7 +223,7 @@ export class SidebarV3Component implements OnInit {
           type: DialogType.ADD_TOPIC,
           payload: { technologyId: tech },
         },
-      })
+      }),
     );
   }
   editChild(event: Event, child: any) {
@@ -204,7 +234,7 @@ export class SidebarV3Component implements OnInit {
           type: DialogType.EDIT_TOPIC,
           payload: { technologyId: child },
         },
-      })
+      }),
     );
   }
   editTechnology(event: Event, child: any) {
@@ -215,7 +245,7 @@ export class SidebarV3Component implements OnInit {
           type: DialogType.EDIT_TECH,
           payload: { technologyId: child },
         },
-      })
+      }),
     );
   }
   deleteChildMenu(event: Event, child: any) {
@@ -226,7 +256,7 @@ export class SidebarV3Component implements OnInit {
           type: DialogType.DELETE_TOPIC,
           payload: { technologyId: child },
         },
-      })
+      }),
     );
   }
   deleteTechnology(event: Event, child: any) {
@@ -237,7 +267,7 @@ export class SidebarV3Component implements OnInit {
           type: DialogType.DELETE_TECH,
           payload: { technologyId: child },
         },
-      })
+      }),
     );
   }
   toggleChildOpen(event: Event, child: any) {

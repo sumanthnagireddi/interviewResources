@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ThemeService } from '../../services/theme.service';
 import { environment } from '../../../environments/environment';
 
 interface Message {
@@ -24,7 +25,8 @@ interface Chat {
   imports: [FormsModule, CommonModule]
 })
 export class AiComponent implements OnInit, AfterViewChecked {
-constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
+  readonly themeService = inject(ThemeService);
 
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
 

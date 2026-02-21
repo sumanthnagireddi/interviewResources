@@ -2,7 +2,7 @@
    ARIA CHAT — Component Styles
    ============================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap");
 
 /* ── Sidebar ────────────────────────────────── */
 .sidebar {
@@ -15,15 +15,14 @@
     position: relative !important;
   }
 }
-.contain{
-    
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 95vh;
-    width: 100vw;
+.contain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 95vh;
+  width: 100vw;
 }
 /* ── Scrollbar ──────────────────────────────── */
 .scrollbar-thin::-webkit-scrollbar {
@@ -82,7 +81,7 @@
   border-radius: 10px;
   padding: 14px 16px;
   overflow-x: auto;
-  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-family: "JetBrains Mono", "Menlo", monospace;
   font-size: 13px;
   line-height: 1.6;
   margin: 0.75em 0;
@@ -94,13 +93,13 @@
   color: #c97b4b;
   padding: 1px 6px;
   border-radius: 4px;
-  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-family: "JetBrains Mono", "Menlo", monospace;
   font-size: 13px;
   border: 1px solid #e0dbd2;
 }
 
 .prose-aria .md-h1 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: "Playfair Display", Georgia, serif;
   font-size: 20px;
   font-weight: 600;
   color: #1e1a17;
@@ -108,7 +107,7 @@
 }
 
 .prose-aria .md-h2 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: "Playfair Display", Georgia, serif;
   font-size: 17px;
   font-weight: 600;
   color: #2d2621;
@@ -137,7 +136,7 @@
 }
 
 .prose-aria .md-li::before {
-  content: '·';
+  content: "·";
   color: #c97b4b;
   font-weight: 700;
   position: absolute;
@@ -146,8 +145,14 @@
 
 /* ── Bounce animation ───────────────────────── */
 @keyframes bounce {
-  0%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-5px); }
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
 }
 .animate-bounce {
   animation: bounce 1.2s infinite ease-in-out;
@@ -158,7 +163,6 @@ textarea {
   scrollbar-width: thin;
   scrollbar-color: #ddd8d0 transparent;
 }
-
 
 /* Remove textarea focus border/outline */
 textarea:focus {
