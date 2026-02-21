@@ -1,4 +1,3 @@
-
 import { BudgetSettings, Expense, ExpenseCategory, ParsedSmsTransaction } from '../../model/finance.model';
 
 export interface FinanceState {
@@ -8,10 +7,10 @@ export interface FinanceState {
   currentBudget: BudgetSettings | null;
 
   // Month navigation
-  selectedMonth: string; // ISO string e.g. "2026-02-01"
+  selectedMonth: string;
 
   // Tab
-  activeTab: 'overview' | 'transactions' | 'categories' | 'sms';
+  activeTab: 'overview' | 'transactions' | 'categories' | 'cards' | 'debts';
 
   // UI modal flags
   showAddForm: boolean;
@@ -31,6 +30,15 @@ export interface FinanceState {
   savingBudget: boolean;
   savingExpense: boolean;
   error: string | null;
+
+  // ── DEBTS (added) ──────────────────────────
+  debts: any[];
+  loadingDebts: boolean;
+  savingDebt: boolean;
+  showAddDebtForm: boolean;
+  showEditDebtForm: boolean;
+  editingDebt: any | null;
+  debtFilter: 'all' | 'owed_to_me' | 'i_owe' | 'settled';
 }
 
 export const initialFinanceState: FinanceState = {
@@ -57,4 +65,13 @@ export const initialFinanceState: FinanceState = {
   savingBudget: false,
   savingExpense: false,
   error: null,
+
+  // ── DEBTS initial values ───────────────────
+  debts: [],
+  loadingDebts: false,
+  savingDebt: false,
+  showAddDebtForm: false,
+  showEditDebtForm: false,
+  editingDebt: null,
+  debtFilter: 'all',
 };

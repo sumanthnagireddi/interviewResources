@@ -191,7 +191,7 @@ export const copyBudgetFromPrevMonth = createAction(
    ========================================================= */
 export const setActiveTab = createAction(
   '[Finance] Set Active Tab',
-  props<{ tab: 'overview' | 'transactions' | 'categories' | 'sms' }>()
+  props<{ tab: 'overview' | 'transactions' | 'categories' | 'cards' | 'debts' }>()
 );
 
 /* =========================================================
@@ -229,3 +229,37 @@ export const updateSmsCategory = createAction(
 export const importSelectedSms = createAction(
   '[Finance] Import Selected SMS'
 );
+
+/* =========================================================
+   DEBTS
+   ========================================================= */
+export const loadDebts = createAction('[Finance] Load Debts');
+export const loadDebtsSuccess = createAction('[Finance] Load Debts Success', props<{ debts: any[] }>());
+export const loadDebtsFailure = createAction('[Finance] Load Debts Failure', props<{ error: string }>());
+
+export const addDebt = createAction('[Finance] Add Debt', props<{ debt: any }>());
+export const addDebtSuccess = createAction('[Finance] Add Debt Success', props<{ debt: any }>());
+export const addDebtFailure = createAction('[Finance] Add Debt Failure', props<{ error: string }>());
+
+export const updateDebt = createAction('[Finance] Update Debt', props<{ id: string; changes: any }>());
+export const updateDebtSuccess = createAction('[Finance] Update Debt Success', props<{ debt: any }>());
+export const updateDebtFailure = createAction('[Finance] Update Debt Failure', props<{ error: string }>());
+
+export const deleteDebt = createAction('[Finance] Delete Debt', props<{ id: string }>());
+export const deleteDebtSuccess = createAction('[Finance] Delete Debt Success', props<{ id: string }>());
+export const deleteDebtFailure = createAction('[Finance] Delete Debt Failure', props<{ error: string }>());
+
+export const markDebtSettled = createAction('[Finance] Mark Debt Settled', props<{ id: string }>());
+export const markDebtSettledSuccess = createAction('[Finance] Mark Debt Settled Success', props<{ debt: any }>());
+export const markDebtSettledFailure = createAction('[Finance] Mark Debt Settled Failure', props<{ error: string }>());
+
+export const recordPartialPayment = createAction('[Finance] Record Partial Payment', props<{ id: string; amount: number }>());
+export const recordPartialPaymentSuccess = createAction('[Finance] Record Partial Payment Success', props<{ debt: any }>());
+export const recordPartialPaymentFailure = createAction('[Finance] Record Partial Payment Failure', props<{ error: string }>());
+
+export const openAddDebtForm  = createAction('[Finance] Open Add Debt Form');
+export const closeAddDebtForm = createAction('[Finance] Close Add Debt Form');
+export const openEditDebtForm = createAction('[Finance] Open Edit Debt Form', props<{ debt: any }>());
+export const closeEditDebtForm= createAction('[Finance] Close Edit Debt Form');
+
+export const setDebtFilter = createAction('[Finance] Set Debt Filter', props<{ filter: 'all' | 'owed_to_me' | 'i_owe' | 'settled' }>());

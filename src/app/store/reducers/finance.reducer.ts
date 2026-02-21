@@ -240,4 +240,57 @@ export const financeReducer = createReducer(
     smsImporting: false,
     error,
   })),
+  /* ── Debts ── */
+  on(FinanceActions.loadDebts, (state) => ({
+    ...state, loadingDebts: true, error: null,
+  })),
+  on(FinanceActions.loadDebtsSuccess, (state, { debts }) => ({
+    ...state, loadingDebts: false, debts,
+  })),
+  on(FinanceActions.loadDebtsFailure, (state, { error }) => ({
+    ...state, loadingDebts: false, error,
+  })),
+
+  on(FinanceActions.addDebt, (state) => ({ ...state, savingDebt: true })),
+  on(FinanceActions.addDebtSuccess, (state, { debt }) => ({
+    ...state, savingDebt: false, showAddDebtForm: false,
+    debts: [debt, ...state.debts],
+  })),
+  on(FinanceActions.addDebtFailure, (state, { error }) => ({
+    ...state, savingDebt: false, error,
+  })),
+
+  on(FinanceActions.updateDebt, (state) => ({ ...state, savingDebt: true })),
+  on(FinanceActions.updateDebtSuccess, (state, { debt }) => ({
+    ...state, savingDebt: false, showEditDebtForm: false, editingDebt: null,
+    debts: state.debts.map((d) => d._id === debt._id ? debt : d),
+  })),
+  on(FinanceActions.updateDebtFailure, (state, { error }) => ({
+    ...state, savingDebt: false, error,
+  })),
+
+  on(FinanceActions.deleteDebtSuccess, (state, { id }) => ({
+    ...state, debts: state.debts.filter((d) => d._id !== id),
+  })),
+
+  on(FinanceActions.markDebtSettledSuccess, (state, { debt }) => ({
+    ...state, debts: state.debts.map((d) => d._id === debt._id ? debt : d),
+  })),
+
+  on(FinanceActions.recordPartialPaymentSuccess, (state, { debt }) => ({
+    ...state, debts: state.debts.map((d) => d._id === debt._id ? debt : d),
+  })),
+
+  on(FinanceActions.openAddDebtForm,  (state) => ({ ...state, showAddDebtForm: true })),
+  on(FinanceActions.closeAddDebtForm, (state) => ({ ...state, showAddDebtForm: false })),
+  on(FinanceActions.openEditDebtForm, (state, { debt }) => ({
+    ...state, showEditDebtForm: true, editingDebt: debt,
+  })),
+  on(FinanceActions.closeEditDebtForm, (state) => ({
+    ...state, showEditDebtForm: false, editingDebt: null,
+  })),
+
+  on(FinanceActions.setDebtFilter, (state, { filter }) => ({
+    ...state, debtFilter: filter,
+  })),
 );

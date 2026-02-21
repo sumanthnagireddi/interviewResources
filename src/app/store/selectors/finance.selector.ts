@@ -1,7 +1,10 @@
 // finance.selectors.ts
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { FinanceState } from '../state/finance.state';
-import { EXPENSE_CATEGORIES } from '../../model/finance.model';
+import { EXPENSE_CATEGORIES, Expense } from '../../model/finance.model';
+
+/* ── Selector Types ── */
+export type SelectorExpense = Omit<Expense, 'id'> & { _id: string };
 
 export const selectFinanceState = createFeatureSelector<FinanceState>('finance');
 
@@ -30,7 +33,8 @@ export const selectActiveTab = createSelector(
 /* ── Expenses ── */
 export const selectCurrentMonthExpenses = createSelector(
   selectFinanceState,
-  (s) => s.currentMonthExpenses  
+  selectActiveTab,
+  (s) => s.currentMonthExpenses.map((e) => ({ ...e, _id: e.id }))
 );
 
 export const selectLoadingExpenses = createSelector(
@@ -180,4 +184,39 @@ export const selectSelectedSmsTotal = createSelector(
 export const selectSmsImporting = createSelector(
   selectFinanceState,
   (s) => s.smsImporting
+);
+/* ── Debts ── */
+export const selectAllDebts    = createSelector(selectFinanceState, (s) => s.debts);
+export const selectDebtLoading = createSelector(selectFinanceState, (s) => s.loadingDebts);
+export const selectDebtSaving  = createSelector(selectFinanceState, (s) => s.savingDebt);
+export const selectDebtFilter  = createSelector(selectFinanceState, (s) => s.debtFilter);
+export const selectShowAddDebt = createSelector(selectFinanceState, (s) => s.showAddDebtForm);
+export const selectShowEditDebt= createSelector(selectFinanceState, (s) => s.showEditDebtForm);
+export const selectEditingDebt = createSelector(selectFinanceState, (s) => s.editingDebt);
+
+export const selectFilteredDebts = createSelector(
+  selectAllDebts,
+  selectDebtFilter,
+  (debts, filter) => {
+    switch (filter) {
+      case 'owed_to_me': return debts.filter((d) => d.debtType === 'owed_to_me' && d.status !== 'settled');
+      case 'i_owe':      return debts.filter((d) => d.debtType === 'i_owe'      && d.status !== 'settled');
+      case 'settled':    return debts.filter((d) => d.status === 'settled');
+      default:           return debts.filter((d) => d.status !== 'settled');
+    }
+  }
+);
+
+export const selectDebtSummary = createSelector(
+  selectAllDebts,
+  (debts) => {
+    const active = debts.filter((d) => d.status !== 'settled');
+    const totalOwedToMe = active
+      .filter((d) => d.debtType === 'owed_to_me')
+      .reduce((sum, d) => sum + (d.amount - (d.paidAmount ?? 0)), 0);
+    const totalIOwe = active
+      .filter((d) => d.debtType === 'i_owe')
+      .reduce((sum, d) => sum + (d.amount - (d.paidAmount ?? 0)), 0);
+    return { totalOwedToMe, totalIOwe, netBalance: totalOwedToMe - totalIOwe };
+  }
 );

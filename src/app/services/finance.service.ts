@@ -19,7 +19,7 @@ const BUDGET_KEY = 'finance_budgets'; // now stores MonthlyBudgetMap
 @Injectable({ providedIn: 'root' })
 export class FinanceService {
   private api =  `${environment.API_URL}/finance`; // Adjust base URL as needed
-
+  private apiUrl = `${environment.API_URL}`; // For debts endpoint
   constructor(private http: HttpClient) {}
 
   // ───── Expenses CRUD ─────
@@ -245,5 +245,29 @@ export class FinanceService {
       }
     }
     return 'other';
+  }
+  // ── Debts ──────────────────────────────────────────────
+  getAllDebts(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.api}/debts`);
+  }
+
+  createDebt(debt: any): Observable<any> {
+    return this.http.post<any>(`${this.api}/add-debt`, debt);
+  }
+
+  updateDebt(id: string, changes: any): Observable<any> {
+    return this.http.patch<any>(`${this.api}/update-debt/${id}`, changes);
+  }
+
+  deleteDebt(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.api}/delete-debt/${id}`);
+  }
+
+  markDebtSettled(id: string): Observable<any> {
+    return this.http.patch<any>(`${this.api}/debts/${id}/settle`, {});
+  }
+
+  recordPartialPayment(id: string, amount: number): Observable<any> {
+    return this.http.patch<any>(`${this.api}/debts/${id}/partial`, { amount });
   }
 }

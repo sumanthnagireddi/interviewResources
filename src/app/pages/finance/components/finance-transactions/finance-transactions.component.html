@@ -34,7 +34,7 @@
               </span>
 
               <!-- Delete confirm -->
-              @if ((deleteConfirmId$ | async) === expense.id) {
+              @if ((deleteConfirmId$ | async) === expense._id) {
                 <div class="flex items-center gap-1 flex-shrink-0">
                   <button (click)="deleteExpense(expense.id)"
                           class="px-2 py-1 text-xs font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors">

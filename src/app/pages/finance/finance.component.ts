@@ -18,6 +18,8 @@ import { FinanceCategoriesComponent } from './components/finance-categories/fina
 import { FinanceExpenseModalsComponent } from './components/finance-expense-modals/finance-expense-modals.component';
 import { TabsComponent } from '../../component/tabs/tabs.component';
 import { distinctUntilChanged, skip } from 'rxjs';
+import { FinanceCardsComponent } from './components/finance-cards/finance-cards.component';
+import { FinanceDebtsComponent } from './components/finance-debts/finance-debts.component';
 
 @Component({
   selector: 'app-finance',
@@ -34,6 +36,8 @@ import { distinctUntilChanged, skip } from 'rxjs';
     FinanceCategoriesComponent,
     FinanceExpenseModalsComponent,
     TabsComponent,
+    FinanceCardsComponent,
+    FinanceDebtsComponent
   ],
   templateUrl: './finance.component.html',
   styleUrl: './finance.component.css',
@@ -47,6 +51,8 @@ export class FinanceComponent implements OnInit {
     { name: 'Overview', icon: 'chart-bar' },
     { name: 'Transactions', icon: 'list' },
     { name: 'Categories', icon: 'tag' },
+    { name: 'Cards', icon: 'card' },
+    { name: 'Debts', icon: 'hand-holding-dollar' },
   ];
 
   ngOnInit(): void {
@@ -84,7 +90,8 @@ export class FinanceComponent implements OnInit {
           | 'overview'
           | 'transactions'
           | 'categories'
-          | 'sms',
+          | 'cards'
+          | 'debts',
       }),
     );
   }

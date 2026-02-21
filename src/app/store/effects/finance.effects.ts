@@ -269,4 +269,76 @@ reloadBudgetOnUpdate$ = createEffect(() =>
       ),
     ),
   );
+  loadDebts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(FinanceActions.loadDebts),
+      switchMap(() =>
+        this.financeService.getAllDebts().pipe(
+          map((debts) => FinanceActions.loadDebtsSuccess({ debts })),
+          catchError((error) => of(FinanceActions.loadDebtsFailure({ error: error.message })))
+        )
+      )
+    )
+  );
+
+  addDebt$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(FinanceActions.addDebt),
+      switchMap(({ debt }) =>
+        this.financeService.createDebt(debt).pipe(
+          map((saved) => FinanceActions.addDebtSuccess({ debt: saved })),
+          catchError((error) => of(FinanceActions.addDebtFailure({ error: error.message })))
+        )
+      )
+    )
+  );
+
+  updateDebt$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(FinanceActions.updateDebt),
+      switchMap(({ id, changes }) =>
+        this.financeService.updateDebt(id, changes).pipe(
+          map((debt) => FinanceActions.updateDebtSuccess({ debt })),
+          catchError((error) => of(FinanceActions.updateDebtFailure({ error: error.message })))
+        )
+      )
+    )
+  );
+
+  deleteDebt$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(FinanceActions.deleteDebt),
+      switchMap(({ id }) =>
+        this.financeService.deleteDebt(id).pipe(
+          map(() => FinanceActions.deleteDebtSuccess({ id })),
+          catchError((error) => of(FinanceActions.deleteDebtFailure({ error: error.message })))
+        )
+      )
+    )
+  );
+
+  markSettled$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(FinanceActions.markDebtSettled),
+      switchMap(({ id }) =>
+        this.financeService.markDebtSettled(id).pipe(
+          map((debt) => FinanceActions.markDebtSettledSuccess({ debt })),
+          catchError((error) => of(FinanceActions.markDebtSettledFailure({ error: error.message })))
+        )
+      )
+    )
+  );
+
+  recordPartial$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(FinanceActions.recordPartialPayment),
+      switchMap(({ id, amount }) =>
+        this.financeService.recordPartialPayment(id, amount).pipe(
+          map((debt) => FinanceActions.recordPartialPaymentSuccess({ debt })),
+          catchError((error) => of(FinanceActions.recordPartialPaymentFailure({ error: error.message })))
+        )
+      )
+    )
+  );
+
 }

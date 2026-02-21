@@ -4,7 +4,7 @@
   <app-finance-budget-alert />
   <app-finance-summarycards />
   <app-finance-progress-bar />
-  <app-tabs [tabNames]="tabNames" (activeTabEvent)="handleTabChange($event)"/>
+  <app-tabs [tabNames]="tabNames" (activeTabEvent)="handleTabChange($event)" />
   <div class="mt-2">
     <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
       Note: Only expenses added manually through this app are counted towards the budget and shown in the overview.
@@ -13,6 +13,8 @@
   @case ('overview') { <app-finance-overview /> }
   @case ('transactions') { <app-finance-transactions /> }
   @case ('categories') { <app-finance-categories /> }
+  @case ('cards') { <app-finance-cards /> }
+  @case ('debts') { <app-finance-debts /> }
   }
 
   <app-finance-expense-modals />
