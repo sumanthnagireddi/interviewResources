@@ -48,7 +48,7 @@ export const initialFinanceState: FinanceState = {
 
   selectedMonth: new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString(),
 
-  activeTab: 'debts',
+  activeTab: 'overview',
 
   showAddForm: false,
   showEditForm: false,
