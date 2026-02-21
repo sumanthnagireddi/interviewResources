@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -119,7 +120,7 @@ constructor(private http: HttpClient) {}
   });
 
   // Real API call
-  this.http.post<{ data: string }>('http://localhost:3000/ai/ask', { question: text })
+  this.http.post<{ data: string }>(`${environment.API_URL}/ai/ask`, { question: text })
     .subscribe({
       next: (res) => {
         chat.messages.push({
