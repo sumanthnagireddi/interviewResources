@@ -39,11 +39,7 @@
   background: #c8c0b6;
 }
 
-/* ── Markdown Prose ─────────────────────────── */
-.prose-aria {
-  color: #2d2621;
-  line-height: 1.7;
-}
+
 
 .prose-aria .md-p {
   margin: 0 0 0.75em;
